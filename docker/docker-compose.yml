@@ -1,13 +1,13 @@
-version: "3.7"
+version: '3.7'
 
 services:
   postgres:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_USER=dbUsername
-      - POSTGRES_PASSWORD=dbPassword
-      - POSTGRES_DB=db_db
+      - POSTGRES_USER=campusUsername
+      - POSTGRES_PASSWORD=campusPassword
+      - POSTGRES_DB=campus_db
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
