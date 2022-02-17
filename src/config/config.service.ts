@@ -6,6 +6,10 @@ import * as Joi from 'joi';
 export class ConfigService {
   database: {
     host: string;
+    port: number;
+    username: string;
+    password: string;
+    name: string;
   };
 
   constructor() {
@@ -21,6 +25,10 @@ export class ConfigService {
   private static validateInput(): Joi.ObjectSchema {
     const envVarsSchema = Joi.object({
       DB_HOST: Joi.string().required(),
+      DB_PORT: Joi.number().required(),
+      DB_USERNAME: Joi.string().required(),
+      DB_PASSWORD: Joi.string().required(),
+      DB_NAME: Joi.string().required(),
     });
 
     const vars = Object.assign({}, process.env) as any;
@@ -36,6 +44,10 @@ export class ConfigService {
   private setAllValues(envConfig: { [varName: string]: any }) {
     this.database = {
       host: envConfig.DB_HOST,
+      port: envConfig.DB_PORT,
+      username: envConfig.DB_USERNAME,
+      password: envConfig.DB_PASSWORD,
+      name: envConfig.DB_NAME,
     };
   }
 }
