@@ -5,9 +5,14 @@ import { ConfigModule } from './config/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from './config/config.service';
 import { UserModule } from './modules/user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     ConfigModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
