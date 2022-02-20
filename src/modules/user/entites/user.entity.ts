@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Lesson } from 'src/entities/lesson.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinColumn,
+} from 'typeorm';
 
 export type UserRole = 'student' | 'teacher';
 
@@ -29,4 +36,8 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @ManyToMany(() => Lesson)
+  @JoinColumn()
+  lessons: Lesson[];
 }

@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { SeederModule } from './seeder/seeder.module';
+import { AnnouncementModule } from './modules/announcement/announcement.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { SeederModule } from './seeder/seeder.module';
     }),
     UserModule,
     SeederModule,
+    AnnouncementModule,
   ],
   controllers: [AppController],
   providers: [AppService],
