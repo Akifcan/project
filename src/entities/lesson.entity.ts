@@ -2,18 +2,21 @@ import { Announcement } from 'src/modules/announcement/entities/announcement.ent
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
 
 @Entity()
 export class Lesson {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column({ unique: true })
   name: string;
+
+  @Column({ unique: true })
+  code: string;
 
   @CreateDateColumn()
   createdAt: Date;
