@@ -7,6 +7,7 @@ import { ConfigService } from './config/config.service';
 import { UserModule } from './modules/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { join } from 'path';
       }),
     }),
     UserModule,
+    SeederModule,
   ],
   controllers: [AppController],
   providers: [AppService],
