@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Lesson } from 'src/entities/lesson.entity'
 import { User } from 'src/modules/user/entites/user.entity'
@@ -11,6 +11,11 @@ export class SeederService {
   @InjectRepository(Lesson) private lessonRepository: Repository<Lesson>
 
   async create() {
+
+    Logger.log('Seeder!')
+    await this.lessonRepository.delete({})
+    await this.usersRepository.delete({})
+    Logger.log('Available Records Removed!')
     const lesson1 = this.lessonRepository.create({
       id: 1,
       name: 'BİLGİ TEKNOLOJİLERİ',
