@@ -7,6 +7,7 @@ import { ConfigService } from './config/config.service'
 import { UserModule } from './modules/user/user.module'
 import { SeederModule } from './seeder/seeder.module'
 import { AnnouncementModule } from './modules/announcement/announcement.module'
+import { AuthModule } from './modules/auth/auth.module'
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AnnouncementModule } from './modules/announcement/announcement.module'
     UserModule,
     SeederModule,
     AnnouncementModule,
+    AuthModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

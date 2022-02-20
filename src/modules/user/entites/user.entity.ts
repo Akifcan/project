@@ -26,6 +26,9 @@ export class User {
   @Column()
   role: UserRole
 
+  @Column({ default: '12345' })
+  password: string
+
   @Column({
     default: 'default-profile-photo.jpg',
   })
