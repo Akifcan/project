@@ -1,26 +1,26 @@
-import { Lesson } from 'src/entities/lesson.entity';
+import { Lesson } from 'src/entities/lesson.entity'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
   CreateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 @Entity()
 export class Announcement {
   @PrimaryGeneratedColumn()
-    id: number;
+  id: number
 
   @Column()
-    title: string;
+  title: string
 
   @Column()
-    content: string;
+  content: string
 
   @ManyToOne(() => Lesson, (lesson) => lesson.id)
-    lesson: Lesson;
+  lesson: Lesson
 
   @CreateDateColumn()
-    createdAt: Date;
+  createdAt: Date
 }
