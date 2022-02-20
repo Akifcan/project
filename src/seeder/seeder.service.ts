@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class SeederService {
   @InjectRepository(User) private usersRepository: Repository<User>;
+
   @InjectRepository(Lesson) private lessonRepository: Repository<Lesson>;
 
   async create() {

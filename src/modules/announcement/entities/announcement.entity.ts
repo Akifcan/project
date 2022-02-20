@@ -10,17 +10,17 @@ import {
 @Entity()
 export class Announcement {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column()
-  title: string;
+    title: string;
 
   @Column()
-  content: string;
+    content: string;
 
   @ManyToOne(() => Lesson, (lesson) => lesson.id)
-  lesson: Lesson;
+    lesson: Lesson;
 
   @CreateDateColumn()
-  createdAt: Date;
+    createdAt: Date;
 }

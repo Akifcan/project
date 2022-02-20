@@ -12,29 +12,29 @@ export type UserRole = 'student' | 'teacher' | 'moderator';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column()
-  name: string;
+    name: string;
 
   @Column({ unique: true })
-  email: string;
+    email: string;
 
   @Column()
-  schollId: string;
+    schollId: string;
 
   @Column()
-  role: UserRole;
+    role: UserRole;
 
   @Column({
     default: 'default-profile-photo.jpg',
   })
-  profilePhoto: string;
+    profilePhoto: string;
 
   @Column({ default: true })
-  isActive: boolean;
+    isActive: boolean;
 
   @ManyToMany(() => Lesson)
   @JoinColumn()
-  lessons: Lesson[];
+    lessons: Lesson[];
 }

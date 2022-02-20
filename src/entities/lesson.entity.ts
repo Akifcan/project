@@ -10,17 +10,17 @@ import {
 @Entity()
 export class Lesson {
   @PrimaryColumn()
-  id: number;
+    id: number;
 
   @Column({ unique: true })
-  name: string;
+    name: string;
 
   @Column({ unique: true })
-  code: string;
+    code: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+    createdAt: Date;
 
   @OneToMany(() => Announcement, (announcement) => announcement.lesson)
-  announcements: Announcement[];
+    announcements: Announcement[];
 }

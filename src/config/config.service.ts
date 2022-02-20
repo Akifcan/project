@@ -31,7 +31,7 @@ export class ConfigService {
       DB_NAME: Joi.string().required(),
     });
 
-    const vars = Object.assign({}, process.env) as any;
+    const vars = ({ ...process.env }) as any;
     const { error, value: validatedEnvConfig } = envVarsSchema.validate(vars, {
       stripUnknown: true,
     });

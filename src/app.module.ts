@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ConfigModule } from './config/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from './config/config.service';
-import { UserModule } from './modules/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
+import { UserModule } from './modules/user/user.module';
 import { SeederModule } from './seeder/seeder.module';
 import { AnnouncementModule } from './modules/announcement/announcement.module';
 
@@ -34,7 +32,5 @@ import { AnnouncementModule } from './modules/announcement/announcement.module';
     SeederModule,
     AnnouncementModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
