@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-export type UserRole = 'student' | 'teacher';
+export type UserRole = 'student' | 'teacher' | 'moderator';
 
 @Entity()
 export class User {
