@@ -1,8 +1,10 @@
+import { Announcement } from 'src/modules/announcement/entities/announcement.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -15,4 +17,7 @@ export class Lesson {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Announcement, (announcement) => announcement.lesson)
+  announcements: Announcement[];
 }
