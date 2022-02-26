@@ -14,13 +14,13 @@ export class AuthController {
 
     @Public()
     @Post('/sign-in')
-    @HttpCode(200)
+    @HttpCode(202)
     signIn(@Body() signInDto: SignInDto, @Language() language: LanguageProps) {
         return this.authService.signIn(signInDto, language)
     }
 
     @Post('/validate')
-    @HttpCode(200)
+    @HttpCode(202)
     validate(@Body() validateDto: ValidateDto) {
         return this.authService.validate(validateDto)
     }
