@@ -11,6 +11,9 @@ export class ConfigService {
     password: string;
     name: string;
   }
+  auth: {
+    jwt: string
+  }
 
   constructor() {
     ConfigService.loadFromEnvFile()
@@ -29,6 +32,7 @@ export class ConfigService {
       DB_USERNAME: Joi.string().required(),
       DB_PASSWORD: Joi.string().required(),
       DB_NAME: Joi.string().required(),
+      JWT_SECRET: Joi.string().required()
     })
 
     const vars = { ...process.env } as any
@@ -48,6 +52,9 @@ export class ConfigService {
       username: envConfig.DB_USERNAME,
       password: envConfig.DB_PASSWORD,
       name: envConfig.DB_NAME,
+    }
+    this.auth = {
+      jwt: envConfig.JWT_SECRET
     }
   }
 }
