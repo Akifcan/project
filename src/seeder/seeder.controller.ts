@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, All, Req, BadRequestException } from '@nestjs/common'
+import { Controller, Inject, All, Req, BadRequestException } from '@nestjs/common'
 import { Public } from 'src/common/decorators/public.decorator'
 import { SeederService } from './seeder.service'
 

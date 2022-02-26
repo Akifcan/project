@@ -39,10 +39,7 @@ export class User {
   @Column({ default: true })
   isActive: boolean
 
-  @OneToMany(
-    () => Announcement,
-    announcement => announcement.user
-  )
+  @OneToMany(() => Announcement, (announcement) => announcement.user)
   announcements: Announcement[]
 
   @ManyToMany(() => Lesson)
