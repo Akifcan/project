@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
         if (!validate) {
             throw new UnauthorizedException('Please try again')
         }
-        request.currentUser = validate.id
+        (request as any).currentUser = validate
         return true
 
     }

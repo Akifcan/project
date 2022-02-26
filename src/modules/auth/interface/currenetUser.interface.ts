@@ -1,5 +1,5 @@
 interface CurrentUserProps {
-    currentUser: number
+    id: number
 }
 
 export default CurrentUserProps

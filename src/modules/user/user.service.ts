@@ -12,5 +12,8 @@ export class UserService {
         return this.userRepository.findOne({ email, password })
     }
 
+    me(id: number) {
+        return this.userRepository.findOne({ id })
+    }
 
 }
