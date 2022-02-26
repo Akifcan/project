@@ -88,24 +88,28 @@ export class SeederService {
           email: 'kathryne.carrat@yasar.edu.tr',
           schollId: 'kathryne.carrat',
           role: 'teacher',
+          lessons: [lesson1, lesson2]
         },
         {
           name: 'Kaylee Beadham',
           email: 'kaylee.beadham@yasar.edu.tr',
           schollId: 'kaylee.beadham',
           role: 'teacher',
+          lessons: [lesson7, lesson5]
         },
         {
           name: 'Nikaniki Janway',
           email: 'nikaniki.janway@yasar.edu.tr',
           schollId: 'nikaniki.janway',
           role: 'teacher',
+          lessons: [lesson9, lesson10]
         },
         {
           name: 'Kelsi Stow',
           email: 'kelsi.stow@yasar.edu.tr',
           schollId: 'kelsi.stow',
           role: 'teacher',
+          lessons: [lesson2, lesson9]
         },
         {
           name: 'Annamarie Ca',

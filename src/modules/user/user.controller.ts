@@ -14,7 +14,7 @@ export class UserController {
         return this.userService.me(user.id)
     }
 
-    @UseGuards(new RoleGuard('student'))
+    @UseGuards(new RoleGuard(['student', 'teacher']))
     @Get('/me/lessons')
     lessons(@User() user: CurrentUserProps) {
         return this.userService.myLessons(user.id)

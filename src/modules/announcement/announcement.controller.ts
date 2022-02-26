@@ -10,13 +10,13 @@ export class AnnouncementController {
 
     @Inject() private readonly announcementService: AnnouncementService
 
-    @UseGuards(new RoleGuard('teacher'))
+    @UseGuards(new RoleGuard(['teacher']))
     @Post('/for-lesson')
     createAnnouncementForLesson(@Body() createAnnouncementDto: CreateAnnouncementForLessonDto, @User() user: CurrentUserProps) {
         return this.announcementService.createAnnouncement(user.id, createAnnouncementDto, createAnnouncementDto.id)
     }
 
-    @UseGuards(new RoleGuard('moderator'))
+    @UseGuards(new RoleGuard(['moderator']))
     @Post('/for-general')
     createAnnouncementForGeneral(@Body() createAnnouncementDto: CreateAnnouncementDto, @User() user: CurrentUserProps) {
         return this.announcementService.createAnnouncement(user.id, createAnnouncementDto, 10)

@@ -5,10 +5,10 @@ import { UserRole } from 'src/modules/user/entites/user.entity'
 @Injectable()
 class RoleGuard implements CanActivate {
 
-    userRole: UserRole
+    userRoles: UserRole[]
 
-    constructor(userRole: UserRole) {
-        this.userRole = userRole
+    constructor(userRoles: UserRole[]) {
+        this.userRoles = userRoles
     }
 
     canActivate(
@@ -18,7 +18,7 @@ class RoleGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest()
         const { role } = request.currentUser
-        if (this.userRole !== role) {
+        if (!this.userRoles.includes(role)) {
             throw new UnauthorizedException()
         }
         return true
