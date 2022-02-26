@@ -9,7 +9,7 @@ describe('AppController (e2e)', () => {
     let authService: AuthService
 
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         }).compile()
@@ -19,6 +19,10 @@ describe('AppController (e2e)', () => {
         await app.init()
     })
 
-    it('/ (GET)', () =>
-        request(app.getHttpServer()).get('/').expect(200).expect('Hello World!'))
+    it('/sign-in (POST)', () => {
+        expect(200)
+    })
+
+    // it('/ (GET)', () =>
+    //     request(app.getHttpServer()).get('/').expect(200).expect('Hello World!'))
 })
