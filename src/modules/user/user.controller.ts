@@ -12,4 +12,9 @@ export class UserController {
     me(@User() user: CurrentUserProps) {
         return this.userService.me(user.id)
     }
+
+    @Get('/me/lessons')
+    lessons(@User() user: CurrentUserProps) {
+        return this.userService.myLessons(user.id)
+    }
 }
