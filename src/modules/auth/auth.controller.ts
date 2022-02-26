@@ -19,6 +19,7 @@ export class AuthController {
         return this.authService.signIn(signInDto, language)
     }
 
+    @Public()
     @Post('/validate')
     @HttpCode(202)
     validate(@Body() validateDto: ValidateDto) {
