@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common'
+import { Body, Controller, HttpCode, Inject, Post } from '@nestjs/common'
 import { Language } from '../../common/decorators/language.decorator'
 import { Public } from '../../common/decorators/public.decorator'
 import LanguageProps from '../../common/i18y/language.interface'
@@ -14,11 +14,13 @@ export class AuthController {
 
     @Public()
     @Post('/sign-in')
+    @HttpCode(200)
     signIn(@Body() signInDto: SignInDto, @Language() language: LanguageProps) {
         return this.authService.signIn(signInDto, language)
     }
 
     @Post('/validate')
+    @HttpCode(200)
     validate(@Body() validateDto: ValidateDto) {
         return this.authService.validate(validateDto)
     }

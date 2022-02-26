@@ -7,7 +7,7 @@ import UserTransformer from './user.transformer'
 @Injectable()
 export class UserService {
 
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User) readonly userRepository: Repository<User>
     @Inject() private readonly userTransformer: UserTransformer
 
     findUser(email: string, password: string) {
