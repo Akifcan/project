@@ -1,12 +1,13 @@
 import { Injectable, CanActivate, ExecutionContext, Inject, UnauthorizedException } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { Reflector } from '@nestjs/core'
-import { AuthService } from './auth.service'
+import { JwtService } from '@nestjs/jwt'
+import JwtProps from './interface/jwtProps.itnerface'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    @Inject() authService: AuthService
+    @Inject() jwtService: JwtService
     @Inject() reflector: Reflector
 
     canActivate(
@@ -24,9 +25,12 @@ export class AuthGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest()
         const { authorization } = request.headers
-        if (!authorization) {
-            throw new UnauthorizedException('Sign in failed')
+        const validate = this.jwtService.decode(authorization.split(' ')[1]) as JwtProps
+        if (!validate) {
+            throw new UnauthorizedException('Please try again')
         }
-        return this.authService.validate({ token: authorization.split(' ')[1] })
+        request.currentUser = validate.id
+        return true
+
     }
 }

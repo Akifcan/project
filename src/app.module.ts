@@ -10,12 +10,10 @@ import { AnnouncementModule } from './modules/announcement/announcement.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from './modules/auth/auth.guard'
-import { AuthService } from './modules/auth/auth.service'
 import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   providers: [
-    AuthService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
