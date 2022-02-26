@@ -1,9 +1,12 @@
-import { Controller, Post } from '@nestjs/common'
+import { Controller, Post, UseGuards } from '@nestjs/common'
+import RoleGuard from 'src/common/guards/role.guard'
 
 @Controller('announcement')
 export class AnnouncementController {
-    @Post()
-    create() {
+
+    @UseGuards(new RoleGuard('teacher'))
+    @Post('/for-lesson')
+    createAnnouncementForLesson() {
         return "ok"
     }
 }

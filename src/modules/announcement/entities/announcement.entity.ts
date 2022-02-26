@@ -1,4 +1,5 @@
 import { Lesson } from 'src/entities/lesson.entity'
+import { User } from 'src/modules/user/entites/user.entity'
 import {
   Entity,
   Column,
@@ -20,6 +21,10 @@ export class Announcement {
 
   @ManyToOne(() => Lesson, (lesson) => lesson.id)
   lesson: Lesson
+
+  @ManyToOne(() => User, (user) => user.id)
+  user: User
+
 
   @CreateDateColumn()
   createdAt: Date

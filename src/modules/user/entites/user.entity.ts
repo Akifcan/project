@@ -1,10 +1,12 @@
 import { Lesson } from 'src/entities/lesson.entity'
+import { Announcement } from 'src/modules/announcement/entities/announcement.entity'
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
@@ -36,6 +38,12 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean
+
+  @OneToMany(
+    () => Announcement,
+    announcement => announcement.user
+  )
+  announcements: Announcement[]
 
   @ManyToMany(() => Lesson)
   @JoinTable()
