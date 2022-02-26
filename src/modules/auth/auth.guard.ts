@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext, Inject, UnauthorizedExceptio
 import { Observable } from 'rxjs'
 import { Reflector } from '@nestjs/core'
 import { JwtService } from '@nestjs/jwt'
-import JwtProps from './interface/jwtProps.itnerface'
+import JwtProps from './interface/jwtProps.interface'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -25,6 +25,9 @@ export class AuthGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest()
         const { authorization } = request.headers
+        if (!authorization) {
+            throw new UnauthorizedException('No token provided')
+        }
         const validate = this.jwtService.decode(authorization.split(' ')[1]) as JwtProps
         if (!validate) {
             throw new UnauthorizedException('Please try again')
