@@ -25,7 +25,7 @@ export class AuthService {
         try {
             const token = this.jwtService.decode(validateDto.token)
             if (!token) throw new UnauthorizedException('Please try again')
-            return token
+            return true
         }
         catch (e) {
             throw new BadRequestException('Unexcepted error occured please try again')
