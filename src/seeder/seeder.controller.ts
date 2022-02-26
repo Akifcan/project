@@ -1,5 +1,5 @@
 import { Controller, Inject, All, Req, BadRequestException } from '@nestjs/common'
-import { Public } from 'src/common/decorators/public.decorator'
+import { Public } from '../common/decorators/public.decorator'
 import { SeederService } from './seeder.service'
 
 @Controller('seeder')

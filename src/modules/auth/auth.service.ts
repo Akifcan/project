@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
-import LanguageProps from 'src/common/i18y/language.interface'
+import LanguageProps from '../../common/i18y/language.interface'
 import { UserService } from '../user/user.service'
 import SignInDto from './dtos/sign-in.dto'
 import ValidateDto from './dtos/validate.dto'

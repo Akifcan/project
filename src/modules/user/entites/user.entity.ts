@@ -1,5 +1,5 @@
-import { Lesson } from 'src/entities/lesson.entity'
-import { Announcement } from 'src/modules/announcement/entities/announcement.entity'
+import { Lesson } from '../../../entities/lesson.entity'
+import { Announcement } from '../../announcement/entities/announcement.entity'
 import {
   Entity,
   Column,

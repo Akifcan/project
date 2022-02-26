@@ -1,4 +1,4 @@
-import { UserRole } from "src/modules/user/entites/user.entity"
+import { UserRole } from "../../user/entites/user.entity"
 
 interface CurrentUserProps {
     id: number

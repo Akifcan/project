@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Lesson } from 'src/entities/lesson.entity'
-import { User } from 'src/modules/user/entites/user.entity'
+import { Lesson } from '../entities/lesson.entity'
+import { User } from '../modules/user/entites/user.entity'
 import { Repository } from 'typeorm'
 
 @Injectable()

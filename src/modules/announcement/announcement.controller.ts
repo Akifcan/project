@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common'
-import { User } from 'src/common/decorators/user.decorator'
-import RoleGuard from 'src/common/guards/role.guard'
+import { User } from '../../common/decorators/user.decorator'
+import RoleGuard from '../../common/guards/role.guard'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { AnnouncementService } from './announcement.service'
 import { CreateAnnouncementDto, CreateAnnouncementForLessonDto } from './dtos/createAnnouncement.dto'

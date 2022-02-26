@@ -1,4 +1,4 @@
-import { Announcement } from 'src/modules/announcement/entities/announcement.entity'
+import { Announcement } from '../modules/announcement/entities/announcement.entity'
 import {
   Entity,
   Column,

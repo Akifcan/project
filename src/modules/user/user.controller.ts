@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, UseGuards } from '@nestjs/common'
-import { User } from 'src/common/decorators/user.decorator'
-import RoleGuard from 'src/common/guards/role.guard'
+import { User } from '../../common/decorators/user.decorator'
+import RoleGuard from '../../common/guards/role.guard'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { UserService } from './user.service'
 
