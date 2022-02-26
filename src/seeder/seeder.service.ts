@@ -61,6 +61,12 @@ export class SeederService {
       name: 'FRENCH II',
       code: 'SOFL 1032',
     })
+    const lesson10 = this.lessonRepository.create({
+      id: 10,
+      name: 'GENERAL',
+      code: 'GFAS',
+    })
+
 
     const lessons = await this.lessonRepository.save([
       lesson1,
@@ -72,6 +78,7 @@ export class SeederService {
       lesson7,
       lesson8,
       lesson9,
+      lesson10
     ])
 
     const users = await this.usersRepository.save(
