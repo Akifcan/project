@@ -2,17 +2,17 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Announcement } from './entities/announcement.entity'
-import CreateAnnouncementDto from './dtos/createAnnouncement.dto'
+import { CreateAnnouncementDto } from './dtos/createAnnouncement.dto'
 
 @Injectable()
 export class AnnouncementService {
     @InjectRepository(Announcement) private readonly announcementRepository: Repository<Announcement>
 
-    async createAnnouncement(createAnnouncementDto: CreateAnnouncementDto) {
+    async createAnnouncement(userId: number, createAnnouncementDto: CreateAnnouncementDto, lessonId: number) {
         try {
-            const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: createAnnouncementDto.id }, ...createAnnouncementDto }))
+            const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: lessonId }, user: { id: userId }, ...createAnnouncementDto }))
             return {
-                message: 'Your announcment created',
+                message: 'Your announcement created',
                 announcement
             }
         } catch (e) {
