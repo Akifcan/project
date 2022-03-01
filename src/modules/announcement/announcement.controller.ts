@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import RoleGuard from '../../common/guards/role.guard'
@@ -23,6 +23,11 @@ export class AnnouncementController {
     @Post('/for-general')
     createAnnouncementForGeneral(@Body() createAnnouncementDto: CreateAnnouncementDto, @User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[]) {
         return this.announcementService.createAnnouncement(user, createAnnouncementDto, 10, files)
+    }
+
+    @Get()
+    announcements(@User() user: CurrentUserProps) {
+        return this.announcementService.listAnnouncements(user)
     }
 
 }
