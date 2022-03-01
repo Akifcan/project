@@ -7,23 +7,15 @@ import { FileService } from '../file/file.service'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { UserService } from '../user/user.service'
 import { AnnouncementTransformer } from './announcement.transformer'
-import { CommentDto } from '../comment/dtos/comment.dto'
-import { Comment } from '../comment/entities/comment.entity'
 
 @Injectable()
 export class AnnouncementService {
     @InjectRepository(Announcement) private readonly announcementRepository: Repository<Announcement>
-    @InjectRepository(Comment) private readonly commentRepository: Repository<Comment>
 
 
     @Inject() private readonly fileService: FileService
     @Inject() private readonly userService: UserService
     @Inject() private readonly announcementTransformer: AnnouncementTransformer
-
-
-    createComment(id: number, createCommentDto: CommentDto) {
-        return this.commentRepository.save(this.commentRepository.create({ body: createCommentDto.body, announcement: { id } }))
-    }
 
 
     async listAnnouncements(user: CurrentUserProps) {

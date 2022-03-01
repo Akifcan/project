@@ -1,7 +1,7 @@
 import {
     Entity,
     Column,
-    PrimaryColumn,
+    PrimaryGeneratedColumn,
     CreateDateColumn,
     ManyToOne,
 } from 'typeorm'
@@ -12,7 +12,7 @@ import { User } from '../../user/entites/user.entity'
 
 @Entity()
 export class Comment {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column()
