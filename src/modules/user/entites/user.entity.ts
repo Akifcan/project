@@ -8,6 +8,7 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm'
+import { Comment } from '../../../entities/comment.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -41,6 +42,9 @@ export class User {
 
   @OneToMany(() => Announcement, (announcement) => announcement.user)
   announcements: Announcement[]
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[]
 
   @ManyToMany(() => Lesson)
   @JoinTable()

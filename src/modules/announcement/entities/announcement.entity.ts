@@ -6,7 +6,9 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   CreateDateColumn,
+  OneToMany
 } from 'typeorm'
+import { Comment } from '../../../entities/comment.entity'
 
 @Entity()
 export class Announcement {
@@ -26,9 +28,11 @@ export class Announcement {
   @ManyToOne(() => Lesson, (lesson) => lesson.id)
   lesson: Lesson
 
+  @OneToMany(() => Comment, (comment) => comment.announcement)
+  comments: Comment[]
+
   @ManyToOne(() => User, (user) => user.id)
   user: User
-
 
   @CreateDateColumn()
   createdAt: Date
