@@ -2,14 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { INestApplication, ValidationPipe } from '@nestjs/common'
 import * as request from 'supertest'
 import { AppModule } from '../../src/app.module'
-import { AuthService } from '../../src/modules/auth/auth.service'
 import { UserService } from '../../src/modules/user/user.service'
 import { User } from '../../src/modules/user/entites/user.entity'
 import { JwtService } from '@nestjs/jwt'
 
 describe('AppController (e2e)', () => {
     let app: INestApplication
-    let authService: AuthService
     let userService: UserService
     let jwtService: JwtService
 
@@ -23,7 +21,6 @@ describe('AppController (e2e)', () => {
         }).compile()
 
         app = moduleFixture.createNestApplication()
-        authService = moduleFixture.get<AuthService>(AuthService)
         userService = moduleFixture.get<UserService>(UserService)
         jwtService = moduleFixture.get<JwtService>(JwtService)
 

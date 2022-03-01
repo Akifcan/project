@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { getStorage, ref, uploadBytes, getDownloadURL, StorageReference, deleteObject } from "firebase/storage"
 
 import { Inject, Injectable } from '@nestjs/common'
-import { ConfigService } from 'src/config/config.service'
+import { ConfigService } from '../../config/config.service'
 import CurrentUserProps from "../auth/interface/currenetUser.interface"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
