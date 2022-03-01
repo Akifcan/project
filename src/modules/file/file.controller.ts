@@ -13,6 +13,6 @@ export class FileController {
     @Post('upload')
     @UseInterceptors(FilesInterceptor('files'))
     upload(@User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[]) {
-        return this.fileService.upload(user, files, "announcements")
+        return this.fileService.upload(user, files, "announcements", 1)
     }
 }

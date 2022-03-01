@@ -1,13 +1,15 @@
+import { Announcement } from '../../announcement/entities/announcement.entity'
 import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
-    CreateDateColumn
+    CreateDateColumn,
+    ManyToOne
 } from 'typeorm'
 
 
 @Entity()
-export class User {
+export class File {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -19,6 +21,12 @@ export class User {
 
     @Column()
     mimeType: string
+
+    @ManyToOne(
+        () => Announcement,
+        announcement => announcement.id
+    )
+    announcements: Announcement
 
     @CreateDateColumn()
     createdAt: Date
