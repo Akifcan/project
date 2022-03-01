@@ -12,6 +12,7 @@ import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from './modules/auth/auth.guard'
 import { JwtModule } from '@nestjs/jwt'
 import { FileModule } from './modules/file/file.module';
+import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   providers: [
@@ -52,6 +53,7 @@ import { FileModule } from './modules/file/file.module';
     AnnouncementModule,
     AuthModule,
     FileModule,
+    CommentModule,
   ],
 })
 export class AppModule { }

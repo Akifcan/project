@@ -6,7 +6,7 @@ import { Announcement } from './entities/announcement.entity'
 import { FileModule } from '../file/file.module'
 import { UserModule } from '../user/user.module'
 import { AnnouncementTransformer } from './announcement.transformer'
-import { Comment } from '../../entities/comment.entity'
+import { Comment } from '../comment/entities/comment.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Announcement, Comment]), FileModule, UserModule],

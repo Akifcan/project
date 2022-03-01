@@ -6,8 +6,8 @@ import {
     ManyToOne,
 } from 'typeorm'
 
-import { Announcement } from '../modules/announcement/entities/announcement.entity'
-import { User } from '../modules/user/entites/user.entity'
+import { Announcement } from '../../announcement/entities/announcement.entity'
+import { User } from '../../user/entites/user.entity'
 
 
 @Entity()
@@ -16,7 +16,7 @@ export class Comment {
     id: number
 
     @Column()
-    name: string
+    body: string
 
     @CreateDateColumn()
     createdAt: Date

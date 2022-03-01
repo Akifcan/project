@@ -8,7 +8,7 @@ import {
   CreateDateColumn,
   OneToMany
 } from 'typeorm'
-import { Comment } from '../../../entities/comment.entity'
+import { Comment } from '../../comment/entities/comment.entity'
 
 @Entity()
 export class Announcement {
