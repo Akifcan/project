@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
 import { AuthGuard } from './modules/auth/auth.guard'
 import { JwtModule } from '@nestjs/jwt'
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   providers: [
@@ -50,6 +51,7 @@ import { JwtModule } from '@nestjs/jwt'
     SeederModule,
     AnnouncementModule,
     AuthModule,
+    FileModule,
   ],
 })
 export class AppModule { }

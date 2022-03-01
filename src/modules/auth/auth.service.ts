@@ -18,7 +18,7 @@ export class AuthService {
         if (!user) {
             throw new UnauthorizedException(language.tr.userNotFound(signInDto.email))
         }
-        return this.jwtService.sign({ id: user.id, role: user.role })
+        return this.jwtService.sign({ id: user.id, role: user.role, email: user.email })
     }
 
     async validate(validateDto: ValidateDto) {
