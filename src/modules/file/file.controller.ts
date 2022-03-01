@@ -1,4 +1,4 @@
-import { Controller, Inject, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
+import { Controller, Inject, Post, UploadedFiles, UseInterceptors, Delete, Param } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
@@ -15,4 +15,10 @@ export class FileController {
     upload(@User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[]) {
         return this.fileService.upload(user, files, "announcements", 1)
     }
+
+    @Delete(':relationId')
+    deleteFile(@Param() params: { relationId: number }) {
+        return this.fileService.deleteFile(params.relationId)
+    }
+
 }

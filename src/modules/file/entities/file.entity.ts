@@ -22,6 +22,10 @@ export class File {
     @Column()
     mimeType: string
 
+    @Column({ unique: true })
+    ref: string
+
+
     @ManyToOne(
         () => Announcement,
         announcement => announcement.id
