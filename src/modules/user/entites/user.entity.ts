@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm'
 import { Comment } from '../../comment/entities/comment.entity'
+import { Demand } from '../../demand/entities/demand.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -43,10 +44,17 @@ export class User {
   @OneToMany(() => Announcement, (announcement) => announcement.user)
   announcements: Announcement[]
 
+  @OneToMany(() => Demand, (demand) => demand.openedBy)
+  demands: Demand[]
+
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[]
 
   @ManyToMany(() => Lesson)
   @JoinTable()
   lessons: Lesson[]
+
+  @ManyToMany(() => Demand)
+  @JoinTable()
+  forwards: Demand[]
 }

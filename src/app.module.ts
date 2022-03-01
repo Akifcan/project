@@ -13,6 +13,7 @@ import { AuthGuard } from './modules/auth/auth.guard'
 import { JwtModule } from '@nestjs/jwt'
 import { FileModule } from './modules/file/file.module'
 import { CommentModule } from './modules/comment/comment.module'
+import { DemandModule } from './modules/demand/demand.module';
 
 @Module({
   providers: [
@@ -54,6 +55,7 @@ import { CommentModule } from './modules/comment/comment.module'
     AuthModule,
     FileModule,
     CommentModule,
+    DemandModule,
   ],
 })
 export class AppModule { }

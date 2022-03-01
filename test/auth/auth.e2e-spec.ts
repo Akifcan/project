@@ -24,8 +24,6 @@ describe('AuthController (e2e)', () => {
         userService = moduleFixture.get<UserService>(UserService)
         jwtService = moduleFixture.get<JwtService>(JwtService)
 
-
-
         app.useGlobalPipes(new ValidationPipe())
         await app.init()
 
