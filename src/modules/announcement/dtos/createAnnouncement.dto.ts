@@ -1,4 +1,4 @@
-import { IsNotEmpty, MinLength, MaxLength } from 'class-validator'
+import { IsNotEmpty, MinLength, MaxLength, IsDateString, IsOptional } from 'class-validator'
 class CreateAnnouncementDto {
     @IsNotEmpty()
     @MinLength(3)
@@ -7,6 +7,9 @@ class CreateAnnouncementDto {
     @IsNotEmpty()
     @MaxLength(255)
     content: string
+    @IsDateString()
+    @IsOptional()
+    validUntil: string
 }
 
 class CreateAnnouncementForLessonDto extends CreateAnnouncementDto {

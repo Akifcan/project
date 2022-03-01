@@ -19,6 +19,10 @@ export class Announcement {
   @Column()
   content: string
 
+  @Column({ nullable: true })
+  validUntil: Date
+
+
   @ManyToOne(() => Lesson, (lesson) => lesson.id)
   lesson: Lesson
 
