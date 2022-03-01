@@ -8,7 +8,7 @@ import { Repository } from 'typeorm'
 export class SeederService {
   @InjectRepository(User) private usersRepository: Repository<User>
 
-  @InjectRepository(Lesson) private lessonRepository: Repository<Lesson>
+  @InjectRepository(Lesson) lessonRepository: Repository<Lesson>
 
   async create() {
 

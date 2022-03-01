@@ -10,7 +10,7 @@ import { AnnouncementTransformer } from './announcement.transformer'
 
 @Injectable()
 export class AnnouncementService {
-    @InjectRepository(Announcement) private readonly announcementRepository: Repository<Announcement>
+    @InjectRepository(Announcement) readonly announcementRepository: Repository<Announcement>
 
 
     @Inject() private readonly fileService: FileService
@@ -19,14 +19,17 @@ export class AnnouncementService {
 
 
     async listAnnouncements(user: CurrentUserProps) {
+
         const lessonIds = (await this.userService.myLessons(user.id)).map(lesson => lesson.id)
 
         return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
             .leftJoinAndSelect("announcements.lesson", "lesson")
             .leftJoinAndSelect("announcements.user", "user")
-            .where("lesson.id IN (:...lessonIds)", { lessonIds })
+            .where("lesson.id IN (:...lessonIds)", { lessonIds: lessonIds.length ? lessonIds : [10] })
             .orderBy("announcements.createdAt", "DESC")
             .getMany())
+
+
     }
 
     async createAnnouncement(user: CurrentUserProps, createAnnouncementDto: CreateAnnouncementDto, lessonId: number, files: Express.Multer.File[] = []) {
