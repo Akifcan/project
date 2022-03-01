@@ -11,6 +11,11 @@ export class ConfigService {
     password: string;
     name: string;
   }
+  firerbase: {
+    apiKey: string
+    authDomain: string
+    storageBucket: string
+  }
   auth: {
     jwt: string
   }
@@ -32,7 +37,10 @@ export class ConfigService {
       DB_USERNAME: Joi.string().required(),
       DB_PASSWORD: Joi.string().required(),
       DB_NAME: Joi.string().required(),
-      JWT_SECRET: Joi.string().required()
+      JWT_SECRET: Joi.string().required(),
+      FIREBASE_API_KEY: Joi.string().required(),
+      FIREBASE_AUTH_DOMAIN: Joi.string().required(),
+      FIREBASE_STORAGE_BUCKET: Joi.string().required(),
     })
 
     const vars = { ...process.env } as any
@@ -52,6 +60,11 @@ export class ConfigService {
       username: envConfig.DB_USERNAME,
       password: envConfig.DB_PASSWORD,
       name: envConfig.DB_NAME,
+    }
+    this.firerbase = {
+      authDomain: envConfig.FIREBASE_AUTH_DOMAIN,
+      storageBucket: envConfig.FIREBASE_STORAGE_BUCKET,
+      apiKey: envConfig.FIREBASE_API_KEY,
     }
     this.auth = {
       jwt: envConfig.JWT_SECRET
