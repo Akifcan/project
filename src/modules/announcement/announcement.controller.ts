@@ -15,14 +15,14 @@ export class AnnouncementController {
     @UseInterceptors(FilesInterceptor('files'))
     @Post('/for-lesson',)
     createAnnouncementForLesson(@Body() createAnnouncementDto: CreateAnnouncementForLessonDto, @User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[]) {
-        return this.announcementService.createAnnouncement(user.id, createAnnouncementDto, createAnnouncementDto.id)
+        return this.announcementService.createAnnouncement(user, createAnnouncementDto, createAnnouncementDto.id, files)
     }
 
     @UseGuards(new RoleGuard(['moderator']))
     @UseInterceptors(FilesInterceptor('files'))
     @Post('/for-general')
     createAnnouncementForGeneral(@Body() createAnnouncementDto: CreateAnnouncementDto, @User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[]) {
-        return this.announcementService.createAnnouncement(user.id, createAnnouncementDto, 10)
+        return this.announcementService.createAnnouncement(user, createAnnouncementDto, 10, files)
     }
 
 }
