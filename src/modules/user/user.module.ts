@@ -5,10 +5,9 @@ import { UserService } from './user.service'
 import { UserController } from './user.controller'
 import { User } from './entites/user.entity'
 import UserTransformer from './user.transformer'
-import { Demand } from '../demand/entities/demand.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Lesson, Demand])],
+  imports: [TypeOrmModule.forFeature([User, Lesson])],
   providers: [UserService, UserTransformer],
   controllers: [UserController],
   exports: [UserService]
