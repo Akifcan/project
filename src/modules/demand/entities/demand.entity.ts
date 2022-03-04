@@ -4,11 +4,13 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     BeforeInsert,
-    ManyToOne
+    ManyToOne,
+    OneToMany
 } from 'typeorm'
 
 import slugify from "slugify"
 import { User } from '../../../modules/user/entites/user.entity'
+import { DemandConversation } from './demandConversation.entity'
 
 @Entity()
 export class Demand {
@@ -35,6 +37,13 @@ export class Demand {
         user => user.id
     )
     openedBy: User
+
+    @OneToMany(
+        () => DemandConversation,
+        demandConversation => demandConversation.demand
+    )
+    conversations: DemandConversation[]
+
 
     @BeforeInsert()
     generateDemandCode() {
