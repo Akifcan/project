@@ -10,6 +10,7 @@ import {
 } from 'typeorm'
 import { Comment } from '../../comment/entities/comment.entity'
 import { Demand } from '../../demand/entities/demand.entity'
+import { DemandConversation } from 'src/modules/demand/entities/demandConversation.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -46,6 +47,9 @@ export class User {
 
   @OneToMany(() => Demand, (demand) => demand.openedBy)
   demands: Demand[]
+
+  @OneToMany(() => DemandConversation, (demandConversation) => demandConversation.user)
+  demandConveresations: DemandConversation[]
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[]

@@ -1,3 +1,4 @@
+import { User } from 'src/modules/user/entites/user.entity'
 import {
     Column,
     Entity,
@@ -23,5 +24,11 @@ export class DemandConversation {
         demand => demand.id
     )
     demand: Demand
+
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    user: User
 
 }

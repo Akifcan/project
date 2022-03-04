@@ -3,18 +3,28 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { CreateDemandDto } from './dtos/createDemand.dto'
+import { ResponseDemandDto } from './dtos/responseDemand.dto'
 import { Demand } from './entities/demand.entity'
+import { DemandConversation } from './entities/demandConversation.entity'
 
 @Injectable()
 export class DemandService {
 
     @InjectRepository(Demand) readonly demandRepository: Repository<Demand>
+    @InjectRepository(DemandConversation) readonly demandConversationRepository: Repository<DemandConversation>
+
 
 
     createDemand(user: CurrentUserProps, createDemandDto: CreateDemandDto) {
         return this.demandRepository.save(
             this.demandRepository.create({ ...createDemandDto, openedBy: { id: user.id } })
         )
+    }
+
+    responseDemand(user: CurrentUserProps, responseDemandDto: ResponseDemandDto) {
+        return this.demandConversationRepository.save(this.demandConversationRepository.create({
+            body: responseDemandDto.body,
+        }))
     }
 
     listMyDemands(userId: number) {
