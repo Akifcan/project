@@ -4,6 +4,7 @@ import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { DemandService } from './demand.service'
 import { CreateDemandDto } from './dtos/createDemand.dto'
+import { ResponseDemandDto } from './dtos/responseDemand.dto'
 
 @Controller('demand')
 export class DemandController {
@@ -14,6 +15,12 @@ export class DemandController {
     createDemand(@User() user: CurrentUserProps, @Body() createDemandDto: CreateDemandDto) {
         return this.demandService.createDemand(user, createDemandDto)
     }
+
+    @Post("/resposne/:id")
+    responseDemand(@User() user: CurrentUserProps, @Param() params: { id: number }, @Body() responseDemandDto: ResponseDemandDto) {
+        return this.demandService.responseDemand(user, params.id, responseDemandDto)
+    }
+
 
     @Get("/my")
     myDemands(@User() user: CurrentUserProps) {

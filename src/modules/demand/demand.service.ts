@@ -21,9 +21,11 @@ export class DemandService {
         )
     }
 
-    responseDemand(user: CurrentUserProps, responseDemandDto: ResponseDemandDto) {
+    responseDemand(user: CurrentUserProps, demandId: number, responseDemandDto: ResponseDemandDto) {
         return this.demandConversationRepository.save(this.demandConversationRepository.create({
             body: responseDemandDto.body,
+            user: { id: user.id },
+            demand: { id: demandId }
         }))
     }
 
