@@ -21,8 +21,11 @@ export class Demand {
     @Column()
     content: string
 
-    @Column({ nullable: true })
+    @Column()
     demandCode: string
+
+    @Column({ default: true })
+    isActive: boolean
 
     @CreateDateColumn()
     createdAt: Date

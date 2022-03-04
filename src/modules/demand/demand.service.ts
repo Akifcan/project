@@ -17,8 +17,20 @@ export class DemandService {
         )
     }
 
+    listMyDemands(userId: number) {
+        return this.demandRepository.find({ openedBy: { id: userId } })
+    }
+
     listAllDemands() {
         return this.demandRepository.find({ order: { createdAt: -1 }, relations: ["openedBy"] })
+    }
+
+    closeDemand(demandId: number) {
+        return this.demandRepository.update({ id: demandId }, { isActive: false })
+    }
+
+    removeDemand(demandId: number) {
+        return this.demandRepository.delete({ id: demandId })
     }
 
 
