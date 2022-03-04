@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
+import UserTransformer from '../user/user.transformer'
 import { CreateDemandDto } from './dtos/createDemand.dto'
 import { ResponseDemandDto } from './dtos/responseDemand.dto'
 import { Demand } from './entities/demand.entity'
@@ -13,12 +14,16 @@ export class DemandService {
     @InjectRepository(Demand) readonly demandRepository: Repository<Demand>
     @InjectRepository(DemandConversation) readonly demandConversationRepository: Repository<DemandConversation>
 
-
+    @Inject() private readonly userTransformer: UserTransformer
 
     createDemand(user: CurrentUserProps, createDemandDto: CreateDemandDto) {
         return this.demandRepository.save(
             this.demandRepository.create({ ...createDemandDto, openedBy: { id: user.id } })
         )
+    }
+
+    demandDetail(demandId: number) {
+        return this.demandConversationRepository.find({ where: { demand: { id: demandId } }, relations: ["user"] })
     }
 
     responseDemand(user: CurrentUserProps, demandId: number, responseDemandDto: ResponseDemandDto) {

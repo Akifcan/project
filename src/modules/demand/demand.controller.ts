@@ -22,6 +22,11 @@ export class DemandController {
     }
 
 
+    @Get("detail/:id")
+    demandDetail(@Param() params: { id: number }) {
+        return this.demandService.demandDetail(params.id)
+    }
+
     @Get("/my")
     myDemands(@User() user: CurrentUserProps) {
         return this.demandService.listMyDemands(user.id)

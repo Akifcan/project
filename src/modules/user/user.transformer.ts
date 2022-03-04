@@ -8,6 +8,15 @@ class UserTransformer {
         return user.lessons
     }
 
+    user(user: User) {
+        return {
+            id: user.id,
+            name: user.name,
+            profilePhoto: user.profilePhoto,
+            email: user.email
+        }
+    }
+
 }
 
 export default UserTransformer
