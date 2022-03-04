@@ -17,4 +17,10 @@ export class DemandService {
         )
     }
 
+    listAllDemands() {
+        return this.demandRepository.find({ order: { createdAt: -1 }, relations: ["openedBy"] })
+    }
+
+
+
 }

@@ -7,7 +7,7 @@ import {
     ManyToOne
 } from 'typeorm'
 
-import slug from "slug"
+import slugify from "slugify"
 import { User } from '../../../modules/user/entites/user.entity'
 
 @Entity()
@@ -21,7 +21,7 @@ export class Demand {
     @Column()
     content: string
 
-    @Column()
+    @Column({ nullable: true })
     demandCode: string
 
     @CreateDateColumn()
@@ -35,6 +35,6 @@ export class Demand {
 
     @BeforeInsert()
     generateDemandCode() {
-        this.demandCode = slug(this.title) + Date.now().toString().substring(0, 5)
+        this.demandCode = slugify(this.title) + Date.now().toString().substring(0, 5)
     }
 }
