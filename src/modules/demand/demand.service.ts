@@ -22,8 +22,15 @@ export class DemandService {
         )
     }
 
-    demandDetail(demandId: number) {
-        return this.demandConversationRepository.find({ where: { demand: { id: demandId } }, relations: ["user"] })
+    async demandDetail(demandId: number) {
+        const demand = await this.demandConversationRepository.find({ where: { demand: { id: demandId } }, relations: ["user"] })
+        return demand.map(demand => {
+            const { user, ...rest } = demand
+            return {
+                ...rest,
+                user: this.userTransformer.user(user)
+            }
+        })
     }
 
     responseDemand(user: CurrentUserProps, demandId: number, responseDemandDto: ResponseDemandDto) {
