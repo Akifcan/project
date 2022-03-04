@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
+import { User } from '../user/entites/user.entity'
 import UserTransformer from '../user/user.transformer'
 import { CreateDemandDto } from './dtos/createDemand.dto'
 import { ResponseDemandDto } from './dtos/responseDemand.dto'
@@ -12,6 +13,8 @@ import { DemandConversation } from './entities/demandConversation.entity'
 export class DemandService {
 
     @InjectRepository(Demand) readonly demandRepository: Repository<Demand>
+    @InjectRepository(User) readonly userRepository: Repository<User>
+
     @InjectRepository(DemandConversation) readonly demandConversationRepository: Repository<DemandConversation>
 
     @Inject() private readonly userTransformer: UserTransformer
@@ -20,6 +23,18 @@ export class DemandService {
         return this.demandRepository.save(
             this.demandRepository.create({ ...createDemandDto, openedBy: { id: user.id } })
         )
+    }
+
+    async forwardDemand(userId: number, demandId: number) {
+        const user = await this.userRepository.findOne({ id: userId })
+        const demand = await this.demandRepository.findOneOrFail({
+            where: {
+                id: demandId
+            },
+            relations: ["forwards"]
+        })
+        demand.forwards.push(user)
+        return this.demandRepository.save(demand)
     }
 
     async demandDetail(demandId: number) {

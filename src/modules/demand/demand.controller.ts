@@ -27,6 +27,12 @@ export class DemandController {
         return this.demandService.demandDetail(params.id)
     }
 
+    @Get("forward/:demandId/:userId")
+    forwardDemand(@Param() params: { demandId: number, userId: number }) {
+        return this.demandService.forwardDemand(params.userId, params.demandId)
+    }
+
+
     @Get("/my")
     myDemands(@User() user: CurrentUserProps) {
         return this.demandService.listMyDemands(user.id)

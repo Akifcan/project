@@ -5,7 +5,9 @@ import {
     CreateDateColumn,
     BeforeInsert,
     ManyToOne,
-    OneToMany
+    OneToMany,
+    ManyToMany,
+    JoinTable
 } from 'typeorm'
 
 import slugify from "slugify"
@@ -37,6 +39,10 @@ export class Demand {
         user => user.id
     )
     openedBy: User
+
+    @ManyToMany(() => User)
+    @JoinTable()
+    forwards: User[]
 
     @OneToMany(
         () => DemandConversation,
