@@ -57,7 +57,13 @@ export class DemandService {
     }
 
     listMyDemands(userId: number) {
-        return this.demandRepository.find({ openedBy: { id: userId } })
+
+        return this.demandRepository.createQueryBuilder("demand")
+            .leftJoinAndSelect("demand.forwards", "forwards")
+            .where("demand.openedById=:userId", { userId })
+            .orWhere("forwards.id=:userId", { userId })
+            .getMany()
+
     }
 
     listAllDemands() {
