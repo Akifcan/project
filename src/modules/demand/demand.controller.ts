@@ -28,8 +28,8 @@ export class DemandController {
     }
 
     @Get("forward/:demandId/:userId")
-    forwardDemand(@Param() params: { demandId: number, userId: number }) {
-        return this.demandService.forwardDemand(params.userId, params.demandId)
+    forwardDemand(@User() user: CurrentUserProps, @Param() params: { demandId: number, userId: number }) {
+        return this.demandService.forwardDemand(params.userId, params.demandId, user.id)
     }
 
 
@@ -46,8 +46,8 @@ export class DemandController {
 
     @UseGuards(new RoleGuard(["moderator"]))
     @Patch("close/:id")
-    closeDemand(@Param() params: { id: number }) {
-        return this.demandService.closeDemand(params.id)
+    closeDemand(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.demandService.closeDemand(params.id, user.id)
     }
 
 

@@ -22,14 +22,18 @@ export class DemandService {
 
     @Inject() private readonly userTransformer: UserTransformer
 
-    createDemand(user: CurrentUserProps, createDemandDto: CreateDemandDto) {
-        return this.demandRepository.save(
+    async createDemand(user: CurrentUserProps, createDemandDto: CreateDemandDto) {
+        const demand = await this.demandRepository.save(
             this.demandRepository.create({ ...createDemandDto, openedBy: { id: user.id } })
         )
+        this.addToDemandActivity(user.id, demand.id, "opened a demand")
+        return demand
     }
 
-    async forwardDemand(userId: number, demandId: number) {
-        const user = await this.userRepository.findOne({ id: userId })
+    async forwardDemand(forwardUserId: number, demandId: number, userId: number) {
+        this.addToDemandActivity(userId, demandId, "forward this demand", forwardUserId)
+
+        const user = await this.userRepository.findOne({ id: forwardUserId })
         const demand = await this.demandRepository.findOneOrFail({
             where: {
                 id: demandId
@@ -52,6 +56,8 @@ export class DemandService {
     }
 
     responseDemand(user: CurrentUserProps, demandId: number, responseDemandDto: ResponseDemandDto) {
+        this.addToDemandActivity(user.id, demandId, "replied")
+
         return this.demandConversationRepository.save(this.demandConversationRepository.create({
             body: responseDemandDto.body,
             user: { id: user.id },
@@ -73,7 +79,8 @@ export class DemandService {
         return this.demandRepository.find({ order: { createdAt: -1 }, relations: ["openedBy"] })
     }
 
-    closeDemand(demandId: number) {
+    closeDemand(demandId: number, userId: number) {
+        this.addToDemandActivity(userId, demandId, "closed this demand")
         return this.demandRepository.update({ id: demandId }, { isActive: false })
     }
 

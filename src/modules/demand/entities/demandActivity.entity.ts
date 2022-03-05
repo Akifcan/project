@@ -9,7 +9,7 @@ import {
 import { User } from '../../user/entites/user.entity'
 import { Demand } from './demand.entity'
 
-export type DemandActivityType = "opened a demand" | "close this demand" | "forward this demand" | "replied"
+export type DemandActivityType = "opened a demand" | "closed this demand" | "forward this demand" | "replied"
 
 @Entity()
 export class DemandActivity {
