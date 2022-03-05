@@ -5,6 +5,8 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     ManyToOne,
+    ManyToMany,
+    JoinTable,
 } from 'typeorm'
 import { MediaPost } from './mediaPost.entity'
 import { EventPost } from './eventPost.entity'
@@ -18,6 +20,10 @@ export class Post {
 
     @CreateDateColumn()
     createdAt: Date
+
+    @ManyToMany(() => User)
+    @JoinTable()
+    likes: User[]
 
     @ManyToOne(
         () => MediaPost,
@@ -36,6 +42,14 @@ export class Post {
         announcement => announcement.id
     )
     announcement: Announcement
+
+    @ManyToOne(
+        () => Post,
+        post => post.id
+    )
+    quote: Post
+
+
 
     @ManyToOne(
         () => User,

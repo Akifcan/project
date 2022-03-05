@@ -38,4 +38,10 @@ export class PostController {
         return this.postService.timeline(params.id)
     }
 
+    @Get("like/:id")
+    likePost(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.postService.likePost(user.id, params.id)
+    }
+
+
 }

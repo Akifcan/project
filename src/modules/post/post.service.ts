@@ -107,4 +107,21 @@ export class PostService {
         return (await this.eventPostRepository.save(event)).participations
     }
 
+    async likePost(userId: number, postId: number) {
+        const post = await this.postRepository.findOne({ where: { id: postId }, relations: ["likes"] })
+        const user = await this.userRepository.findOneOrFail({ id: userId })
+        let message = ""
+
+        if (post.likes.find(user => user.id === userId)) {
+            post.likes = post.likes.filter(user => user.id !== userId)
+            message = "Like removed"
+        } else {
+            post.likes.push(user)
+            message = "Like Added"
+        }
+        await this.postRepository.save(post)
+        return message
+
+    }
+
 }
