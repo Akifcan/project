@@ -25,7 +25,7 @@ export class PostService {
         let attachements
 
         if (files.length) {
-            attachements = await this.fileService.upload(user, files, "post", mediaPost.id)
+            attachements = await this.fileService.upload(user, files, "mediaPost", mediaPost.id)
         }
         const post = await this.postRepository.save(this.postRepository.create({ user: { id: user.id }, media: { id: mediaPost.id } }))
 

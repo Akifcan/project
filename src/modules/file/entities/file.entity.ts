@@ -7,6 +7,7 @@ import {
     ManyToOne
 } from 'typeorm'
 import { Post } from '../../../modules/post/entities/post.entity'
+import { MediaPost } from '../../../modules/post/entities/mediaPost.entity'
 
 
 @Entity()
@@ -34,10 +35,10 @@ export class File {
     announcements: Announcement
 
     @ManyToOne(
-        () => Post,
-        post => post.id
+        () => MediaPost,
+        mediaPost => mediaPost.id
     )
-    post: Post
+    mediaPost: Post
 
 
     @CreateDateColumn()

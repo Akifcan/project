@@ -4,8 +4,10 @@ import {
     CreateDateColumn,
     Column,
     ManyToOne,
+    OneToMany,
 } from 'typeorm'
 import { User } from '../../../modules/user/entites/user.entity'
+import { File } from '../../../modules/file/entities/file.entity'
 
 
 @Entity()
@@ -21,6 +23,13 @@ export class MediaPost {
         user => user.id
     )
     user: User
+
+    @OneToMany(
+        () => File,
+        file => file.id
+    )
+    files: File[]
+
 
     @CreateDateColumn()
     createdAt: Date

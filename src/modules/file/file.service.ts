@@ -8,7 +8,7 @@ import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { File } from "./entities/file.entity"
 
-export type FolderType = "announcements" | "post"
+export type FolderType = "announcements" | "mediaPost"
 
 @Injectable()
 export class FileService {
