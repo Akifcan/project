@@ -6,6 +6,7 @@ import {
     CreateDateColumn,
     ManyToOne
 } from 'typeorm'
+import { Post } from '../../../modules/post/entities/post.entity'
 
 
 @Entity()
@@ -31,6 +32,13 @@ export class File {
         announcement => announcement.id
     )
     announcements: Announcement
+
+    @ManyToOne(
+        () => Post,
+        post => post.id
+    )
+    post: Post
+
 
     @CreateDateColumn()
     createdAt: Date
