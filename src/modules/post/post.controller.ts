@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
@@ -21,6 +21,11 @@ export class PostController {
     @UseInterceptors(FilesInterceptor('files'))
     createPostAsEvent(@User() user: CurrentUserProps, @Body() createEventPostDto: CreateEventPostDto, @UploadedFiles() files: Express.Multer.File[]) {
         return this.postService.createPostAsEvent(user, createEventPostDto, files)
+    }
+
+    @Get("event/:id/participate")
+    participateEvent(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.postService.participateEvent(user.id, params.id)
     }
 
 }

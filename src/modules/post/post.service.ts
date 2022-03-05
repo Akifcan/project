@@ -48,6 +48,7 @@ export class PostService {
         const eventPost = await this.eventPostRepository.save(this.eventPostRepository.create({
             ...createEventPostDto,
             user: { id: user.id },
+            participations: [{ id: user.id }]
         }))
         let attachements
 
@@ -63,6 +64,13 @@ export class PostService {
             attachements
         }
 
+    }
+
+    async participateEvent(userId: number, eventId: number) {
+        const user = await this.userRepository.findOneOrFail({ id: userId })
+        const event = await this.eventPostRepository.findOneOrFail({ where: { id: eventId }, relations: ["participations"] })
+        event.participations.push(user)
+        return (await this.eventPostRepository.save(event)).participations
     }
 
 }
