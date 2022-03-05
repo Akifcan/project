@@ -8,6 +8,7 @@ import { MediaPost } from './entities/mediaPost.entity'
 @Module({
   imports: [TypeOrmModule.forFeature([MediaPost, Post])],
   providers: [PostService],
-  controllers: [PostController]
+  controllers: [PostController],
+  exports: [PostService]
 })
 export class PostModule { }

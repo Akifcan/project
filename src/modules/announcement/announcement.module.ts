@@ -6,9 +6,10 @@ import { Announcement } from './entities/announcement.entity'
 import { FileModule } from '../file/file.module'
 import { UserModule } from '../user/user.module'
 import { AnnouncementTransformer } from './announcement.transformer'
+import { PostModule } from '../post/post.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Announcement]), FileModule, UserModule],
+  imports: [TypeOrmModule.forFeature([Announcement]), FileModule, UserModule, PostModule],
   providers: [AnnouncementService, AnnouncementTransformer],
   controllers: [AnnouncementController],
 })

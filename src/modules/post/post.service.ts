@@ -8,6 +8,8 @@ export class PostService {
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
 
-    createPostAsAnnouncement(id: number) { }
+    createPostAsAnnouncement(userId: number, announcementId: number) {
+        return this.postRepository.save(this.postRepository.create({ announcement: { id: announcementId }, user: { id: userId } }))
+    }
 
 }

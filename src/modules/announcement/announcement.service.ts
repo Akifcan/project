@@ -7,6 +7,7 @@ import { FileService } from '../file/file.service'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { UserService } from '../user/user.service'
 import { AnnouncementTransformer } from './announcement.transformer'
+import { PostService } from '../post/post.service'
 
 @Injectable()
 export class AnnouncementService {
@@ -14,6 +15,7 @@ export class AnnouncementService {
 
 
     @Inject() private readonly fileService: FileService
+    @Inject() private readonly postService: PostService
     @Inject() private readonly userService: UserService
     @Inject() private readonly announcementTransformer: AnnouncementTransformer
 
@@ -42,6 +44,8 @@ export class AnnouncementService {
             if (files.length) {
                 attachements = await this.fileService.upload(user, files, "announcements", announcement.id)
             }
+
+            await this.postService.createPostAsAnnouncement(user.id, announcement.id)
 
             return {
                 message: 'Your announcement created',
