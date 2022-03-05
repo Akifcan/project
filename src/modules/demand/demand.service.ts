@@ -81,8 +81,13 @@ export class DemandService {
         return this.demandRepository.delete({ id: demandId })
     }
 
-    private addToDemandActivity(action: DemandActivityType) {
-        return this.demandActivityRepository.save(this.demandActivityRepository.create({ action }))
+    private addToDemandActivity(userId: number, demandId: number, action: DemandActivityType, forwardedUserId: number = null) {
+        return this.demandActivityRepository.save(this.demandActivityRepository.create({
+            action,
+            user: { id: userId },
+            demand: { id: demandId },
+            forwardedUser: { id: forwardedUserId }
+        }))
     }
 
 }
