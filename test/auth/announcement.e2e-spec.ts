@@ -6,13 +6,11 @@ import { UserService } from '../../src/modules/user/user.service'
 import { User } from '../../src/modules/user/entites/user.entity'
 import { JwtService } from '@nestjs/jwt'
 import { AnnouncementService } from '../../src/modules/announcement/announcement.service'
-import { SeederService } from '../../src/seeder/seeder.service'
 
 describe('AnnouncementController (e2e)', () => {
     let app: INestApplication
     let userService: UserService
     let announcementService: AnnouncementService
-    let seederService: SeederService
 
     let jwtService: JwtService
 
@@ -34,7 +32,6 @@ describe('AnnouncementController (e2e)', () => {
         userService = moduleFixture.get<UserService>(UserService)
         announcementService = moduleFixture.get<AnnouncementService>(AnnouncementService)
         jwtService = moduleFixture.get<JwtService>(JwtService)
-        seederService = moduleFixture.get<SeederService>(SeederService)
 
         app.useGlobalPipes(new ValidationPipe())
         await app.init()
