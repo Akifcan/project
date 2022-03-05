@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { FileService } from '../file/file.service'
+import { User } from '../user/entites/user.entity'
 import { CreateEventPostDto } from './dtos/createEventPost.dto'
 import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { EventPost } from './entities/eventPost.entity'
@@ -15,6 +16,7 @@ export class PostService {
     @Inject() private readonly fileService: FileService
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
+    @InjectRepository(User) readonly userRepository: Repository<User>
     @InjectRepository(MediaPost) readonly mediaPostRepository: Repository<MediaPost>
     @InjectRepository(EventPost) readonly eventPostRepository: Repository<EventPost>
 
@@ -42,7 +44,11 @@ export class PostService {
     }
 
     async createPostAsEvent(user: CurrentUserProps, createEventPostDto: CreateEventPostDto, files: Express.Multer.File[] = []) {
-        const eventPost = await this.eventPostRepository.save(this.eventPostRepository.create({ ...createEventPostDto, user: { id: user.id } }))
+
+        const eventPost = await this.eventPostRepository.save(this.eventPostRepository.create({
+            ...createEventPostDto,
+            user: { id: user.id },
+        }))
         let attachements
 
         if (files.length) {

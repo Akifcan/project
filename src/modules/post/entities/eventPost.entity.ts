@@ -37,7 +37,7 @@ export class EventPost {
 
     @ManyToMany(() => User)
     @JoinTable()
-    participations: User
+    participations: User[]
 
     @OneToMany(
         () => File,
