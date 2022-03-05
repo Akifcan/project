@@ -9,6 +9,7 @@ import {
   OneToMany
 } from 'typeorm'
 import { Comment } from '../../comment/entities/comment.entity'
+import { File } from '../../../modules/file/entities/file.entity'
 
 @Entity()
 export class Announcement {
@@ -30,6 +31,13 @@ export class Announcement {
 
   @OneToMany(() => Comment, (comment) => comment.announcement)
   comments: Comment[]
+
+  @OneToMany(
+    () => File,
+    file => file.announcements
+  )
+  files: File[]
+
 
   @ManyToOne(() => User, (user) => user.id)
   user: User

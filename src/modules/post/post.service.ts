@@ -69,9 +69,13 @@ export class PostService {
     async feed(userId: number) {
         const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
         return this.postRepository.createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.user", "user")
             .leftJoinAndSelect("posts.media", "media")
+            .leftJoinAndSelect("media.files", "mediaFiles")
             .leftJoinAndSelect("posts.event", "event")
+            .leftJoinAndSelect("event.files", "eventFiles")
             .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.files", "announcementFiles")
             .leftJoinAndSelect("announcement.lesson", "announcementLesson")
             .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL", { lessonIds })
             .orderBy("posts.createdAt", "DESC")
@@ -80,9 +84,13 @@ export class PostService {
 
     async timeline(userId: number) {
         return this.postRepository.createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.user", "user")
             .leftJoinAndSelect("posts.media", "media")
+            .leftJoinAndSelect("media.files", "mediaFiles")
             .leftJoinAndSelect("posts.event", "event")
+            .leftJoinAndSelect("event.files", "eventFiles")
             .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.files", "announcementFiles")
             .leftJoinAndSelect("announcement.lesson", "announcementLesson")
             .where("posts.userId = :userId ", { userId })
             .orderBy("posts.createdAt", "DESC")

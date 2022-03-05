@@ -25,7 +25,7 @@ export class MediaPost {
 
     @OneToMany(
         () => File,
-        file => file.id
+        file => file.mediaPost
     )
     files: File[]
 
