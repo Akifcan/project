@@ -7,9 +7,11 @@ import {
     ManyToOne,
     ManyToMany,
     JoinTable,
+    OneToMany,
 } from 'typeorm'
 import { MediaPost } from './mediaPost.entity'
 import { EventPost } from './eventPost.entity'
+import { Comment } from '../../../modules/comment/entities/comment.entity'
 
 export type PostType = "announcement" | "event" | "post"
 
@@ -24,6 +26,12 @@ export class Post {
     @ManyToMany(() => User)
     @JoinTable()
     likes: User[]
+
+    @OneToMany(
+        () => Comment,
+        comment => comment.post
+    )
+    comments: Comment[]
 
     @ManyToOne(
         () => MediaPost,

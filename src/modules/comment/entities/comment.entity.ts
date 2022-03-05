@@ -1,3 +1,4 @@
+import { Post } from '../../../modules/post/entities/post.entity'
 import {
     Entity,
     Column,
@@ -26,4 +27,8 @@ export class Comment {
 
     @ManyToOne(() => Announcement, (announcement) => announcement.id)
     announcement: Announcement
+
+    @ManyToOne(() => Post, (post) => post.id)
+    post: Post
+
 }
