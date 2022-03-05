@@ -2,6 +2,7 @@ import { Body, Controller, Inject, Post, UploadedFiles, UseInterceptors } from '
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
+import { CreateEventPostDto } from './dtos/createEventPost.dto'
 import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { PostService } from './post.service'
 
@@ -14,6 +15,12 @@ export class PostController {
     @UseInterceptors(FilesInterceptor('files'))
     createPostAsMedia(@User() user: CurrentUserProps, @Body() createMediaPost: CreateMediaPostDto, @UploadedFiles() files: Express.Multer.File[]) {
         return this.postService.createPostAsMedia(user, createMediaPost, files)
+    }
+
+    @Post("event")
+    @UseInterceptors(FilesInterceptor('files'))
+    createPostAsEvent(@User() user: CurrentUserProps, @Body() createEventPostDto: CreateEventPostDto, @UploadedFiles() files: Express.Multer.File[]) {
+        return this.postService.createPostAsEvent(user, createEventPostDto, files)
     }
 
 }

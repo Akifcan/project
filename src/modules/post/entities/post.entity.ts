@@ -7,6 +7,7 @@ import {
     ManyToOne,
 } from 'typeorm'
 import { MediaPost } from './mediaPost.entity'
+import { EventPost } from './eventPost.entity'
 
 export type PostType = "announcement" | "event" | "post"
 
@@ -23,6 +24,14 @@ export class Post {
         mediaPost => mediaPost.id
     )
     media: MediaPost
+
+    @ManyToOne(
+        () => MediaPost,
+        mediaPost => mediaPost.id
+    )
+    event: EventPost
+
+
 
     @ManyToOne(
         () => Announcement,

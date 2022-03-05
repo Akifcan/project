@@ -6,8 +6,8 @@ import {
     CreateDateColumn,
     ManyToOne
 } from 'typeorm'
-import { Post } from '../../../modules/post/entities/post.entity'
 import { MediaPost } from '../../../modules/post/entities/mediaPost.entity'
+import { EventPost } from 'src/modules/post/entities/eventPost.entity'
 
 
 @Entity()
@@ -38,7 +38,13 @@ export class File {
         () => MediaPost,
         mediaPost => mediaPost.id
     )
-    mediaPost: Post
+    mediaPost: MediaPost
+
+    @ManyToOne(
+        () => EventPost,
+        eventPost => eventPost.id
+    )
+    eventPost: EventPost
 
 
     @CreateDateColumn()
