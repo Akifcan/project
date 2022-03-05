@@ -6,7 +6,8 @@ import {
     ManyToOne,
 } from 'typeorm'
 
-import { User } from '../../../modules/user/entites/user.entity'
+import { User } from '../../user/entites/user.entity'
+import { Demand } from './demand.entity'
 
 export type DemandActivityType = "opened a demand" | "close this demand" | "forward this demand" | "replied"
 
@@ -26,6 +27,12 @@ export class DemandActivity {
         user => user.id
     )
     user: User
+
+    @ManyToOne(
+        () => Demand,
+        demand => demand.id
+    )
+    demand: Demand
 
     @ManyToOne(
         () => User,

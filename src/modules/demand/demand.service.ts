@@ -7,6 +7,7 @@ import UserTransformer from '../user/user.transformer'
 import { CreateDemandDto } from './dtos/createDemand.dto'
 import { ResponseDemandDto } from './dtos/responseDemand.dto'
 import { Demand } from './entities/demand.entity'
+import { DemandActivity, DemandActivityType } from './entities/demandActivity'
 import { DemandConversation } from './entities/demandConversation.entity'
 
 @Injectable()
@@ -14,6 +15,8 @@ export class DemandService {
 
     @InjectRepository(Demand) readonly demandRepository: Repository<Demand>
     @InjectRepository(User) readonly userRepository: Repository<User>
+    @InjectRepository(DemandActivity) readonly demandActivityRepository: Repository<DemandActivity>
+
 
     @InjectRepository(DemandConversation) readonly demandConversationRepository: Repository<DemandConversation>
 
@@ -78,6 +81,8 @@ export class DemandService {
         return this.demandRepository.delete({ id: demandId })
     }
 
-
+    private addToDemandActivity(action: DemandActivityType) {
+        return this.demandActivityRepository.save(this.demandActivityRepository.create({ action }))
+    }
 
 }
