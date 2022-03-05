@@ -45,7 +45,9 @@ export class DemandService {
     }
 
     async demandDetail(demandId: number) {
+
         const demand = await this.demandConversationRepository.find({ where: { demand: { id: demandId } }, relations: ["user"] })
+
         return demand.map(demand => {
             const { user, ...rest } = demand
             return {

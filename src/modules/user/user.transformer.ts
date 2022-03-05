@@ -13,6 +13,7 @@ class UserTransformer {
             id: user.id,
             name: user.name,
             profilePhoto: user.profilePhoto,
+            role: user.role,
             email: user.email
         }
     }
