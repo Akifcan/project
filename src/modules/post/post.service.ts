@@ -10,12 +10,14 @@ import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { EventPost } from './entities/eventPost.entity'
 import { MediaPost } from './entities/mediaPost.entity'
 import { Post } from './entities/post.entity'
+import { PostTransformer } from './post.transformer'
 
 @Injectable()
 export class PostService {
 
     @Inject() private readonly fileService: FileService
     @Inject() private readonly userService: UserService
+    @Inject() private readonly postTransformer: PostTransformer
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
     @InjectRepository(User) readonly userRepository: Repository<User>
@@ -68,7 +70,7 @@ export class PostService {
 
     async feed(userId: number) {
         const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
-        return this.postRepository.createQueryBuilder("posts")
+        return this.postTransformer.postsToPublicEntity(await this.postRepository.createQueryBuilder("posts")
             .leftJoinAndSelect("posts.user", "user")
             .leftJoinAndSelect("posts.media", "media")
             .leftJoinAndSelect("media.files", "mediaFiles")
@@ -79,11 +81,11 @@ export class PostService {
             .leftJoinAndSelect("announcement.lesson", "announcementLesson")
             .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL", { lessonIds })
             .orderBy("posts.createdAt", "DESC")
-            .getMany()
+            .getMany())
     }
 
     async timeline(userId: number) {
-        return this.postRepository.createQueryBuilder("posts")
+        return this.postTransformer.postsToPublicEntity(await this.postRepository.createQueryBuilder("posts")
             .leftJoinAndSelect("posts.user", "user")
             .leftJoinAndSelect("posts.media", "media")
             .leftJoinAndSelect("media.files", "mediaFiles")
@@ -94,9 +96,9 @@ export class PostService {
             .leftJoinAndSelect("announcement.lesson", "announcementLesson")
             .where("posts.userId = :userId ", { userId })
             .orderBy("posts.createdAt", "DESC")
-            .getMany()
-    }
+            .getMany())
 
+    }
 
     async participateEvent(userId: number, eventId: number) {
         const user = await this.userRepository.findOneOrFail({ id: userId })
