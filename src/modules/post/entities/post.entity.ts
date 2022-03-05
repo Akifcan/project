@@ -31,8 +31,6 @@ export class Post {
     )
     event: EventPost
 
-
-
     @ManyToOne(
         () => Announcement,
         announcement => announcement.id

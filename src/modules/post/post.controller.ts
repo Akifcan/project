@@ -28,4 +28,9 @@ export class PostController {
         return this.postService.participateEvent(user.id, params.id)
     }
 
+    @Get("feed")
+    feed(@User() user: CurrentUserProps) {
+        return this.postService.feed(user.id)
+    }
+
 }

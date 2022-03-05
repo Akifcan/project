@@ -7,9 +7,10 @@ import { MediaPost } from './entities/mediaPost.entity'
 import { FileModule } from '../file/file.module'
 import { EventPost } from './entities/eventPost.entity'
 import { User } from '../user/entites/user.entity'
+import { UserModule } from '../user/user.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MediaPost, Post, EventPost, User]), FileModule],
+  imports: [TypeOrmModule.forFeature([MediaPost, Post, EventPost, User]), FileModule, UserModule],
   providers: [PostService],
   controllers: [PostController],
   exports: [PostService]

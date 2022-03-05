@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { FileService } from '../file/file.service'
 import { User } from '../user/entites/user.entity'
+import { UserService } from '../user/user.service'
 import { CreateEventPostDto } from './dtos/createEventPost.dto'
 import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { EventPost } from './entities/eventPost.entity'
@@ -14,13 +15,12 @@ import { Post } from './entities/post.entity'
 export class PostService {
 
     @Inject() private readonly fileService: FileService
+    @Inject() private readonly userService: UserService
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
     @InjectRepository(User) readonly userRepository: Repository<User>
     @InjectRepository(MediaPost) readonly mediaPostRepository: Repository<MediaPost>
     @InjectRepository(EventPost) readonly eventPostRepository: Repository<EventPost>
-
-
 
     createPostAsAnnouncement(userId: number, announcementId: number) {
         return this.postRepository.save(this.postRepository.create({ announcement: { id: announcementId }, user: { id: userId } }))
@@ -64,6 +64,18 @@ export class PostService {
             attachements
         }
 
+    }
+
+    async feed(userId: number) {
+        const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
+        return this.postRepository.createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.media", "media")
+            .leftJoinAndSelect("posts.event", "event")
+            .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.lesson", "announcementLesson")
+            .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL", { lessonIds })
+            .orderBy("posts.createdAt", "DESC")
+            .getMany()
     }
 
     async participateEvent(userId: number, eventId: number) {
