@@ -7,7 +7,7 @@ import UserTransformer from '../user/user.transformer'
 import { CreateDemandDto } from './dtos/createDemand.dto'
 import { ResponseDemandDto } from './dtos/responseDemand.dto'
 import { Demand } from './entities/demand.entity'
-import { DemandActivity, DemandActivityType } from './entities/demandActivity'
+import { DemandActivity, DemandActivityType } from './entities/demandActivity.entity'
 import { DemandConversation } from './entities/demandConversation.entity'
 
 @Injectable()

@@ -11,7 +11,7 @@ import {
 import { Comment } from '../../comment/entities/comment.entity'
 import { Demand } from '../../demand/entities/demand.entity'
 import { DemandConversation } from 'src/modules/demand/entities/demandConversation.entity'
-import { DemandActivity } from 'src/modules/demand/entities/demandActivity'
+import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 

@@ -13,6 +13,7 @@ import {
 import slugify from "slugify"
 import { User } from '../../../modules/user/entites/user.entity'
 import { DemandConversation } from './demandConversation.entity'
+import { DemandActivity } from './demandActivity.entity'
 
 @Entity()
 export class Demand {
@@ -50,6 +51,11 @@ export class Demand {
     )
     conversations: DemandConversation[]
 
+    @OneToMany(
+        () => DemandActivity,
+        demandActivity => demandActivity.demand
+    )
+    demandActivities: DemandActivity[]
 
     @BeforeInsert()
     generateDemandCode() {
