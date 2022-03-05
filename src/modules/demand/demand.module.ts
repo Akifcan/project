@@ -6,9 +6,10 @@ import { Demand } from './entities/demand.entity'
 import { DemandConversation } from './entities/demandConversation.entity'
 import { User } from '../user/entites/user.entity'
 import UserTransformer from '../user/user.transformer'
+import { DemandActivity } from './entities/demandActivity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Demand, DemandConversation, User])],
+  imports: [TypeOrmModule.forFeature([Demand, DemandConversation, DemandActivity, User])],
   providers: [DemandService, UserTransformer],
   controllers: [DemandController]
 })
