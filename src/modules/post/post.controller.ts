@@ -23,6 +23,12 @@ export class PostController {
         return this.postService.createPostAsEvent(user, createEventPostDto, files)
     }
 
+    @Post("quote/:id")
+    createPostAsQuote(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.postService.quote(params.id, user.id)
+    }
+
+
     @Get("event/:id/participate")
     participateEvent(@User() user: CurrentUserProps, @Param() params: { id: number }) {
         return this.postService.participateEvent(user.id, params.id)

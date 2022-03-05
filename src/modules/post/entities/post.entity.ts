@@ -33,6 +33,7 @@ export class Post {
     )
     comments: Comment[]
 
+
     @ManyToOne(
         () => MediaPost,
         mediaPost => mediaPost.id
@@ -46,18 +47,17 @@ export class Post {
     event: EventPost
 
     @ManyToOne(
-        () => Announcement,
-        announcement => announcement.id
-    )
-    announcement: Announcement
-
-    @ManyToOne(
         () => Post,
         post => post.id
     )
     quote: Post
 
 
+    @ManyToOne(
+        () => Announcement,
+        announcement => announcement.id
+    )
+    announcement: Announcement
 
     @ManyToOne(
         () => User,

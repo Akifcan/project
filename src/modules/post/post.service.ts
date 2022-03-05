@@ -72,9 +72,24 @@ export class PostService {
         const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
         return this.postTransformer.postsToPublicEntity(
             await this.postBuilder()
-                .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL", { lessonIds })
+                .leftJoinAndSelect("announcement.lesson", "announcementLesson")
+                .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL OR posts.quoteId IS NOT NULL", { lessonIds })
                 .orderBy("posts.createdAt", "DESC")
                 .getMany())
+    }
+
+    async postDetail(postId: number) {
+        return await this.postRepository.findOne({ id: postId })
+    }
+
+    async quote(postId: number, userId: number) {
+        const post = await this.postRepository.findOne({ id: postId })
+        return this.postRepository.save(
+            this.postRepository.create({
+                user: { id: userId },
+                quote: post
+            })
+        )
     }
 
     async timeline(userId: number) {
@@ -88,13 +103,19 @@ export class PostService {
     private postBuilder() {
         return this.postRepository.createQueryBuilder("posts")
             .leftJoinAndSelect("posts.user", "user")
+            .leftJoinAndSelect("posts.quote", "quote")
+            .leftJoinAndSelect("quote.media", "quoteMedia")
+            .leftJoinAndSelect("quoteMedia.files", "quoteMediaFiles")
+            .leftJoinAndSelect("quote.event", "quoteEvent")
+            .leftJoinAndSelect("quoteEvent.files", "quoteEventFiles")
+            .leftJoinAndSelect("quote.announcement", "quoteAnnouncement")
+            .leftJoinAndSelect("quoteAnnouncement.files", "quoteAnnouncementFiles")
             .leftJoinAndSelect("posts.media", "media")
             .leftJoinAndSelect("media.files", "mediaFiles")
             .leftJoinAndSelect("posts.event", "event")
             .leftJoinAndSelect("event.files", "eventFiles")
             .leftJoinAndSelect("posts.announcement", "announcement")
             .leftJoinAndSelect("announcement.files", "announcementFiles")
-            .leftJoinAndSelect("announcement.lesson", "announcementLesson")
 
     }
 
