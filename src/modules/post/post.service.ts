@@ -8,6 +8,6 @@ export class PostService {
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
 
-
+    createPostAsAnnouncement(id: number) { }
 
 }

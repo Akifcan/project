@@ -12,6 +12,7 @@ import { Comment } from '../../comment/entities/comment.entity'
 import { Demand } from '../../demand/entities/demand.entity'
 import { DemandConversation } from 'src/modules/demand/entities/demandConversation.entity'
 import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
+import { Post } from 'src/modules/post/entities/post.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -57,6 +58,9 @@ export class User {
 
   @OneToMany(() => DemandActivity, (demandActivity) => demandActivity.user)
   demandActivities: DemandActivity[]
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[]
 
   @ManyToMany(() => Lesson)
   @JoinTable()

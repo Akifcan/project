@@ -1,4 +1,5 @@
-import { Announcement } from 'src/modules/announcement/entities/announcement.entity'
+import { Announcement } from '../../../modules/announcement/entities/announcement.entity'
+import { User } from '../../../modules/user/entites/user.entity'
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -28,4 +29,11 @@ export class Post {
         announcement => announcement.id
     )
     announcement: Announcement
+
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    user: User
+
 }
