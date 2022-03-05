@@ -14,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { FileModule } from './modules/file/file.module'
 import { CommentModule } from './modules/comment/comment.module'
 import { DemandModule } from './modules/demand/demand.module';
+import { PostModule } from './modules/post/post.module';
 
 @Module({
   providers: [
@@ -56,6 +57,7 @@ import { DemandModule } from './modules/demand/demand.module';
     FileModule,
     CommentModule,
     DemandModule,
+    PostModule,
   ],
 })
 export class AppModule { }
