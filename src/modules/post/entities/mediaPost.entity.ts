@@ -6,7 +6,9 @@ import {
     Column,
     ManyToMany,
     JoinTable,
+    ManyToOne,
 } from 'typeorm'
+import { User } from '../../../modules/user/entites/user.entity'
 
 
 @Entity()
@@ -16,6 +18,12 @@ export class MediaPost {
 
     @Column()
     body: string
+
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    user: User
 
     @ManyToMany(() => File)
     @JoinTable()
