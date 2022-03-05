@@ -1,11 +1,8 @@
-import { File } from '../../file/entities/file.entity'
 import {
     Entity,
     PrimaryGeneratedColumn,
     CreateDateColumn,
     Column,
-    ManyToMany,
-    JoinTable,
     ManyToOne,
 } from 'typeorm'
 import { User } from '../../../modules/user/entites/user.entity'
@@ -24,10 +21,6 @@ export class MediaPost {
         user => user.id
     )
     user: User
-
-    @ManyToMany(() => File)
-    @JoinTable()
-    files: File[]
 
     @CreateDateColumn()
     createdAt: Date
