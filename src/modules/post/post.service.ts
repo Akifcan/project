@@ -78,6 +78,18 @@ export class PostService {
             .getMany()
     }
 
+    async timeline(userId: number) {
+        return this.postRepository.createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.media", "media")
+            .leftJoinAndSelect("posts.event", "event")
+            .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.lesson", "announcementLesson")
+            .where("posts.userId = :userId ", { userId })
+            .orderBy("posts.createdAt", "DESC")
+            .getMany()
+    }
+
+
     async participateEvent(userId: number, eventId: number) {
         const user = await this.userRepository.findOneOrFail({ id: userId })
         const event = await this.eventPostRepository.findOneOrFail({ where: { id: eventId }, relations: ["participations"] })

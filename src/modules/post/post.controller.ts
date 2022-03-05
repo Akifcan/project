@@ -33,4 +33,9 @@ export class PostController {
         return this.postService.feed(user.id)
     }
 
+    @Get("timeline/:id")
+    timeline(@Param() params: { id: number }) {
+        return this.postService.timeline(params.id)
+    }
+
 }
