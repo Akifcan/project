@@ -90,6 +90,15 @@ export class DemandService {
         return this.demandRepository.delete({ id: demandId })
     }
 
+    async demandActivities(demandId: number) {
+        const demandActivities = await this.demandActivityRepository.find({ where: { demand: { id: demandId } }, relations: ["user", "forwardedUser"] })
+        return demandActivities.map(activity => {
+
+            const { user, forwardedUser, ...rest } = activity
+            return { ...rest, user: this.userTransformer.user(user), forwardedUser: forwardedUser ? this.userTransformer.user(forwardedUser) : null }
+        })
+    }
+
     private addToDemandActivity(userId: number, demandId: number, action: DemandActivityType, forwardedUserId: number = null) {
         return this.demandActivityRepository.save(this.demandActivityRepository.create({
             action,

@@ -27,6 +27,12 @@ export class DemandController {
         return this.demandService.demandDetail(params.id)
     }
 
+    @Get("acitivites/:id")
+    demandActivities(@Param() params: { id: number }) {
+        return this.demandService.demandActivities(params.id)
+    }
+
+
     @Get("forward/:demandId/:userId")
     forwardDemand(@User() user: CurrentUserProps, @Param() params: { demandId: number, userId: number }) {
         return this.demandService.forwardDemand(params.userId, params.demandId, user.id)
