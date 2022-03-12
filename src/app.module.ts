@@ -15,6 +15,7 @@ import { FileModule } from './modules/file/file.module'
 import { CommentModule } from './modules/comment/comment.module'
 import { DemandModule } from './modules/demand/demand.module'
 import { PostModule } from './modules/post/post.module'
+import { ScheduleModule } from './modules/schedule/schedule.module'
 
 @Module({
   providers: [
@@ -58,6 +59,8 @@ import { PostModule } from './modules/post/post.module'
     CommentModule,
     DemandModule,
     PostModule,
+    ScheduleModule,
   ],
 })
 export class AppModule { }
+

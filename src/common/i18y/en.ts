@@ -1,3 +1,3 @@
 export default {
-    userNotFound: (email: string) => `Sory we can't found this email: ${email}`
+    userNotFound: (email: string) => `Sorry we can't found this email: ${email}`
 }

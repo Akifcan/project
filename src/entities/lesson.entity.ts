@@ -1,4 +1,3 @@
-import { Announcement } from '../modules/announcement/entities/announcement.entity'
 import {
   Entity,
   Column,
@@ -6,6 +5,9 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm'
+
+import { Announcement } from '../modules/announcement/entities/announcement.entity'
+import { Schedule } from '../modules/schedule/entities/schedule.entity'
 
 @Entity()
 export class Lesson {
@@ -23,4 +25,8 @@ export class Lesson {
 
   @OneToMany(() => Announcement, (announcement) => announcement.lesson)
   announcements: Announcement[]
+
+  @OneToMany(() => Schedule, (schedule) => schedule.lesson)
+  schedules: Schedule[]
+
 }
