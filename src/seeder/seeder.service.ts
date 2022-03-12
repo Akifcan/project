@@ -3,16 +3,47 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Lesson } from '../entities/lesson.entity'
 import { User } from '../modules/user/entites/user.entity'
 import { Repository } from 'typeorm'
+import { Schedule } from '../modules/schedule/entities/schedule.entity'
+import { File } from '../modules/file/entities/file.entity'
+import { Demand } from '../modules/demand/entities/demand.entity'
+import { Announcement } from '../modules/announcement/entities/announcement.entity'
+import { DemandConversation } from '../modules/demand/entities/demandConversation.entity'
+import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
+import { Post } from 'src/modules/post/entities/post.entity'
+import { Comment } from 'src/modules/comment/entities/comment.entity'
+import { EventPost } from 'src/modules/post/entities/eventPost.entity'
+import { MediaPost } from 'src/modules/post/entities/mediaPost.entity'
 
 @Injectable()
 export class SeederService {
   @InjectRepository(User) private usersRepository: Repository<User>
-
   @InjectRepository(Lesson) lessonRepository: Repository<Lesson>
+  @InjectRepository(Schedule) scheduleRepository: Repository<Schedule>
+  @InjectRepository(File) fileRepository: Repository<File>
+  @InjectRepository(Demand) demandRepository: Repository<Demand>
+  @InjectRepository(DemandConversation) demandConversationRepository: Repository<DemandConversation>
+  @InjectRepository(Announcement) announcementRepository: Repository<Announcement>
+  @InjectRepository(DemandActivity) demandActivityRepository: Repository<DemandActivity>
+  @InjectRepository(Post) postRepository: Repository<Post>
+  @InjectRepository(Comment) commentRepository: Repository<Comment>
+  @InjectRepository(EventPost) eventPostRepository: Repository<EventPost>
+  @InjectRepository(MediaPost) mediaPostRepository: Repository<MediaPost>
+
+
 
   async create() {
 
     Logger.log('Seeder!')
+    await this.fileRepository.delete({})
+    await this.commentRepository.delete({})
+    await this.eventPostRepository.delete({})
+    await this.mediaPostRepository.delete({})
+    await this.postRepository.delete({})
+    await this.demandConversationRepository.delete({})
+    await this.demandActivityRepository.delete({})
+    await this.demandRepository.delete({})
+    await this.announcementRepository.delete({})
+    await this.scheduleRepository.delete({})
     await this.lessonRepository.delete({})
     await this.usersRepository.delete({})
     Logger.log('Available Records Removed!')
@@ -80,6 +111,215 @@ export class SeederService {
       lesson9,
       lesson10
     ])
+
+    const schedule = await this.scheduleRepository.save(
+      this.scheduleRepository.create([
+        {
+          day: 1,
+          startAt: "08:00",
+          endAt: "10:00",
+          lesson: lesson1,
+          place: "Y319",
+        },
+        {
+          day: 2,
+          startAt: "08:00",
+          endAt: "10:00",
+          lesson: lesson1,
+          place: "Y319",
+        },
+        {
+          day: 3,
+          startAt: "15:00",
+          endAt: "20:00",
+          lesson: lesson1,
+          place: "Y318",
+        },
+        {
+          day: 3,
+          startAt: "09:00",
+          endAt: "12:00",
+          lesson: lesson2,
+          place: "Y310",
+        },
+        {
+          day: 2,
+          startAt: "12:00",
+          endAt: "13:00",
+          lesson: lesson2,
+          place: "Y310",
+        },
+        {
+          day: 5,
+          startAt: "09:00",
+          endAt: "12:00",
+          lesson: lesson2,
+          place: "T101",
+        },
+        {
+          day: 1,
+          startAt: "11:00",
+          endAt: "12:00",
+          lesson: lesson3,
+          place: "Y410",
+        },
+        {
+          day: 2,
+          startAt: "11:00",
+          endAt: "12:00",
+          lesson: lesson3,
+          place: "Y410",
+        },
+        {
+          day: 3,
+          startAt: "14:00",
+          endAt: "15:00",
+          lesson: lesson3,
+          place: "T401",
+        },
+        {
+          day: 5,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson4,
+          place: "Y412",
+        },
+        {
+          day: 4,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson4,
+          place: "Y412",
+        },
+        {
+          day: 3,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson4,
+          place: "T412",
+        },
+        {
+          day: 1,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson5,
+          place: "Y413",
+        },
+        {
+          day: 5,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson5,
+          place: "Y413",
+        },
+        {
+          day: 2,
+          startAt: "15:00",
+          endAt: "17:00",
+          lesson: lesson5,
+          place: "T413",
+        },
+        {
+          day: 1,
+          startAt: "18:00",
+          endAt: "19:00",
+          lesson: lesson6,
+          place: "Y113",
+        },
+        {
+          day: 5,
+          startAt: "18:00",
+          endAt: "19:00",
+          lesson: lesson6,
+          place: "Y113",
+        },
+        {
+          day: 4,
+          startAt: "18:00",
+          endAt: "19:00",
+          lesson: lesson6,
+          place: "T113",
+        },
+        {
+          day: 1,
+          startAt: "18:00",
+          endAt: "19:00",
+          lesson: lesson6,
+          place: "Y113",
+        },
+        {
+          day: 5,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson7,
+          place: "T200",
+        },
+        {
+          day: 5,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson7,
+          place: "Y213",
+        },
+        {
+          day: 4,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson7,
+          place: "T200",
+        },
+        {
+          day: 2,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson8,
+          place: "T201",
+        },
+        {
+          day: 1,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson8,
+          place: "Y214",
+        },
+        {
+          day: 3,
+          startAt: "10:00",
+          endAt: "12:00",
+          lesson: lesson8,
+          place: "T201",
+        },
+        {
+          day: 2,
+          startAt: "14:30",
+          endAt: "16:30",
+          lesson: lesson9,
+          place: "X00",
+        },
+        {
+          day: 4,
+          startAt: "14:30",
+          endAt: "16:30",
+          lesson: lesson9,
+          place: "X00",
+        },
+        {
+          day: 1,
+          startAt: "14:30",
+          endAt: "16:30",
+          lesson: lesson10,
+          place: "X00",
+        },
+        {
+          day: 5,
+          startAt: "14:30",
+          endAt: "16:30",
+          lesson: lesson10,
+          place: "X00",
+        },
+
+      ])
+    )
 
     const users = await this.usersRepository.save(
       this.usersRepository.create([
@@ -162,6 +402,7 @@ export class SeederService {
     )
 
     return {
+      schedule,
       lessons,
       users,
     }
