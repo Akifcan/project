@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import LanguageProps from '../../common/i18y/language.interface'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { FileService } from '../file/file.service'
@@ -120,9 +121,15 @@ export class PostService {
 
     }
 
-    async participateEvent(userId: number, eventId: number) {
+    async participateEvent(userId: number, eventId: number, language: LanguageProps) {
         const user = await this.userRepository.findOneOrFail({ id: userId })
         const event = await this.eventPostRepository.findOneOrFail({ where: { id: eventId }, relations: ["participations"] })
+
+        if (event.participations.find(e => e.id === user.id)) {
+
+            throw new BadRequestException(language.tr.alreadyParticipate)
+        }
+
         event.participations.push(user)
         return (await this.eventPostRepository.save(event)).participations
     }

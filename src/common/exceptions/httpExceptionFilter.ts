@@ -11,10 +11,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const status = exception.getStatus()
         const language = await require(`../../common/i18y/${request.headers['accept-language'] || 'tr'}`)
 
+        let errorMessage: string
+
+        switch (exception.message) {
+            case "Bad Request":
+                errorMessage = language.default.unexceptedError
+                break
+            default:
+                errorMessage = exception.message
+                break
+        }
+
         response
             .status(status)
             .json({
-                message: language.default.unexceptedError,
+                message: errorMessage,
                 statusCode: status,
                 timestamp: new Date().toISOString(),
                 path: request.url,
