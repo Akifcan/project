@@ -5,7 +5,9 @@ import {
     CreateDateColumn,
     Column,
     ManyToOne,
+    OneToMany,
 } from 'typeorm'
+import { User } from 'src/modules/user/entites/user.entity'
 
 
 @Entity()
