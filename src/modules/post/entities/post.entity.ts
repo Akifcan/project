@@ -41,8 +41,8 @@ export class Post {
     media: MediaPost
 
     @ManyToOne(
-        () => MediaPost,
-        mediaPost => mediaPost.id
+        () => EventPost,
+        eventPost => eventPost.id
     )
     event: EventPost
 
