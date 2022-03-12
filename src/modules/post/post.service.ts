@@ -52,6 +52,7 @@ export class PostService {
             user: { id: user.id },
             participations: [{ id: user.id }]
         }))
+
         let attachements
 
         if (files.length) {
