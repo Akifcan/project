@@ -13,7 +13,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
         let errorMessage: string
 
-        console.log(exception)
+        Logger.log(exception)
 
 
         switch (exception.message) {
