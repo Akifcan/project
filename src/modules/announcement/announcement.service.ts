@@ -25,6 +25,7 @@ export class AnnouncementService {
         const lessonIds = (await this.userService.myLessons(user.id)).map(lesson => lesson.id)
 
         return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+            .leftJoinAndSelect("announcements.files", "files")
             .leftJoinAndSelect("announcements.lesson", "lesson")
             .leftJoinAndSelect("announcements.user", "user")
             .where("lesson.id IN (:...lessonIds)", { lessonIds: lessonIds.length ? lessonIds : [10] })
