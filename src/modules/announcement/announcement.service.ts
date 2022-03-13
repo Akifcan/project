@@ -37,7 +37,10 @@ export class AnnouncementService {
     async createAnnouncement(user: CurrentUserProps, createAnnouncementDto: CreateAnnouncementDto, lessonId: number, files: Express.Multer.File[] = []) {
         try {
 
-            const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: +lessonId }, user: { id: user.id }, ...createAnnouncementDto }))
+            const { validUntil, ...rest } = createAnnouncementDto
+            console.log(validUntil)
+
+            const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: +lessonId }, user: { id: user.id }, ...rest, validUntil: validUntil.length === 0 ? null : validUntil }))
 
             let attachements
 
@@ -53,6 +56,8 @@ export class AnnouncementService {
                 attachements: attachements ? attachements : {}
             }
         } catch (e) {
+            console.log(e)
+
             throw new BadRequestException()
         }
     }

@@ -7,7 +7,6 @@ class CreateAnnouncementDto {
     @IsNotEmpty()
     @MaxLength(255)
     content: string
-    @IsDateString()
     @IsOptional()
     validUntil: string
 }
