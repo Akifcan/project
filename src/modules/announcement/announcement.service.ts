@@ -37,6 +37,7 @@ export class AnnouncementService {
     async listAnnouncementsByLessonId(lessonId: number) {
 
         return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+            .leftJoinAndSelect("announcements.files", "files")
             .leftJoinAndSelect("announcements.lesson", "lesson")
             .leftJoinAndSelect("announcements.user", "user")
             .where("lesson.id = :lessonId", { lessonId })
