@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Param, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import RoleGuard from '../../common/guards/role.guard'
@@ -29,5 +29,11 @@ export class AnnouncementController {
     announcements(@User() user: CurrentUserProps) {
         return this.announcementService.listAnnouncements(user)
     }
+
+    @Get(":lessonId")
+    announcementsByLessonId(@Param() params: { lessonId: number }) {
+        return this.announcementService.listAnnouncementsByLessonId(params.lessonId)
+    }
+
 
 }

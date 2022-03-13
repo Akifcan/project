@@ -34,11 +34,22 @@ export class AnnouncementService {
 
     }
 
+    async listAnnouncementsByLessonId(lessonId: number) {
+
+        return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+            .leftJoinAndSelect("announcements.lesson", "lesson")
+            .leftJoinAndSelect("announcements.user", "user")
+            .where("lesson.id = :lessonId", { lessonId })
+            .orderBy("announcements.createdAt", "DESC")
+            .getMany())
+
+
+    }
+
     async createAnnouncement(user: CurrentUserProps, createAnnouncementDto: CreateAnnouncementDto, lessonId: number, files: Express.Multer.File[] = []) {
         try {
 
             const { validUntil, ...rest } = createAnnouncementDto
-            console.log(validUntil)
 
             const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: +lessonId }, user: { id: user.id }, ...rest, validUntil: validUntil.length === 0 ? null : validUntil }))
 
@@ -56,8 +67,6 @@ export class AnnouncementService {
                 attachements: attachements ? attachements : {}
             }
         } catch (e) {
-            console.log(e)
-
             throw new BadRequestException()
         }
     }
