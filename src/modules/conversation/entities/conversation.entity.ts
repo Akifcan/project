@@ -20,9 +20,6 @@ export class Conversation {
     @CreateDateColumn()
     createdAt: Date
 
-    @Column()
-    body: string
-
     @ManyToMany(() => User)
     @JoinTable()
     users: User[]
@@ -31,7 +28,7 @@ export class Conversation {
         () => Lesson,
         lesson => lesson.id
     )
-    lessons: Lesson
+    lesson: Lesson
 
     @OneToMany(
         () => Message,

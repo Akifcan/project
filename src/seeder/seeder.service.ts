@@ -8,12 +8,15 @@ import { File } from '../modules/file/entities/file.entity'
 import { Demand } from '../modules/demand/entities/demand.entity'
 import { Announcement } from '../modules/announcement/entities/announcement.entity'
 import { DemandConversation } from '../modules/demand/entities/demandConversation.entity'
-import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
-import { Post } from 'src/modules/post/entities/post.entity'
-import { Comment } from 'src/modules/comment/entities/comment.entity'
-import { EventPost } from 'src/modules/post/entities/eventPost.entity'
-import { MediaPost } from 'src/modules/post/entities/mediaPost.entity'
-import { Department } from 'src/entities/department.entity'
+import { DemandActivity } from '../modules/demand/entities/demandActivity.entity'
+import { Post } from '../modules/post/entities/post.entity'
+import { Comment } from '../modules/comment/entities/comment.entity'
+import { EventPost } from '../modules/post/entities/eventPost.entity'
+import { MediaPost } from '../modules/post/entities/mediaPost.entity'
+import { Department } from '../entities/department.entity'
+import { Conversation } from '../modules/conversation/entities/conversation.entity'
+import { Message } from 'src/modules/conversation/entities/message.entity'
+import { Notification } from 'src/modules/notification/entities/notification.entity'
 
 @Injectable()
 export class SeederService {
@@ -30,13 +33,15 @@ export class SeederService {
   @InjectRepository(EventPost) eventPostRepository: Repository<EventPost>
   @InjectRepository(MediaPost) mediaPostRepository: Repository<MediaPost>
   @InjectRepository(Department) departmentRepository: Repository<Department>
-
-
+  @InjectRepository(Conversation) conversationRepository: Repository<Conversation>
+  @InjectRepository(Message) messageRepository: Repository<Message>
+  @InjectRepository(Notification) notificationRepository: Repository<Notification>
 
 
   async create() {
 
     Logger.log('Seeder!')
+    await this.notificationRepository.delete({})
     await this.fileRepository.delete({})
     await this.commentRepository.delete({})
     await this.eventPostRepository.delete({})
@@ -47,9 +52,12 @@ export class SeederService {
     await this.demandRepository.delete({})
     await this.announcementRepository.delete({})
     await this.scheduleRepository.delete({})
+    await this.conversationRepository.delete({})
+    await this.messageRepository.delete({})
+    await this.conversationRepository.delete({})
     await this.lessonRepository.delete({})
-    await this.departmentRepository.delete({})
     await this.usersRepository.delete({})
+    await this.departmentRepository.delete({})
     Logger.log('Available Records Removed!')
 
 
@@ -311,6 +319,41 @@ export class SeederService {
       lesson9,
       lesson10
     ])
+
+    await this.conversationRepository.save(
+      this.conversationRepository.create([
+        {
+          lesson: lesson1
+        },
+        {
+          lesson: lesson2
+        },
+        {
+          lesson: lesson3
+        },
+        {
+          lesson: lesson4
+        },
+        {
+          lesson: lesson5
+        },
+        {
+          lesson: lesson6
+        },
+        {
+          lesson: lesson7
+        },
+        {
+          lesson: lesson8
+        },
+        {
+          lesson: lesson9
+        },
+        {
+          lesson: lesson10
+        },
+      ])
+    )
 
     const schedule = await this.scheduleRepository.save(
       this.scheduleRepository.create([

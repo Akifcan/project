@@ -15,9 +15,12 @@ import { Post } from '../modules/post/entities/post.entity'
 import { MediaPost } from '../modules/post/entities/mediaPost.entity'
 import { EventPost } from '../modules/post/entities/eventPost.entity'
 import { Department } from '../entities/department.entity'
+import { Conversation } from '../modules/conversation/entities/conversation.entity'
+import { Message } from '../modules/conversation/entities/message.entity'
+import { Notification } from 'src/modules/notification/entities/notification.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Department, User, Lesson, Schedule, File, Announcement, Demand, DemandConversation, DemandActivity, Post, Comment, MediaPost, EventPost])],
+  imports: [TypeOrmModule.forFeature([Notification, Conversation, Message, Department, User, Lesson, Schedule, File, Announcement, Demand, DemandConversation, DemandActivity, Post, Comment, MediaPost, EventPost])],
   providers: [SeederService],
   controllers: [SeederController],
 })
