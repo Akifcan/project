@@ -68,8 +68,6 @@ export class AnnouncementService {
             }
 
             await this.postService.createPostAsAnnouncement(user.id, announcement.id)
-            await this.redisCacheService.pushToCache<Announcement>(this.cacheKey, { id: announcement.id }, this.announcementRepository)
-
 
             return {
                 message: 'Your announcement created',
