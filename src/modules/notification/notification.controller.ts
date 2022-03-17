@@ -1,5 +1,16 @@
-import { Controller } from '@nestjs/common'
+import { Controller, Get, Inject } from '@nestjs/common'
+import { User } from 'src/common/decorators/user.decorator'
+import CurrentUserProps from '../auth/interface/currenetUser.interface'
+import { NotificationService } from './notification.service'
 
 @Controller('notification')
 export class NotificationController {
+
+    @Inject() private readonly notificaitonService: NotificationService
+
+    @Get("/me")
+    myNotifications(@User() user: CurrentUserProps) {
+        return this.notificaitonService.myNotifications(user.id)
+    }
+
 }

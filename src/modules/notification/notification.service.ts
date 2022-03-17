@@ -10,6 +10,17 @@ export class NotificationService {
     @InjectRepository(Announcement) readonly announcementRepository: Repository<Announcement>
     @InjectRepository(Notification) readonly notificationRepository: Repository<Notification>
 
+    myNotifications(userId: number) {
+        return this.notificationRepository.createQueryBuilder("notification")
+            .leftJoinAndSelect("notification.lesson", "lesson")
+            .leftJoinAndSelect("lesson.users", "lessonUsers")
+            .leftJoinAndSelect("notification.sender", "sender")
+            .leftJoinAndSelect("notification.receiver", "receiver")
+            .where("lessonUsers.id = :userId OR sender.id = :userId", { userId })
+            .getMany()
+    }
+
+
     sendPersonalNotification(topic: NotificationTopic, senderId: number, receiverId: number, title: string, body: string) {
         return this.notificationRepository.save(
             this.notificationRepository.create({
