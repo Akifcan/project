@@ -15,7 +15,7 @@ export class CommentController {
     }
 
     @Post("/list")
-    listComments(@User() user: CurrentUserProps, @Body() commentRelationDto: CommentRelationDto) {
+    listComments(@Body() commentRelationDto: CommentRelationDto) {
         return this.commentService.listComments(commentRelationDto.relation)
     }
 
