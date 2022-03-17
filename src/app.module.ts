@@ -19,6 +19,7 @@ import { ScheduleModule } from './modules/schedule/schedule.module'
 import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
 import { NotificationModule } from './modules/notification/notification.module'
 import { RedisCacheModule } from './redis-cache/redis-cache.module'
+import { ConversationModule } from './modules/conversation/conversation.module';
 
 @Module({
   providers: [
@@ -69,6 +70,7 @@ import { RedisCacheModule } from './redis-cache/redis-cache.module'
     ScheduleModule,
     NotificationModule,
     RedisCacheModule,
+    ConversationModule,
   ],
 })
 export class AppModule { }

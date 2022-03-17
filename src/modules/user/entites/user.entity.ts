@@ -15,6 +15,7 @@ import { DemandActivity } from '../../../modules/demand/entities/demandActivity.
 import { Post } from '../../../modules/post/entities/post.entity'
 import { Department } from '../../../entities/department.entity'
 import { Notification } from '../../../modules/notification/entities/notification.entity'
+import { Message } from '../../../modules/conversation/entities/message.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -55,6 +56,9 @@ export class User {
 
   @OneToMany(() => Demand, (demand) => demand.openedBy)
   demands: Demand[]
+
+  @OneToMany(() => Message, (message) => message.sender)
+  sentMessages: Message[]
 
   @OneToMany(() => DemandConversation, (demandConversation) => demandConversation.user)
   demandConveresations: DemandConversation[]
