@@ -17,7 +17,8 @@ import { DemandModule } from './modules/demand/demand.module'
 import { PostModule } from './modules/post/post.module'
 import { ScheduleModule } from './modules/schedule/schedule.module'
 import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
-import { NotificationModule } from './modules/notification/notification.module';
+import { NotificationModule } from './modules/notification/notification.module'
+import { RedisCacheModule } from './redis-cache/redis-cache.module';
 
 @Module({
   providers: [
@@ -67,6 +68,7 @@ import { NotificationModule } from './modules/notification/notification.module';
     PostModule,
     ScheduleModule,
     NotificationModule,
+    RedisCacheModule,
   ],
 })
 export class AppModule { }

@@ -4,6 +4,10 @@ import * as Joi from 'joi'
 
 @Injectable()
 export class ConfigService {
+  redis: {
+    host: string,
+    port: number
+  }
   database: {
     host: string;
     port: number;
@@ -41,6 +45,8 @@ export class ConfigService {
       FIREBASE_API_KEY: Joi.string().required(),
       FIREBASE_AUTH_DOMAIN: Joi.string().required(),
       FIREBASE_STORAGE_BUCKET: Joi.string().required(),
+      REDIS_HOST: Joi.string().required(),
+      REDIS_PORT: Joi.number().required(),
     })
 
     const vars = { ...process.env } as any
@@ -60,6 +66,10 @@ export class ConfigService {
       username: envConfig.DB_USERNAME,
       password: envConfig.DB_PASSWORD,
       name: envConfig.DB_NAME,
+    }
+    this.redis = {
+      host: envConfig.REDIS_HOST,
+      port: envConfig.REDIS_PORT
     }
     this.firerbase = {
       authDomain: envConfig.FIREBASE_AUTH_DOMAIN,
