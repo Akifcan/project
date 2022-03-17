@@ -13,6 +13,7 @@ import { Post } from 'src/modules/post/entities/post.entity'
 import { Comment } from 'src/modules/comment/entities/comment.entity'
 import { EventPost } from 'src/modules/post/entities/eventPost.entity'
 import { MediaPost } from 'src/modules/post/entities/mediaPost.entity'
+import { Department } from 'src/entities/department.entity'
 
 @Injectable()
 export class SeederService {
@@ -28,6 +29,8 @@ export class SeederService {
   @InjectRepository(Comment) commentRepository: Repository<Comment>
   @InjectRepository(EventPost) eventPostRepository: Repository<EventPost>
   @InjectRepository(MediaPost) mediaPostRepository: Repository<MediaPost>
+  @InjectRepository(Department) departmentRepository: Repository<Department>
+
 
 
 
@@ -45,15 +48,77 @@ export class SeederService {
     await this.announcementRepository.delete({})
     await this.scheduleRepository.delete({})
     await this.lessonRepository.delete({})
+    await this.departmentRepository.delete({})
     await this.usersRepository.delete({})
     Logger.log('Available Records Removed!')
 
+
+
+    const department1 = this.departmentRepository.create({
+      nameEn: "Faculty of Architecture",
+      nameTr: "Mimarlık Fakültesi"
+    })
+
+    const department2 = this.departmentRepository.create({
+      nameEn: "Computer Programming",
+      nameTr: "Bilgisayar Programcılığı"
+    })
+
+
+    const department3 = this.departmentRepository.create({
+      nameEn: "Computer Engineering",
+      nameTr: "Bilgisayar Mühendisliği"
+    })
+
+
+    const department4 = this.departmentRepository.create({
+      nameEn: "Industrial Engineering",
+      nameTr: "Endüstri Mühendisliği"
+    })
+
+
+    const department5 = this.departmentRepository.create({
+      nameEn: "Psychology",
+      nameTr: "Psikoloji"
+    })
+
+
+    const department6 = this.departmentRepository.create({
+      nameEn: "English Language and Literature",
+      nameTr: "İngiliz Dili ve Edebiyatı"
+    })
+
+    const department7 = this.departmentRepository.create({
+      nameEn: "Economics",
+      nameTr: "Ekonomi"
+    })
+
+    const department8 = this.departmentRepository.create({
+      nameEn: "Student Affairs",
+      nameTr: "Öğrenci İşleri"
+    })
+
+
+
+    const departments = await this.departmentRepository.save(
+      [
+        department1,
+        department2,
+        department3,
+        department4,
+        department5,
+        department6,
+        department7,
+        department8
+      ]
+    )
 
     const user1 = this.usersRepository.create({
       name: 'Kathryne Carratt',
       email: 'kathryne.carrat@yasar.edu.tr',
       schollId: 'kathryne.carrat',
       role: 'teacher',
+      department: department1,
     })
 
     const user2 = this.usersRepository.create(
@@ -62,6 +127,7 @@ export class SeederService {
         email: 'kaylee.beadham@yasar.edu.tr',
         schollId: 'kaylee.beadham',
         role: 'teacher',
+        department: department2
       }
     )
     const user3 = this.usersRepository.create(
@@ -70,6 +136,7 @@ export class SeederService {
         email: 'nikaniki.janway@yasar.edu.tr',
         schollId: 'nikaniki.janway',
         role: 'teacher',
+        department: department3,
       }
     )
     const user4 = this.usersRepository.create(
@@ -78,6 +145,7 @@ export class SeederService {
         email: 'kelsi.stow@yasar.edu.tr',
         schollId: 'kelsi.stow',
         role: 'teacher',
+        department: department4
       }
 
     )
@@ -87,6 +155,7 @@ export class SeederService {
         email: 'annamaria.ca@yasar.edu.tr',
         schollId: 'annamarie.ca',
         role: 'moderator',
+        department: department8,
       }
     )
     const user6 = this.usersRepository.create(
@@ -95,6 +164,7 @@ export class SeederService {
         email: 'seana.janeway@stu.yasar.edu.tr',
         schollId: 'seane.janeway',
         role: 'moderator',
+        department: department8,
       }
     )
     const user7 = this.usersRepository.create(
@@ -103,6 +173,7 @@ export class SeederService {
         email: '20100001016@stu.yasar.edu.tr',
         schollId: '2010001016',
         role: 'student',
+        department: department2,
       }
     )
     const user8 = this.usersRepository.create(
@@ -111,6 +182,7 @@ export class SeederService {
         email: '2010001017@stu.yasar.edu.tr',
         schollId: '2010001017',
         role: 'student',
+        department: department3,
       }
     )
     const user9 = this.usersRepository.create(
@@ -119,6 +191,7 @@ export class SeederService {
         email: '2010001217@stu.yasar.edu.tr',
         schollId: '2010001027',
         role: 'student',
+        department: department5,
       },
 
     )
@@ -128,6 +201,7 @@ export class SeederService {
         email: '2010001018@stu.yasar.edu.tr',
         schollId: '2010001018',
         role: 'student',
+        department: department6,
       },
 
     )
@@ -137,6 +211,7 @@ export class SeederService {
         email: '2010001019@stu.yasar.edu.tr',
         schollId: '2010001019',
         role: 'student',
+        department: department3,
       },
 
     )
@@ -450,6 +525,7 @@ export class SeederService {
       schedule,
       lessons,
       users,
+      departments
     }
   }
 }

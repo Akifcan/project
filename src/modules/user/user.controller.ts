@@ -24,4 +24,15 @@ export class UserController {
     lessons(@User() user: CurrentUserProps) {
         return this.userService.myLessons(user.id)
     }
+
+    @Get("/lessons/rosters/:id")
+    rosters(@Param() params: { id: number }) {
+        return this.userService.rosters(params.id)
+    }
+
+    @Get("/lessons/rosters/all/:id")
+    rostersAll(@Param() params: { id: number }) {
+        return this.userService.rostersUser(params.id)
+    }
+
 }

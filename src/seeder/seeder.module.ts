@@ -14,9 +14,10 @@ import { Comment } from '../modules/comment/entities/comment.entity'
 import { Post } from '../modules/post/entities/post.entity'
 import { MediaPost } from '../modules/post/entities/mediaPost.entity'
 import { EventPost } from '../modules/post/entities/eventPost.entity'
+import { Department } from '../entities/department.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Lesson, Schedule, File, Announcement, Demand, DemandConversation, DemandActivity, Post, Comment, MediaPost, EventPost])],
+  imports: [TypeOrmModule.forFeature([Department, User, Lesson, Schedule, File, Announcement, Demand, DemandConversation, DemandActivity, Post, Comment, MediaPost, EventPost])],
   providers: [SeederService],
   controllers: [SeederController],
 })

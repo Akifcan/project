@@ -19,7 +19,7 @@ export class UserService {
     }
 
     me(id: number) {
-        return this.userRepository.findOne({ id })
+        return this.userRepository.findOne({ where: { id }, relations: ["department"] })
     }
 
     async myLessons(id: number) {
@@ -29,6 +29,16 @@ export class UserService {
             .getMany()
 
         )
+    }
+
+    async rosters(lessonId: number) {
+        const lesson = await this.lessonRepository.findOne({ where: { id: lessonId }, relations: ["users"] })
+        return { rosters: lesson.users.length }
+    }
+
+    async rostersUser(lessonId: number) {
+        const lesson = await this.lessonRepository.findOne({ where: { id: lessonId }, relations: ["users"] })
+        return { users: lesson.users }
     }
 
 

@@ -7,12 +7,14 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  ManyToOne,
 } from 'typeorm'
 import { Comment } from '../../comment/entities/comment.entity'
 import { Demand } from '../../demand/entities/demand.entity'
 import { DemandConversation } from 'src/modules/demand/entities/demandConversation.entity'
 import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
 import { Post } from 'src/modules/post/entities/post.entity'
+import { Department } from 'src/entities/department.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -46,6 +48,10 @@ export class User {
 
   @OneToMany(() => Announcement, (announcement) => announcement.user)
   announcements: Announcement[]
+
+  @ManyToOne(() => Department, (department) => department.id)
+  department: Department
+
 
   @OneToMany(() => Demand, (demand) => demand.openedBy)
   demands: Demand[]
