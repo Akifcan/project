@@ -22,7 +22,9 @@ export class AnnouncementService {
 
     async listAnnouncements(user: CurrentUserProps) {
 
-        const lessonIds = (await this.userService.myLessons(user.id)).map(lesson => lesson.id)
+        // const lessonIds = (await this.userService.myLessons(user.id)).map(lesson => lesson.id)
+        const lessonIds = [2]
+
 
         return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
             .leftJoinAndSelect("announcements.files", "files")

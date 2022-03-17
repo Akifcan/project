@@ -1,13 +1,17 @@
+import { User } from 'src/modules/user/entites/user.entity'
 import {
   Entity,
   Column,
   PrimaryColumn,
   CreateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm'
 
 import { Announcement } from '../modules/announcement/entities/announcement.entity'
 import { Schedule } from '../modules/schedule/entities/schedule.entity'
+
 
 @Entity()
 export class Lesson {
@@ -16,7 +20,6 @@ export class Lesson {
 
   @Column({ unique: true })
   name: string
-
   @Column({ unique: true })
   code: string
 
@@ -25,6 +28,10 @@ export class Lesson {
 
   @OneToMany(() => Announcement, (announcement) => announcement.lesson)
   announcements: Announcement[]
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  users: User[]
 
   @OneToMany(() => Schedule, (schedule) => schedule.lesson)
   schedules: Schedule[]

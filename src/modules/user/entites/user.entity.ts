@@ -62,10 +62,6 @@ export class User {
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[]
 
-  @ManyToMany(() => Lesson)
-  @JoinTable()
-  lessons: Lesson[]
-
   @ManyToMany(() => Demand)
   @JoinTable()
   forwards: Demand[]

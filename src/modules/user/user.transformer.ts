@@ -1,11 +1,16 @@
 import { Injectable } from "@nestjs/common"
+import { Lesson } from "../../entities/lesson.entity"
 import { User } from "./entites/user.entity"
 
 @Injectable()
 class UserTransformer {
 
-    lessons(user: User) {
-        return user.lessons
+    lessons(lessons: Lesson[]) {
+        return lessons.map(lesson => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { users, ...rest } = lesson
+            return rest
+        })
     }
 
     user(user: User) {

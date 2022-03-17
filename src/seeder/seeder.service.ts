@@ -47,55 +47,180 @@ export class SeederService {
     await this.lessonRepository.delete({})
     await this.usersRepository.delete({})
     Logger.log('Available Records Removed!')
+
+
+    const user1 = this.usersRepository.create({
+      name: 'Kathryne Carratt',
+      email: 'kathryne.carrat@yasar.edu.tr',
+      schollId: 'kathryne.carrat',
+      role: 'teacher',
+    })
+
+    const user2 = this.usersRepository.create(
+      {
+        name: 'Kaylee Beadham',
+        email: 'kaylee.beadham@yasar.edu.tr',
+        schollId: 'kaylee.beadham',
+        role: 'teacher',
+      }
+    )
+    const user3 = this.usersRepository.create(
+      {
+        name: 'Nikaniki Janway',
+        email: 'nikaniki.janway@yasar.edu.tr',
+        schollId: 'nikaniki.janway',
+        role: 'teacher',
+      }
+    )
+    const user4 = this.usersRepository.create(
+      {
+        name: 'Kelsi Stow',
+        email: 'kelsi.stow@yasar.edu.tr',
+        schollId: 'kelsi.stow',
+        role: 'teacher',
+      }
+
+    )
+    const user5 = this.usersRepository.create(
+      {
+        name: 'Annamarie Ca',
+        email: 'annamaria.ca@yasar.edu.tr',
+        schollId: 'annamarie.ca',
+        role: 'moderator',
+      }
+    )
+    const user6 = this.usersRepository.create(
+      {
+        name: 'Seana Janeway',
+        email: 'seana.janeway@stu.yasar.edu.tr',
+        schollId: 'seane.janeway',
+        role: 'moderator',
+      }
+    )
+    const user7 = this.usersRepository.create(
+      {
+        name: 'Akifcan Kara',
+        email: '20100001016@stu.yasar.edu.tr',
+        schollId: '2010001016',
+        role: 'student',
+      }
+    )
+    const user8 = this.usersRepository.create(
+      {
+        name: 'Gusty Farthin',
+        email: '2010001017@stu.yasar.edu.tr',
+        schollId: '2010001017',
+        role: 'student',
+      }
+    )
+    const user9 = this.usersRepository.create(
+      {
+        name: 'Jaquith Phibb',
+        email: '2010001217@stu.yasar.edu.tr',
+        schollId: '2010001027',
+        role: 'student',
+      },
+
+    )
+    const user10 = this.usersRepository.create(
+      {
+        name: 'Lionello Dykins',
+        email: '2010001018@stu.yasar.edu.tr',
+        schollId: '2010001018',
+        role: 'student',
+      },
+
+    )
+    const user11 = this.usersRepository.create(
+      {
+        name: 'Alexia Wybron',
+        email: '2010001019@stu.yasar.edu.tr',
+        schollId: '2010001019',
+        role: 'student',
+      },
+
+    )
+
+    const users = await this.usersRepository.save([
+      user1,
+      user2,
+      user3,
+      user4,
+      user5,
+      user6,
+      user7,
+      user8,
+      user9,
+      user10,
+      user11
+    ])
+
+    /*
+       1,- 4 , 7 - 11
+    */
+
+
+
     const lesson1 = this.lessonRepository.create({
       id: 1,
       name: 'BİLGİ TEKNOLOJİLERİ',
       code: 'MBBP 1100',
+      users: [user1, user7, user9, user10],
     })
     const lesson2 = this.lessonRepository.create({
       id: 2,
       name: 'YAPAY ZEKA TEMELLERİ',
       code: 'MBBP 1108',
+      users: [user2, user8, user10, user8],
+
     })
     const lesson3 = this.lessonRepository.create({
       id: 3,
       name: 'GÖRSEL PROGRAMLAMA I',
       code: 'MBBP 1112',
+      users: [user4, user8, user9],
     })
     const lesson4 = this.lessonRepository.create({
       id: 4,
       name: 'VERİ YAPILARI VE ALGORİTMALAR',
       code: 'MBBP 1114',
+      users: [user3, user7, user8, user9],
     })
     const lesson5 = this.lessonRepository.create({
       id: 5,
       name: 'İNTERNET PROGRAMLAMA',
       code: 'MBBP 1156',
+      users: [user4, user10, user11, user7],
     })
     const lesson6 = this.lessonRepository.create({
       id: 6,
       name: 'MOBİL UYGULAMALAR VE TEKNOLOJİLER',
       code: 'MBBP 2214',
+      users: [user1, user8, user9, user10],
     })
     const lesson7 = this.lessonRepository.create({
       id: 7,
       name: 'SİSTEM ANALİZİ VE TASARIMI',
       code: 'MBBP 2216',
+      users: [user2, user11, user8, user7],
     })
     const lesson8 = this.lessonRepository.create({
       id: 8,
       name: 'ENGLISH I',
       code: 'SOFL 1115',
+      users: [user2, user8, user7, user9],
     })
     const lesson9 = this.lessonRepository.create({
       id: 9,
       name: 'FRENCH II',
       code: 'SOFL 1032',
+      users: [user3, user9, user6, user11],
     })
     const lesson10 = this.lessonRepository.create({
       id: 10,
       name: 'GENERAL',
       code: 'GFAS',
+      users: [user2, user11, user10, user6],
     })
 
 
@@ -319,86 +444,6 @@ export class SeederService {
         },
 
       ])
-    )
-
-    const users = await this.usersRepository.save(
-      this.usersRepository.create([
-        {
-          name: 'Kathryne Carratt',
-          email: 'kathryne.carrat@yasar.edu.tr',
-          schollId: 'kathryne.carrat',
-          role: 'teacher',
-          lessons: [lesson1, lesson2]
-        },
-        {
-          name: 'Kaylee Beadham',
-          email: 'kaylee.beadham@yasar.edu.tr',
-          schollId: 'kaylee.beadham',
-          role: 'teacher',
-          lessons: [lesson7, lesson5]
-        },
-        {
-          name: 'Nikaniki Janway',
-          email: 'nikaniki.janway@yasar.edu.tr',
-          schollId: 'nikaniki.janway',
-          role: 'teacher',
-          lessons: [lesson9, lesson10]
-        },
-        {
-          name: 'Kelsi Stow',
-          email: 'kelsi.stow@yasar.edu.tr',
-          schollId: 'kelsi.stow',
-          role: 'teacher',
-          lessons: [lesson2, lesson9]
-        },
-        {
-          name: 'Annamarie Ca',
-          email: 'annamaria.ca@yasar.edu.tr',
-          schollId: 'annamarie.ca',
-          role: 'moderator',
-        },
-        {
-          name: 'Seana Janeway',
-          email: 'seana.janeway@stu.yasar.edu.tr',
-          schollId: 'seane.janeway',
-          role: 'moderator',
-        },
-        {
-          name: 'Akifcan Kara',
-          email: '20100001016@stu.yasar.edu.tr',
-          schollId: '2010001016',
-          role: 'student',
-          lessons: [lesson9, lesson2, lesson3],
-        },
-        {
-          name: 'Gusty Farthin',
-          email: '2010001017@stu.yasar.edu.tr',
-          schollId: '2010001017',
-          role: 'student',
-          lessons: [lesson1, lesson5, lesson2],
-        },
-        {
-          name: 'Jaquith Phibb',
-          email: '2010001217@stu.yasar.edu.tr',
-          schollId: '2010001027',
-          role: 'student',
-          lessons: [lesson1, lesson4, lesson2],
-        },
-        {
-          name: 'Lionello Dykins',
-          email: '2010001018@stu.yasar.edu.tr',
-          schollId: '2010001018',
-          role: 'student',
-          lessons: [lesson6, lesson7, lesson8],
-        },
-        {
-          name: 'Alexia Wybron',
-          email: '2010001019@stu.yasar.edu.tr',
-          schollId: '2010001019',
-          role: 'student',
-          lessons: [lesson3, lesson2, lesson9],
-        },
-      ]),
     )
 
     return {
