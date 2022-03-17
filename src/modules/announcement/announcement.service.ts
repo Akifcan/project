@@ -8,7 +8,7 @@ import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { UserService } from '../user/user.service'
 import { AnnouncementTransformer } from './announcement.transformer'
 import { PostService } from '../post/post.service'
-import { RedisCacheService } from 'src/redis-cache/redis-cache.service'
+import { NotificationService } from '../notification/notification.service'
 
 @Injectable()
 export class AnnouncementService {
@@ -19,7 +19,8 @@ export class AnnouncementService {
     @Inject() private readonly postService: PostService
     @Inject() private readonly userService: UserService
     @Inject() private readonly announcementTransformer: AnnouncementTransformer
-    @Inject() private readonly redisCacheService: RedisCacheService
+    @Inject() private readonly notificationService: NotificationService
+
 
     cacheKey = "cache-announcements"
 
@@ -68,6 +69,8 @@ export class AnnouncementService {
             if (files.length) {
                 attachements = await this.fileService.upload(user, files, "announcements", announcement.id)
             }
+
+            this.notificationService.sendAnnouncementNotification(announcement.title, announcement.id, user.id)
 
             await this.postService.createPostAsAnnouncement(user.id, announcement.id)
 

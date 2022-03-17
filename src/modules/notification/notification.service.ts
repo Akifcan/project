@@ -11,9 +11,18 @@ export class NotificationService {
     @InjectRepository(Notification) readonly notificationRepository: Repository<Notification>
 
 
-    async sendAnnouncementNotification(announcementId: number) {
+
+    async sendAnnouncementNotification(body: string, announcementId: number, senderId: number) {
         const current = await this.announcementRepository.findOne({ where: { id: announcementId }, relations: ["lesson"] })
-        return current
+        return this.notificationRepository.save(
+            this.notificationRepository.create({
+                topic: "announcement",
+                body,
+                lesson: { id: current.lesson.id },
+                sender: { id: senderId },
+                title: "New announcement"
+            })
+        )
 
     }
 

@@ -8,9 +8,10 @@ import { UserModule } from '../user/user.module'
 import { AnnouncementTransformer } from './announcement.transformer'
 import { PostModule } from '../post/post.module'
 import { RedisCacheModule } from '../../redis-cache/redis-cache.module'
+import { NotificationModule } from '../notification/notification.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Announcement]), FileModule, UserModule, PostModule, RedisCacheModule],
+  imports: [TypeOrmModule.forFeature([Announcement]), FileModule, UserModule, PostModule, RedisCacheModule, NotificationModule],
   providers: [AnnouncementService, AnnouncementTransformer],
   controllers: [AnnouncementController],
 })
