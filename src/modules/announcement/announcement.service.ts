@@ -8,6 +8,7 @@ import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { UserService } from '../user/user.service'
 import { AnnouncementTransformer } from './announcement.transformer'
 import { PostService } from '../post/post.service'
+import { RedisCacheService } from 'src/redis-cache/redis-cache.service'
 
 @Injectable()
 export class AnnouncementService {
@@ -18,6 +19,10 @@ export class AnnouncementService {
     @Inject() private readonly postService: PostService
     @Inject() private readonly userService: UserService
     @Inject() private readonly announcementTransformer: AnnouncementTransformer
+    @Inject() private readonly redisCacheService: RedisCacheService
+
+    cacheKey = "cache-announcements"
+
 
 
     async listAnnouncements(user: CurrentUserProps) {
@@ -25,7 +30,7 @@ export class AnnouncementService {
         const lessonIds = (await this.userService.myLessons(user.id)).map(lesson => lesson.id)
 
 
-        return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+        return this.announcementTransformer.announcemenstToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
             .leftJoinAndSelect("announcements.files", "files")
             .leftJoinAndSelect("announcements.lesson", "lesson")
             .leftJoinAndSelect("announcements.user", "user")
@@ -38,7 +43,7 @@ export class AnnouncementService {
 
     async listAnnouncementsByLessonId(lessonId: number) {
 
-        return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+        return this.announcementTransformer.announcemenstToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
             .leftJoinAndSelect("announcements.files", "files")
             .leftJoinAndSelect("announcements.lesson", "lesson")
             .leftJoinAndSelect("announcements.user", "user")
@@ -63,6 +68,8 @@ export class AnnouncementService {
             }
 
             await this.postService.createPostAsAnnouncement(user.id, announcement.id)
+            await this.redisCacheService.pushToCache<Announcement>(this.cacheKey, { id: announcement.id }, this.announcementRepository)
+
 
             return {
                 message: 'Your announcement created',

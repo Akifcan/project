@@ -13,7 +13,8 @@ import { ConfigModule } from 'src/config/config.module'
       useFactory: async (configService: ConfigService) => ({
         store: redisStore,
         host: configService.redis.host,
-        port: configService.redis.port
+        port: configService.redis.port,
+        ttl: 0
       }),
     })
   ],

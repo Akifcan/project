@@ -5,17 +5,19 @@ import { Announcement } from "./entities/announcement.entity"
 
 export class AnnouncementTransformer {
 
-    announcementToPublicEntity(announcements: Announcement[]) {
-        return announcements.map(announcement => {
+    announcemenstToPublicEntity(announcements: Announcement[]) {
+        return announcements.map(announcement => this.announcementToPublicEntity(announcement))
+    }
 
-            if (!announcement.validUntil) {
-                delete announcement.validUntil
-            } else {
-                announcement["isValid"] = new Date() > announcement.validUntil ? true : false
-            }
+    announcementToPublicEntity(announcement: Announcement) {
+        if (!announcement.validUntil) {
+            delete announcement.validUntil
+        } else {
+            announcement["isValid"] = new Date() > announcement.validUntil ? true : false
+        }
 
-            return announcement
-        })
+        return announcement
+
     }
 
 }
