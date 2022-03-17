@@ -4,6 +4,7 @@ import {
     CreateDateColumn,
     PrimaryGeneratedColumn,
     ManyToOne,
+    ManyToMany,
 } from 'typeorm'
 import { Lesson } from "../../../entities/lesson.entity"
 import { User } from '../../user/entites/user.entity'
@@ -25,6 +26,9 @@ export class Notification {
     @Column()
     body: string
 
+    @ManyToMany(() => User)
+    readUsers: User[]
+
     @ManyToOne(
         () => Lesson,
         lesson => lesson.id
@@ -35,8 +39,13 @@ export class Notification {
         () => User,
         user => user.id
     )
-    user: Lesson
+    sender: User
 
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    receiver: User
 
     @CreateDateColumn()
     createdAt: Date

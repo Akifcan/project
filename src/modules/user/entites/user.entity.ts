@@ -11,10 +11,11 @@ import {
 } from 'typeorm'
 import { Comment } from '../../comment/entities/comment.entity'
 import { Demand } from '../../demand/entities/demand.entity'
-import { DemandConversation } from 'src/modules/demand/entities/demandConversation.entity'
-import { DemandActivity } from 'src/modules/demand/entities/demandActivity.entity'
-import { Post } from 'src/modules/post/entities/post.entity'
-import { Department } from 'src/entities/department.entity'
+import { DemandConversation } from '../../../modules/demand/entities/demandConversation.entity'
+import { DemandActivity } from '../../../modules/demand/entities/demandActivity.entity'
+import { Post } from '../../../modules/post/entities/post.entity'
+import { Department } from '../../../entities/department.entity'
+import { Notification } from '../../../modules/notification/entities/notification.entity'
 
 export type UserRole = 'student' | 'teacher' | 'moderator';
 
@@ -67,6 +68,13 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[]
+
+  @OneToMany(() => Notification, (notification) => notification.receiver)
+  received: Notification[]
+
+  @OneToMany(() => Notification, (notification) => notification.sender)
+  sent: Notification[]
+
 
   @ManyToMany(() => Demand)
   @JoinTable()
