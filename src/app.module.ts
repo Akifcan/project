@@ -17,6 +17,7 @@ import { DemandModule } from './modules/demand/demand.module'
 import { PostModule } from './modules/post/post.module'
 import { ScheduleModule } from './modules/schedule/schedule.module'
 import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
+import { NotificationModule } from './modules/notification/notification.module';
 
 @Module({
   providers: [
@@ -65,6 +66,7 @@ import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
     DemandModule,
     PostModule,
     ScheduleModule,
+    NotificationModule,
   ],
 })
 export class AppModule { }
