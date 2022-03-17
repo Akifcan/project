@@ -1,4 +1,3 @@
-import { Lesson } from '../../../entities/lesson.entity'
 import { Announcement } from '../../announcement/entities/announcement.entity'
 import {
   Entity,

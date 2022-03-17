@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Announcement } from '../announcement/entities/announcement.entity'
-import { Notification } from './entities/notification.entity'
+import { Notification, NotificationTopic } from './entities/notification.entity'
 
 @Injectable()
 export class NotificationService {
@@ -10,6 +10,17 @@ export class NotificationService {
     @InjectRepository(Announcement) readonly announcementRepository: Repository<Announcement>
     @InjectRepository(Notification) readonly notificationRepository: Repository<Notification>
 
+    sendPersonalNotification(topic: NotificationTopic, senderId: number, receiverId: number, title: string, body: string) {
+        return this.notificationRepository.save(
+            this.notificationRepository.create({
+                topic,
+                body,
+                title,
+                sender: { id: senderId },
+                receiver: { id: receiverId }
+            })
+        )
+    }
 
 
     async sendAnnouncementNotification(body: string, announcementId: number, senderId: number) {
