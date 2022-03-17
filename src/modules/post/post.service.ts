@@ -71,8 +71,7 @@ export class PostService {
     }
 
     async feed(userId: number) {
-        // const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
-        const lessonIds = [2]
+        const lessonIds = (await this.userService.myLessons(userId)).map(lesson => lesson.id)
 
         return this.postTransformer.postsToPublicEntity(
             await this.postBuilder()

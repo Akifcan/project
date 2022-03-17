@@ -23,10 +23,6 @@ export class UserService {
     }
 
     async myLessons(id: number) {
-        // return this.userTransformer.lessons(await this.userRepository.findOne({ where: { id } }))
-        // const me = await this.me(id)
-        // const user = await this.lessonRepository.find({ where: { users: [me] }, relations: ["users"] })
-        // console.log(user)
         return this.userTransformer.lessons(await this.lessonRepository.createQueryBuilder("lessons")
             .leftJoinAndSelect("lessons.users", "users")
             .where("users.id = :id", { id })
