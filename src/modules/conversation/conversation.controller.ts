@@ -14,6 +14,11 @@ export class ConversationController {
         return this.conversationService.myConversations(user.id)
     }
 
+    @Get("/conversation/:id")
+    conversation(@Param() params: { id: number }, @User() user: CurrentUserProps) {
+        return this.conversationService.conversation(params.id, user.id)
+    }
+
     @Post("/send-message/:userId")
     sendMessage(@Param() params: { userId: number }, @Body() sendMessageDto: SendMessageDto, @User() user: CurrentUserProps) {
         return this.conversationService.sendMessage(sendMessageDto, user.id, +params.userId)

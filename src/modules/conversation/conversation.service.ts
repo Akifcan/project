@@ -1,6 +1,7 @@
-import { Body, Injectable, Logger } from '@nestjs/common'
+import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { ConversationTransformer } from './conversation.transformer'
 import { SendMessageDto } from './dtos/sendMessageDto.dto'
 import { Conversation } from './entities/conversation.entity'
 import { Message } from './entities/message.entity'
@@ -8,13 +9,33 @@ import { Message } from './entities/message.entity'
 @Injectable()
 export class ConversationService {
 
-    @InjectRepository(Conversation) conversationRepository: Repository<Conversation>
-    @InjectRepository(Message) messageRepository: Repository<Message>
+    @InjectRepository(Conversation) private readonly conversationRepository: Repository<Conversation>
+    @InjectRepository(Message) private readonly messageRepository: Repository<Message>
+
+    @Inject() private readonly conversationTransformer: ConversationTransformer
 
     async myConversations(userId: number) {
-        return this.conversationRepository.find({ where: [{ sender: { id: userId } }, { receiver: { id: userId } }] })
+        const conversations = await this.conversationRepository.find({
+            where: [{ sender: { id: userId } }, { receiver: { id: userId } }],
+            relations: ["sender", "receiver"],
+            order: { lastMessageTime: -1 }
+        })
+        return this.conversationTransformer.myConversations(userId, conversations)
     }
 
+    async conversation(conversationId: number, userId: number) {
+        const conversations = await this.conversationRepository.createQueryBuilder("conversation")
+            .leftJoinAndSelect("conversation.messages", "messages")
+            .leftJoinAndSelect("messages.sender", "user")
+            .where("conversation.id = :id and (conversation.receiverId = :userId or conversation.senderId = :userId)", { id: conversationId, userId })
+            .getOne()
+
+        if (!conversations) {
+            throw new UnauthorizedException()
+        }
+
+        return this.conversationTransformer.textToPublicEntity(conversations.messages)
+    }
 
     async sendMessage(messageDto: SendMessageDto, currentUserId: number, receiverId: number) {
 
