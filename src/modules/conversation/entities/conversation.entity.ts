@@ -7,8 +7,6 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
     OneToMany,
-    ManyToMany,
-    JoinTable,
 } from 'typeorm'
 import { Message } from './message.entity'
 
@@ -26,9 +24,18 @@ export class Conversation {
     @Column({ type: "timestamp", default: new Date() })
     lastMessageTime: Date
 
-    @ManyToMany(() => User)
-    @JoinTable()
-    users: User[]
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    sender: User
+
+    @ManyToOne(
+        () => User,
+        user => user.id
+    )
+    receiver: User
+
 
     @ManyToOne(
         () => Lesson,
