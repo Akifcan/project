@@ -25,12 +25,12 @@ export class AnnouncementController {
         return this.announcementService.createAnnouncement(user, createAnnouncementDto, 10, files)
     }
 
-    @Get()
-    announcements(@User() user: CurrentUserProps) {
-        return this.announcementService.listAnnouncements(user)
+    @Get(":announcmentId")
+    announcements(@Param() params: { announcmentId: number }) {
+        return this.announcementService.findOne(params.announcmentId)
     }
 
-    @Get(":lessonId")
+    @Get("/lesson/:lessonId")
     announcementsByLessonId(@Param() params: { lessonId: number }) {
         return this.announcementService.listAnnouncementsByLessonId(params.lessonId)
     }

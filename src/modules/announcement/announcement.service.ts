@@ -42,6 +42,17 @@ export class AnnouncementService {
 
     }
 
+    async findOne(id: number) {
+        return this.announcementTransformer.announcementToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
+            .leftJoinAndSelect("announcements.files", "files")
+            .leftJoinAndSelect("announcements.lesson", "lesson")
+            .leftJoinAndSelect("announcements.user", "user")
+            .where("announcements.id = :id", { id })
+            .orderBy("announcements.createdAt", "DESC")
+            .getOne())
+
+    }
+
     async listAnnouncementsByLessonId(lessonId: number) {
 
         return this.announcementTransformer.announcemenstToPublicEntity(await this.announcementRepository.createQueryBuilder("announcements")
