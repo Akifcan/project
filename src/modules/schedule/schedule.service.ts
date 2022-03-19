@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Lesson } from '../../entities/lesson.entity'
 import { Repository } from 'typeorm'
 import { User } from '../user/entites/user.entity'
 import { Schedule } from './entities/schedule.entity'
@@ -7,20 +8,20 @@ import { Schedule } from './entities/schedule.entity'
 @Injectable()
 export class ScheduleService {
     @InjectRepository(Schedule) scheduleRepository: Repository<Schedule>
-    @InjectRepository(User) userRepository: Repository<User>
+    @InjectRepository(Lesson) lessonRepository: Repository<Lesson>
+
 
     scheduleOfUser(userId: number) {
 
         const today = 3
         // const today = new Date().getDay()
 
-        return this.userRepository.createQueryBuilder("users")
-            .select(["users.id"])
-            .leftJoinAndSelect("users.lessons", "lessons")
+        return this.lessonRepository.createQueryBuilder("lessons")
             .leftJoinAndSelect("lessons.schedules", "schedules")
-            .where("users.id = :userId", { userId })
-            .where("schedules.day = :today", { today })
-            .getOne()
+            .leftJoinAndSelect("lessons.users", "users")
+            .where("users.id = :userId and schedules.day = :today", { userId, today })
+            .getMany()
+
     }
 
 }

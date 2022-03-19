@@ -23,7 +23,7 @@ export class UserService {
     }
 
     me(id: number) {
-        return this.userRepository.findOne({ where: { id }, relations: ["department"] })
+        return this.userRepository.findOneOrFail({ where: { id }, relations: ["department"] })
     }
 
     async myLessons(id: number) {
