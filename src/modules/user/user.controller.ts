@@ -1,4 +1,5 @@
-import { Controller, Get, Inject, Param, UseGuards } from '@nestjs/common'
+import { Controller, Get, Inject, Param, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { User } from '../../common/decorators/user.decorator'
 import RoleGuard from '../../common/guards/role.guard'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
@@ -33,6 +34,12 @@ export class UserController {
     @Get("/lessons/rosters/all/:id")
     rostersAll(@Param() params: { id: number }) {
         return this.userService.rostersUser(params.id)
+    }
+
+    @Put("/profile-photo")
+    @UseInterceptors(FileInterceptor('photo'))
+    updateProfilePhoto(@User() user: CurrentUserProps, @UploadedFile() photo: Express.Multer.File) {
+        return this.userService.updateProfilePhoto(user, photo)
     }
 
 }

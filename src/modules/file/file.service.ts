@@ -8,7 +8,7 @@ import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { File } from "./entities/file.entity"
 
-export type FolderType = "announcements" | "mediaPost" | "eventPost"
+export type FolderType = "announcements" | "mediaPost" | "eventPost" | "profilePhoto"
 
 @Injectable()
 export class FileService {
@@ -27,16 +27,25 @@ export class FileService {
 
     }
 
-    async upload(user: CurrentUserProps, files: Express.Multer.File[], folder: FolderType, relationId: number) {
+    async uploadAndGetDownloadUrl(user: CurrentUserProps, file: Express.Multer.File, folder: FolderType) {
         const storage = this.initializeFirebase()
         const metadata = {
             contentType: 'image/jpeg',
         }
+        const fileName = `${user.email}/${folder}/${file.originalname}-${Date.now()}`
+        const storageRef = ref(storage, `${fileName}`)
+        await uploadBytes(storageRef, file.buffer, metadata)
+        return { path: await this.downloadUrl(storageRef) }
+
+    }
+
+    async upload(user: CurrentUserProps, files: Express.Multer.File[], folder: FolderType, relationId: number) {
+        const storage = this.initializeFirebase()
         const data = []
         for (const file in files) {
             const fileName = `${user.email}/${folder}/${files[file].originalname}-${Date.now()}`
             const storageRef = ref(storage, `${fileName}`)
-            await uploadBytes(storageRef, files[file].buffer, metadata)
+            await uploadBytes(storageRef, files[file].buffer, { contentType: files[file].mimetype })
             data.push(this.fileRepository.create({
                 path: await this.downloadUrl(storageRef),
                 name: fileName,
