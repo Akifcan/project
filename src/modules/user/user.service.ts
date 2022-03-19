@@ -45,8 +45,9 @@ export class UserService {
         return { users: lesson.users }
     }
 
-    updateProfilePhoto(user: CurrentUserProps, photo: Express.Multer.File) {
-        return this.fileService.uploadAndGetDownloadUrl(user, photo, "profilePhoto")
+    async updateProfilePhoto(user: CurrentUserProps, photo: Express.Multer.File) {
+        const profilePhoto = await this.fileService.uploadAndGetDownloadUrl(user, photo, "profilePhoto")
+        return this.userRepository.update({ id: user.id }, { profilePhoto: profilePhoto.path })
     }
 
 
