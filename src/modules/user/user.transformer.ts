@@ -19,7 +19,8 @@ class UserTransformer {
             name: user.name,
             profilePhoto: user.profilePhoto,
             role: user.role,
-            email: user.email
+            email: user.email,
+            department: user.department || null
         }
     }
 

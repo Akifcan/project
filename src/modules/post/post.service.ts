@@ -107,18 +107,21 @@ export class PostService {
     private postBuilder() {
         return this.postRepository.createQueryBuilder("posts")
             .leftJoinAndSelect("posts.user", "user")
+            .leftJoinAndSelect("user.department", "userDepartment")
             .leftJoinAndSelect("posts.quote", "quote")
             .leftJoinAndSelect("quote.media", "quoteMedia")
             .leftJoinAndSelect("quoteMedia.files", "quoteMediaFiles")
             .leftJoinAndSelect("quote.event", "quoteEvent")
             .leftJoinAndSelect("quoteEvent.files", "quoteEventFiles")
             .leftJoinAndSelect("quote.announcement", "quoteAnnouncement")
+            .leftJoinAndSelect("quoteAnnouncement.user", "quoteAnnouncementUser")
             .leftJoinAndSelect("quoteAnnouncement.files", "quoteAnnouncementFiles")
             .leftJoinAndSelect("posts.media", "media")
             .leftJoinAndSelect("media.files", "mediaFiles")
             .leftJoinAndSelect("posts.event", "event")
             .leftJoinAndSelect("event.files", "eventFiles")
             .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.user", "announcementUser")
             .leftJoinAndSelect("announcement.files", "announcementFiles")
 
     }
