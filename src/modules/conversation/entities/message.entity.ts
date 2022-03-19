@@ -1,16 +1,17 @@
+import { Lesson } from '../../../entities/lesson.entity'
 import { User } from '../../../modules/user/entites/user.entity'
 import {
     Entity,
     Column,
-    PrimaryColumn,
     CreateDateColumn,
     ManyToOne,
+    PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Conversation } from './conversation.entity'
 
 @Entity()
 export class Message {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
     @CreateDateColumn()
@@ -30,4 +31,6 @@ export class Message {
         conversation => conversation.id
     )
     conversation: Conversation
+
+
 }

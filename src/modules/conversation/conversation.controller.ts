@@ -1,4 +1,22 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Inject, Param, Post, Get } from '@nestjs/common'
+import { User } from 'src/common/decorators/user.decorator'
+import CurrentUserProps from '../auth/interface/currenetUser.interface'
+import { ConversationService } from './conversation.service'
+import { SendMessageDto } from './dtos/sendMessageDto.dto'
 
 @Controller('conversation')
-export class ConversationController {}
+export class ConversationController {
+
+    @Inject() private readonly conversationService: ConversationService
+
+    @Get("/me")
+    myConversations(@User() user: CurrentUserProps) {
+        return this.conversationService.myConversations(user.id)
+    }
+
+    @Post("/send-message/:userId")
+    sendMessage(@Param() params: { userId: number }, @Body() sendMessageDto: SendMessageDto, @User() user: CurrentUserProps) {
+        return this.conversationService.sendMessage(sendMessageDto, user.id, +params.userId)
+    }
+
+}

@@ -15,7 +15,6 @@ import { EventPost } from '../modules/post/entities/eventPost.entity'
 import { MediaPost } from '../modules/post/entities/mediaPost.entity'
 import { Department } from '../entities/department.entity'
 import { Conversation } from '../modules/conversation/entities/conversation.entity'
-import { Message } from 'src/modules/conversation/entities/message.entity'
 import { Notification } from 'src/modules/notification/entities/notification.entity'
 
 @Injectable()
@@ -34,7 +33,6 @@ export class SeederService {
   @InjectRepository(MediaPost) mediaPostRepository: Repository<MediaPost>
   @InjectRepository(Department) departmentRepository: Repository<Department>
   @InjectRepository(Conversation) conversationRepository: Repository<Conversation>
-  @InjectRepository(Message) messageRepository: Repository<Message>
   @InjectRepository(Notification) notificationRepository: Repository<Notification>
 
 
@@ -53,7 +51,6 @@ export class SeederService {
     await this.announcementRepository.delete({})
     await this.scheduleRepository.delete({})
     await this.conversationRepository.delete({})
-    await this.messageRepository.delete({})
     await this.conversationRepository.delete({})
     await this.lessonRepository.delete({})
     await this.usersRepository.delete({})
@@ -319,41 +316,6 @@ export class SeederService {
       lesson9,
       lesson10
     ])
-
-    await this.conversationRepository.save(
-      this.conversationRepository.create([
-        {
-          lesson: lesson1
-        },
-        {
-          lesson: lesson2
-        },
-        {
-          lesson: lesson3
-        },
-        {
-          lesson: lesson4
-        },
-        {
-          lesson: lesson5
-        },
-        {
-          lesson: lesson6
-        },
-        {
-          lesson: lesson7
-        },
-        {
-          lesson: lesson8
-        },
-        {
-          lesson: lesson9
-        },
-        {
-          lesson: lesson10
-        },
-      ])
-    )
 
     const schedule = await this.scheduleRepository.save(
       this.scheduleRepository.create([
