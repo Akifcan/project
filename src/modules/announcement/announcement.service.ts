@@ -62,8 +62,6 @@ export class AnnouncementService {
 
             const announcement = await this.announcementRepository.save(this.announcementRepository.create({ lesson: { id: +lessonId }, user: { id: user.id }, ...rest, validUntil: validUntil.length === 0 ? null : validUntil }))
 
-
-
             let attachements
 
             if (files.length) {

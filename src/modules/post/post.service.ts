@@ -76,7 +76,7 @@ export class PostService {
         return this.postTransformer.postsToPublicEntity(
             await this.postBuilder()
                 .leftJoinAndSelect("announcement.lesson", "announcementLesson")
-                .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL OR posts.quoteId IS NOT NULL", { lessonIds })
+                .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL OR posts.quoteId IS NOT NULL or announcementLesson.id = 10", { lessonIds })
                 .orderBy("posts.createdAt", "DESC")
                 .getMany())
     }
