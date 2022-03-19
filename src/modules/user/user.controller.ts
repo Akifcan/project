@@ -37,9 +37,9 @@ export class UserController {
     }
 
     @Put("/profile-photo")
-    @UseInterceptors(FileInterceptor('photo'))
-    updateProfilePhoto(@User() user: CurrentUserProps, @UploadedFile() photo: Express.Multer.File) {
-        return this.userService.updateProfilePhoto(user, photo)
+    @UseInterceptors(FileInterceptor('files'))
+    updateProfilePhoto(@User() user: CurrentUserProps, @UploadedFile() files: Express.Multer.File) {
+        return this.userService.updateProfilePhoto(user, files)
     }
 
 }

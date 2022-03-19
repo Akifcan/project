@@ -13,7 +13,7 @@ export class AnnouncementController {
 
     @UseGuards(new RoleGuard(['teacher']))
     @UseInterceptors(FilesInterceptor('files'))
-    @Post('/for-lesson',)
+    @Post('/for-lesson')
     createAnnouncementForLesson(@Body() createAnnouncementDto: CreateAnnouncementForLessonDto, @User() user: CurrentUserProps, @UploadedFiles() files: Express.Multer.File[] = []) {
         return this.announcementService.createAnnouncement(user, createAnnouncementDto, createAnnouncementDto.id, files)
     }
