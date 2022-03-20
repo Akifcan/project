@@ -1,20 +1,30 @@
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common'
+import { Ctx } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
-import { MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets'
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets'
 import { Repository } from 'typeorm'
 import { ConversationTransformer } from './conversation.transformer'
 import { SendMessageDto } from './dtos/sendMessageDto.dto'
 import { Conversation } from './entities/conversation.entity'
 import { Message } from './entities/message.entity'
+import { Socket } from 'socket.io-client'
 
-@WebSocketGateway(80, { namespace: 'conversation' })
+
 @Injectable()
+@WebSocketGateway()
 export class ConversationService {
 
     @InjectRepository(Conversation) private readonly conversationRepository: Repository<Conversation>
     @InjectRepository(Message) private readonly messageRepository: Repository<Message>
 
     @Inject() private readonly conversationTransformer: ConversationTransformer
+
+    @SubscribeMessage('demo')
+    demo() {
+        console.log("ok demooo")
+
+        return "ok"
+    }
 
     @SubscribeMessage('my-conversations')
     async myConversations(userId: number) {
@@ -74,6 +84,8 @@ export class ConversationService {
             sender: { id: currentUserId },
             conversation: { id: conversation.id }
         }))
+
+        client.emit("new-message", text)
 
         return { conversation, text }
     }
