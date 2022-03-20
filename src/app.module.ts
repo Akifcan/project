@@ -20,7 +20,6 @@ import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
 import { NotificationModule } from './modules/notification/notification.module'
 import { RedisCacheModule } from './redis-cache/redis-cache.module'
 import { ConversationModule } from './modules/conversation/conversation.module'
-import { ConversationGateway } from './modules/conversation.gateway'
 
 @Module({
   providers: [
@@ -32,7 +31,6 @@ import { ConversationGateway } from './modules/conversation.gateway'
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    ConversationGateway,
   ],
   imports: [
     ServeStaticModule.forRoot({

@@ -1,32 +1,59 @@
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common'
-import { Ctx } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets'
 import { Repository } from 'typeorm'
 import { ConversationTransformer } from './conversation.transformer'
 import { SendMessageDto } from './dtos/sendMessageDto.dto'
 import { Conversation } from './entities/conversation.entity'
 import { Message } from './entities/message.entity'
-import { Socket } from 'socket.io-client'
+import { Payload } from '@nestjs/microservices'
+import {
+    SubscribeMessage,
+    WebSocketGateway,
+    OnGatewayInit,
+    WebSocketServer,
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+} from '@nestjs/websockets'
+import { Server, Socket } from 'socket.io'
 
 
+@WebSocketGateway({
+    cors: {
+        origin: '*',
+    },
+})
 @Injectable()
-@WebSocketGateway()
-export class ConversationService {
+export class ConversationService implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+
+    @WebSocketServer() server: Server
+    private logger: Logger = new Logger('AppGateway')
+
+    conversationPrefix = "conversation-"
+
+    afterInit() {
+        this.logger.log('Init')
+    }
+
+    handleDisconnect(client: Socket) {
+        this.logger.log(`Client disconnected: ${client.id}`)
+    }
+
+    handleConnection(client: Socket) {
+        this.logger.log(`Client connected: ${client.id}`)
+    }
+
+    @SubscribeMessage('join-chatroom')
+    joinChatroom(@Payload() data: number) {
+        this.server.socketsJoin(this.conversationPrefix + data.toString())
+        this.logger.log("joined ", this.conversationPrefix + data.toString())
+    }
+
 
     @InjectRepository(Conversation) private readonly conversationRepository: Repository<Conversation>
     @InjectRepository(Message) private readonly messageRepository: Repository<Message>
 
     @Inject() private readonly conversationTransformer: ConversationTransformer
 
-    @SubscribeMessage('demo')
-    demo() {
-        console.log("ok demooo")
-
-        return "ok"
-    }
-
-    @SubscribeMessage('my-conversations')
     async myConversations(userId: number) {
 
         const conversations = await this.conversationRepository.find({
@@ -53,6 +80,7 @@ export class ConversationService {
             .leftJoinAndSelect("conversation.messages", "messages")
             .leftJoinAndSelect("messages.sender", "user")
             .where("conversation.id = :id and (conversation.receiverId = :userId or conversation.senderId = :userId)", { id: conversationId, userId })
+            .orderBy("messages.createdAt", "ASC")
             .getOne()
 
         if (!conversations) {
@@ -62,8 +90,7 @@ export class ConversationService {
         return this.conversationTransformer.textToPublicEntity(conversations.messages)
     }
 
-    @SubscribeMessage('send-message')
-    async sendMessage(@MessageBody() messageDto: SendMessageDto, currentUserId: number, receiverId: number) {
+    async sendMessage(messageDto: SendMessageDto, currentUserId: number, receiverId: number) {
 
         let conversation = await this.currentConversation([currentUserId, receiverId])
 
@@ -85,7 +112,7 @@ export class ConversationService {
             conversation: { id: conversation.id }
         }))
 
-        client.emit("new-message", text)
+        this.server.to(this.conversationPrefix + conversation.id.toString()).emit("new-message", text)
 
         return { conversation, text }
     }

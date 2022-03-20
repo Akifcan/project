@@ -43,7 +43,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "slugify": "^1.6.5",
-    "socket.io-client": "^4.4.1",
+    "socket.io": "^4.4.1",
     "typeorm": "^0.2.43"
   },
   "devDependencies": {
