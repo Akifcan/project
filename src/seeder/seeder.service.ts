@@ -15,7 +15,8 @@ import { EventPost } from '../modules/post/entities/eventPost.entity'
 import { MediaPost } from '../modules/post/entities/mediaPost.entity'
 import { Department } from '../entities/department.entity'
 import { Conversation } from '../modules/conversation/entities/conversation.entity'
-import { Notification } from 'src/modules/notification/entities/notification.entity'
+import { Notification } from '../modules/notification/entities/notification.entity'
+import { Message } from '../modules/conversation/entities/message.entity'
 
 @Injectable()
 export class SeederService {
@@ -34,25 +35,29 @@ export class SeederService {
   @InjectRepository(Department) departmentRepository: Repository<Department>
   @InjectRepository(Conversation) conversationRepository: Repository<Conversation>
   @InjectRepository(Notification) notificationRepository: Repository<Notification>
+  @InjectRepository(Message) messageRepository: Repository<Message>
+
 
 
   async create() {
 
     Logger.log('Seeder!')
-    await this.notificationRepository.delete({})
     await this.fileRepository.delete({})
-    await this.commentRepository.delete({})
-    await this.eventPostRepository.delete({})
-    await this.mediaPostRepository.delete({})
+    await this.messageRepository.delete({})
+    await this.conversationRepository.delete({})
     await this.postRepository.delete({})
+    await this.announcementRepository.delete({})
+    await this.notificationRepository.delete({})
+    await this.commentRepository.delete({})
     await this.demandConversationRepository.delete({})
     await this.demandActivityRepository.delete({})
     await this.demandRepository.delete({})
-    await this.announcementRepository.delete({})
     await this.scheduleRepository.delete({})
     await this.conversationRepository.delete({})
     await this.conversationRepository.delete({})
     await this.lessonRepository.delete({})
+    await this.eventPostRepository.delete({})
+    await this.mediaPostRepository.delete({})
     await this.usersRepository.delete({})
     await this.departmentRepository.delete({})
     Logger.log('Available Records Removed!')
@@ -526,7 +531,41 @@ export class SeederService {
       ])
     )
 
+    const conversation = await this.conversationRepository.save(this.conversationRepository.create([
+      {
+        lesson: lesson1
+      },
+      {
+        lesson: lesson2
+      },
+      {
+        lesson: lesson3
+      },
+      {
+        lesson: lesson4
+      },
+      {
+        lesson: lesson5
+      },
+      {
+        lesson: lesson6
+      },
+      {
+        lesson: lesson7
+      },
+      {
+        lesson: lesson8
+      },
+      {
+        lesson: lesson9
+      },
+      {
+        lesson: lesson10
+      },
+    ]))
+
     return {
+      conversation,
       schedule,
       lessons,
       users,
