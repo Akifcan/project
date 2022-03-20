@@ -14,6 +14,11 @@ export class ConversationController {
         return this.conversationService.myConversations(user.id)
     }
 
+    @Get("/detail/:receiverId")
+    conversationDetail(@User() user: CurrentUserProps, @Param() params: { receiverId: number }) {
+        return this.conversationService.conversationDetail(user.id, params.receiverId)
+    }
+
     @Get("/conversation/:id")
     conversation(@Param() params: { id: number }, @User() user: CurrentUserProps) {
         return this.conversationService.conversation(params.id, user.id)

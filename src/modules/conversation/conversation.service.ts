@@ -18,12 +18,24 @@ export class ConversationService {
 
     @SubscribeMessage('my-conversations')
     async myConversations(userId: number) {
+
         const conversations = await this.conversationRepository.find({
             where: [{ sender: { id: userId } }, { receiver: { id: userId } }],
             relations: ["sender", "receiver"],
             order: { lastMessageTime: -1 }
         })
         return this.conversationTransformer.myConversations(userId, conversations)
+    }
+
+    async conversationDetail(currentUserId: number, receiverUserId: number) {
+
+        const conversation = await this.conversationRepository.createQueryBuilder("conversation")
+            .where(" (conversation.sender.id = :senderId and conversation.receiver.id = :receiverId) or (conversation.sender.id = :receiverId and conversation.receiver.id = :senderId)", { senderId: currentUserId, receiverId: receiverUserId })
+            .getOne()
+        return {
+            success: conversation ? true : false,
+            id: conversation ? conversation.id : null
+        }
     }
 
     async conversation(conversationId: number, userId: number) {
