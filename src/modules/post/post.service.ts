@@ -82,7 +82,9 @@ export class PostService {
     }
 
     async postDetail(postId: number) {
-        return await this.postRepository.findOne({ id: postId })
+        return this.postTransformer.postToPublicEntity(await this.postBuilder()
+            .where("posts.id = :postId", { postId })
+            .getOne())
     }
 
     async quote(postId: number, userId: number) {

@@ -13,4 +13,9 @@ export class PostTransformer {
             return { ...rest, user: this.userTransformer.user(user) }
         })
     }
+
+    postToPublicEntity(post: Post) {
+        const { user, ...rest } = post
+        return { ...rest, user: this.userTransformer.user(user) }
+    }
 }

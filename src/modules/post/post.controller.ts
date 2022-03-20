@@ -51,5 +51,10 @@ export class PostController {
         return this.postService.likePost(user.id, params.id)
     }
 
+    @Get("detail/:id")
+    postDetail(@Param() params: { id: number }) {
+        return this.postService.postDetail(params.id)
+    }
+
 
 }
