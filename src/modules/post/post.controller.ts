@@ -42,8 +42,8 @@ export class PostController {
     }
 
     @Get("timeline/:id")
-    timeline(@Param() params: { id: number }) {
-        return this.postService.timeline(params.id)
+    timeline(@Param() params: { id: number }, @User() user: CurrentUserProps) {
+        return this.postService.timeline(params.id, user.id)
     }
 
     @Get("like/:id")
@@ -52,8 +52,8 @@ export class PostController {
     }
 
     @Get("detail/:id")
-    postDetail(@Param() params: { id: number }) {
-        return this.postService.postDetail(params.id)
+    postDetail(@Param() params: { id: number }, @User() user: CurrentUserProps) {
+        return this.postService.postDetail(params.id, user.id)
     }
 
 

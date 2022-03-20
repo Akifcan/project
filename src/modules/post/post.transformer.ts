@@ -7,15 +7,15 @@ export class PostTransformer {
 
     @Inject() private readonly userTransformer: UserTransformer
 
-    postsToPublicEntity(post: Post[]) {
+    postsToPublicEntity(post: Post[], currentUserId: number) {
         return post.map(post => {
-            const { user, ...rest } = post
-            return { ...rest, user: this.userTransformer.user(user) }
+            const { user, likes, ...rest } = post
+            return { ...rest, totalLike: likes.length, didLike: likes.find(user => user.id === currentUserId) ? true : false, user: this.userTransformer.user(user) }
         })
     }
 
-    postToPublicEntity(post: Post) {
-        const { user, ...rest } = post
-        return { ...rest, user: this.userTransformer.user(user) }
+    postToPublicEntity(post: Post, currentUserId: number) {
+        const { user, likes, ...rest } = post
+        return { ...rest, totalLike: likes.length, didLike: likes.find(user => user.id === currentUserId) ? true : false, user: this.userTransformer.user(user) }
     }
 }

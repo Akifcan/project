@@ -78,13 +78,13 @@ export class PostService {
             await this.postBuilder()
                 .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL OR posts.quoteId IS NOT NULL or announcementLesson.id = 10", { lessonIds })
                 .orderBy("posts.createdAt", "DESC")
-                .getMany())
+                .getMany(), userId)
     }
 
-    async postDetail(postId: number) {
+    async postDetail(postId: number, currentUserId: number) {
         return this.postTransformer.postToPublicEntity(await this.postBuilder()
             .where("posts.id = :postId", { postId })
-            .getOne())
+            .getOne(), currentUserId)
     }
 
     async quote(postId: number, userId: number) {
@@ -97,16 +97,17 @@ export class PostService {
         )
     }
 
-    async timeline(userId: number) {
+    async timeline(userId: number, currentUserId: number) {
         return this.postTransformer.postsToPublicEntity(await this.postBuilder()
             .where("posts.userId = :userId ", { userId })
             .orderBy("posts.createdAt", "DESC")
-            .getMany())
+            .getMany(), currentUserId)
 
     }
 
     private postBuilder() {
         return this.postRepository.createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.likes", "likes")
             .leftJoinAndSelect("posts.user", "user")
             .leftJoinAndSelect("user.department", "userDepartment")
             .leftJoinAndSelect("posts.quote", "quote")
