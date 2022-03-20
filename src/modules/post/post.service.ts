@@ -76,7 +76,6 @@ export class PostService {
 
         return this.postTransformer.postsToPublicEntity(
             await this.postBuilder()
-                .leftJoinAndSelect("announcement.lesson", "announcementLesson")
                 .where("announcementLesson.id IN(:...lessonIds) OR  posts.media.id IS NOT NULL OR posts.event.id IS NOT NULL OR posts.quoteId IS NOT NULL or announcementLesson.id = 10", { lessonIds })
                 .orderBy("posts.createdAt", "DESC")
                 .getMany())
@@ -114,6 +113,7 @@ export class PostService {
             .leftJoinAndSelect("quote.event", "quoteEvent")
             .leftJoinAndSelect("quoteEvent.files", "quoteEventFiles")
             .leftJoinAndSelect("quote.announcement", "quoteAnnouncement")
+            .leftJoinAndSelect("quoteAnnouncement.lesson", "quoteAnnouncementLesson")
             .leftJoinAndSelect("quoteAnnouncement.user", "quoteAnnouncementUser")
             .leftJoinAndSelect("quoteAnnouncement.files", "quoteAnnouncementFiles")
             .leftJoinAndSelect("posts.media", "media")
@@ -121,6 +121,7 @@ export class PostService {
             .leftJoinAndSelect("posts.event", "event")
             .leftJoinAndSelect("event.files", "eventFiles")
             .leftJoinAndSelect("posts.announcement", "announcement")
+            .leftJoinAndSelect("announcement.lesson", "announcementLesson")
             .leftJoinAndSelect("announcement.user", "announcementUser")
             .leftJoinAndSelect("announcement.files", "announcementFiles")
 
