@@ -56,5 +56,9 @@ export class PostController {
         return this.postService.postDetail(params.id, user.id)
     }
 
+    @Get("detail/liked/:id")
+    postDetailLiked(@Param() params: { id: number }) {
+        return this.postService.likedUsers(params.id)
+    }
 
 }

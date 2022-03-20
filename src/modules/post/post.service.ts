@@ -12,6 +12,7 @@ import { EventPost } from './entities/eventPost.entity'
 import { MediaPost } from './entities/mediaPost.entity'
 import { Post } from './entities/post.entity'
 import { PostTransformer } from './post.transformer'
+import UserTransformer from '../user/user.transformer'
 
 @Injectable()
 export class PostService {
@@ -19,6 +20,7 @@ export class PostService {
     @Inject() private readonly fileService: FileService
     @Inject() private readonly userService: UserService
     @Inject() private readonly postTransformer: PostTransformer
+    @Inject() private readonly userTransformer: UserTransformer
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
     @InjectRepository(User) readonly userRepository: Repository<User>
@@ -102,7 +104,11 @@ export class PostService {
             .where("posts.userId = :userId ", { userId })
             .orderBy("posts.createdAt", "DESC")
             .getMany(), currentUserId)
+    }
 
+    async likedUsers(postId: number) {
+        const post = await this.postRepository.findOne({ where: { id: postId }, relations: ["likes", "likes.department"] })
+        return post.likes.map(user => this.userTransformer.user(user))
     }
 
     private postBuilder() {
