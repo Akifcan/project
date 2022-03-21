@@ -18,11 +18,26 @@ export class PostController {
     @Post("elasticdemo")
     elasticDemo() {
         // return this.elasticService.save("test", "3", { "id": 3, "name": "akifcan", "status": "test" })
+        // const query = {
+        //     query: {
+        //         multi_match: {
+        //             query: "test",
+        //             fields: ['status']
+        //         }
+        //     }
+        // }
         const query = {
             query: {
-                multi_match: {
-                    query: "test",
-                    fields: ['status']
+                bool: {
+                    must: [
+                        {
+                            query_string: {
+                                query: `*test*`,
+                                fields: ['status'],
+                            }
+
+                        }
+                    ]
                 }
             }
         }
