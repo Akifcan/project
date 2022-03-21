@@ -20,6 +20,7 @@ import { HttpExceptionFilter } from './common/exceptions/httpExceptionFilter'
 import { NotificationModule } from './modules/notification/notification.module'
 import { RedisCacheModule } from './redis-cache/redis-cache.module'
 import { ConversationModule } from './modules/conversation/conversation.module'
+import { ElasticModule } from './elastic/elastic.module'
 
 @Module({
   providers: [
@@ -71,6 +72,7 @@ import { ConversationModule } from './modules/conversation/conversation.module'
     NotificationModule,
     RedisCacheModule,
     ConversationModule,
+    ElasticModule,
   ],
 })
 export class AppModule { }

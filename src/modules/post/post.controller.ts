@@ -7,11 +7,28 @@ import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { CreateEventPostDto } from './dtos/createEventPost.dto'
 import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { PostService } from './post.service'
+import { ElasticService } from '../../elastic/elastic.service'
 
 @Controller('post')
 export class PostController {
 
     @Inject() private readonly postService: PostService
+    @Inject() private readonly elasticService: ElasticService
+
+    @Post("elasticdemo")
+    elasticDemo() {
+        // return this.elasticService.save("test", "3", { "id": 3, "name": "akifcan", "status": "test" })
+        const query = {
+            query: {
+                multi_match: {
+                    query: "test",
+                    fields: ['status']
+                }
+            }
+        }
+        return this.elasticService.search("test", query)
+
+    }
 
     @Post("media")
     @UseInterceptors(FilesInterceptor('files'))

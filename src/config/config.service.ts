@@ -8,6 +8,11 @@ export class ConfigService {
     host: string,
     port: number
   }
+  elasticSearch: {
+    host: string,
+    username: string,
+    password: string
+  }
   database: {
     host: string;
     port: number;
@@ -47,6 +52,9 @@ export class ConfigService {
       FIREBASE_STORAGE_BUCKET: Joi.string().required(),
       REDIS_HOST: Joi.string().required(),
       REDIS_PORT: Joi.number().required(),
+      ELASTICSEARCH_NODE: Joi.string().required(),
+      ELASTICSEARCH_USERNAME: Joi.string().required(),
+      ELASTICSEARCH_PASSWORD: Joi.string().required(),
     })
 
     const vars = { ...process.env } as any
@@ -70,6 +78,11 @@ export class ConfigService {
     this.redis = {
       host: envConfig.REDIS_HOST,
       port: envConfig.REDIS_PORT
+    }
+    this.elasticSearch = {
+      host: envConfig.ELASTICSEARCH_NODE,
+      username: envConfig.ELASTICSEARCH_USERNAME,
+      password: envConfig.ELASTICSEARCH_PASSWORD
     }
     this.firerbase = {
       authDomain: envConfig.FIREBASE_AUTH_DOMAIN,
