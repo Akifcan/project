@@ -40,6 +40,21 @@ export class NotificationService {
 
     }
 
+    sendConversationNotification(topic: NotificationTopic, senderId: number, receiverId: number, title: string, body: string, conversationId: number) {
+        return this.notificationRepository.save(
+            this.notificationRepository.create({
+                topic,
+                body,
+                title,
+                conversation: { id: conversationId },
+                sender: { id: senderId },
+                receiver: { id: receiverId }
+            })
+        )
+    }
+
+
+
     undoNotification(senderId: number, receiverId: number, postId: number) {
         return this.notificationRepository.delete({ sender: { id: senderId }, receiver: { id: receiverId }, post: { id: postId } })
     }

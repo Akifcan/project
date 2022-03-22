@@ -15,6 +15,7 @@ import {
     OnGatewayDisconnect,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
+import { NotificationService } from '../notification/notification.service'
 
 
 @WebSocketGateway({
@@ -24,6 +25,8 @@ import { Server, Socket } from 'socket.io'
 })
 @Injectable()
 export class ConversationService implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+
+    @Inject() private readonly notificationService: NotificationService
 
     @WebSocketServer() server: Server
     private logger: Logger = new Logger('AppGateway')
@@ -101,6 +104,7 @@ export class ConversationService implements OnGatewayInit, OnGatewayConnection, 
                 sender: { id: currentUserId },
                 receiver: { id: receiverId }
             }))
+            this.notificationService.sendConversationNotification("message", currentUserId, receiverId, "Message", "Started a conversation with you!", conversation.id)
         } else {
             await this.conversationRepository.update({ id: conversation.id }, { lastMessage: messageDto.body })
         }

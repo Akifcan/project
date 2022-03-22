@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import { Lesson } from "../../../entities/lesson.entity"
 import { User } from '../../user/entites/user.entity'
+import { Conversation } from '../../conversation/entities/conversation.entity'
 
 
 export type NotificationTopic = "announcement" | "message" | "post"
@@ -41,6 +42,13 @@ export class Notification {
         post => post.id
     )
     post: Post
+
+    @ManyToOne(
+        () => Conversation,
+        conversation => conversation.id
+    )
+    conversation: Post
+
 
     @ManyToOne(
         () => User,
