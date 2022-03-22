@@ -1,3 +1,4 @@
+import { Post } from '../../post/entities/post.entity'
 import {
     Entity,
     Column,
@@ -10,7 +11,7 @@ import { Lesson } from "../../../entities/lesson.entity"
 import { User } from '../../user/entites/user.entity'
 
 
-export type NotificationTopic = "announcement" | "message"
+export type NotificationTopic = "announcement" | "message" | "post"
 
 @Entity()
 export class Notification {
@@ -34,6 +35,12 @@ export class Notification {
         lesson => lesson.id
     )
     lesson: Lesson
+
+    @ManyToOne(
+        () => Post,
+        post => post.id
+    )
+    post: Post
 
     @ManyToOne(
         () => User,

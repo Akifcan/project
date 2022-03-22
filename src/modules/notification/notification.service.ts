@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Announcement } from '../announcement/entities/announcement.entity'
@@ -21,16 +21,27 @@ export class NotificationService {
     }
 
 
-    sendPersonalNotification(topic: NotificationTopic, senderId: number, receiverId: number, title: string, body: string) {
-        return this.notificationRepository.save(
-            this.notificationRepository.create({
-                topic,
-                body,
-                title,
-                sender: { id: senderId },
-                receiver: { id: receiverId }
-            })
-        )
+    sendPersonalNotification(topic: NotificationTopic, senderId: number, receiverId: number, title: string, body: string, postId: number) {
+
+        if (senderId !== receiverId) {
+            return this.notificationRepository.save(
+                this.notificationRepository.create({
+                    topic,
+                    body,
+                    title,
+                    post: { id: postId },
+                    sender: { id: senderId },
+                    receiver: { id: receiverId }
+                })
+            )
+        } else {
+            Logger.log("this post belongs same user")
+        }
+
+    }
+
+    undoNotification(senderId: number, receiverId: number, postId: number) {
+        return this.notificationRepository.delete({ sender: { id: senderId }, receiver: { id: receiverId }, post: { id: postId } })
     }
 
 

@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import LanguageProps from '../../common/i18y/language.interface'
 import { Repository } from 'typeorm'
@@ -13,6 +13,7 @@ import { MediaPost } from './entities/mediaPost.entity'
 import { Post } from './entities/post.entity'
 import { PostTransformer } from './post.transformer'
 import UserTransformer from '../user/user.transformer'
+import { NotificationService } from '../notification/notification.service'
 
 @Injectable()
 export class PostService {
@@ -21,6 +22,8 @@ export class PostService {
     @Inject() private readonly userService: UserService
     @Inject() private readonly postTransformer: PostTransformer
     @Inject() private readonly userTransformer: UserTransformer
+    @Inject() private readonly notificationService: NotificationService
+
 
     @InjectRepository(Post) readonly postRepository: Repository<Post>
     @InjectRepository(User) readonly userRepository: Repository<User>
@@ -150,14 +153,18 @@ export class PostService {
     }
 
     async likePost(userId: number, postId: number) {
-        const post = await this.postRepository.findOne({ where: { id: postId }, relations: ["likes"] })
+        const post = await this.postRepository.findOne({ where: { id: postId }, relations: ["likes", "user"] })
+
         const user = await this.userRepository.findOneOrFail({ id: userId })
         let message = ""
 
         if (post.likes.find(user => user.id === userId)) {
             post.likes = post.likes.filter(user => user.id !== userId)
+            this.notificationService.undoNotification(userId, post.user.id, post.id)
+            Logger.log("like undo")
             message = "Like removed"
         } else {
+            this.notificationService.sendPersonalNotification("post", userId, post.user.id, "Like", "Liked your post", post.id)
             post.likes.push(user)
             message = "Like Added"
         }

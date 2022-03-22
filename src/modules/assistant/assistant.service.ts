@@ -65,7 +65,7 @@ export class AssistantService {
 
 
         const result = await this.elasticService.search(this.configService.elasticSearch.index.assistant, query)
-        return result.length ? result : { text: "Üzgünüm. Seni anlayamadım başka bir şekilde yazar mısın lütfen?" }
+        return result.length ? result : [{ text: "Üzgünüm. Seni anlayamadım başka bir şekilde yazar mısın lütfen?" }]
     }
 
 }

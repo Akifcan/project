@@ -10,10 +10,10 @@ import { User } from '../user/entites/user.entity'
 import { UserModule } from '../user/user.module'
 import { PostTransformer } from './post.transformer'
 import UserTransformer from '../user/user.transformer'
-import { ElasticModule } from '../../elastic/elastic.module'
+import { NotificationModule } from '../notification/notification.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MediaPost, Post, EventPost, User]), FileModule, UserModule, ElasticModule],
+  imports: [TypeOrmModule.forFeature([MediaPost, Post, EventPost, User]), FileModule, UserModule, NotificationModule],
   providers: [PostService, PostTransformer, UserTransformer],
   controllers: [PostController],
   exports: [PostService]
