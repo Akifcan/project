@@ -22,6 +22,7 @@ import { RedisCacheModule } from './redis-cache/redis-cache.module'
 import { ConversationModule } from './modules/conversation/conversation.module'
 import { ElasticModule } from './elastic/elastic.module'
 import { NewsModule } from './modules/news/news.module'
+import { AssistantModule } from './modules/assistant/assistant.module';
 
 @Module({
   providers: [
@@ -75,6 +76,7 @@ import { NewsModule } from './modules/news/news.module'
     ConversationModule,
     ElasticModule,
     NewsModule,
+    AssistantModule,
   ],
 })
 export class AppModule { }
