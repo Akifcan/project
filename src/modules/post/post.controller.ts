@@ -36,6 +36,11 @@ export class PostController {
         return this.postService.participateEvent(user.id, params.id, language)
     }
 
+    @Get("event/:id/participate/status")
+    participateStatus(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.postService.participateStatus(user.id, params.id)
+    }
+
     @Get("feed")
     feed(@User() user: CurrentUserProps) {
         return this.postService.feed(user.id)

@@ -155,6 +155,12 @@ export class PostService {
         return (await this.eventPostRepository.save(event)).participations
     }
 
+    async participateStatus(userId: number, eventId: number) {
+        const event = await this.eventPostRepository.findOneOrFail({ where: { id: eventId }, relations: ["participations"] })
+
+        return { isParticipation: event.participations.find(user => user.id === userId) ? true : false }
+    }
+
     async likePost(userId: number, postId: number) {
         const post = await this.postRepository.findOne({ where: { id: postId }, relations: ["likes", "user"] })
 
