@@ -1,13 +1,17 @@
 import { HttpService } from '@nestjs/axios'
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { JSDOM } from "jsdom"
 import { lastValueFrom } from 'rxjs'
+import { RedisCacheService } from '../../redis-cache/redis-cache.service'
 
 @Injectable()
 export class NewsService {
     @Inject() private httpService: HttpService
+    @Inject() private cacheService: RedisCacheService
 
-    async getLastNews() {
+    newsCacheName = "news"
+
+    async createNews() {
         const response = await lastValueFrom(this.httpService.get('https://haber.yasar.edu.tr/'))
         const dom = new JSDOM(response.data)
         const newsBase = [...dom.window.document.querySelectorAll(".tdb_module_loop_2")]
@@ -26,9 +30,12 @@ export class NewsService {
                 categoryName,
             }
         })
-        console.log(JSON.stringify(result))
+        this.cacheService.set(this.newsCacheName, JSON.stringify(result))
+        Logger.log("redis", "Saved to cache")
+    }
 
-        return result
+    async getLastNews() {
+        return this.cacheService.getJson(this.newsCacheName)
     }
 
 }
