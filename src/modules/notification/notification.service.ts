@@ -16,7 +16,7 @@ export class NotificationService {
             .leftJoinAndSelect("lesson.users", "lessonUsers")
             .leftJoinAndSelect("notification.sender", "sender")
             .leftJoinAndSelect("notification.receiver", "receiver")
-            .where("lessonUsers.id = :userId OR sender.id = :userId", { userId })
+            .where("lessonUsers.id = :userId OR receiver.id = :userId", { userId })
             .getMany()
     }
 
