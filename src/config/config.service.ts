@@ -11,7 +11,10 @@ export class ConfigService {
   elasticSearch: {
     host: string,
     username: string,
-    password: string
+    password: string,
+    index: {
+      assistant: string
+    }
   }
   database: {
     host: string;
@@ -55,6 +58,7 @@ export class ConfigService {
       ELASTICSEARCH_NODE: Joi.string().required(),
       ELASTICSEARCH_USERNAME: Joi.string().required(),
       ELASTICSEARCH_PASSWORD: Joi.string().required(),
+      ELASTICSEARCH_INDEX_ASSISTANT: Joi.string().required(),
     })
 
     const vars = { ...process.env } as any
@@ -82,7 +86,10 @@ export class ConfigService {
     this.elasticSearch = {
       host: envConfig.ELASTICSEARCH_NODE,
       username: envConfig.ELASTICSEARCH_USERNAME,
-      password: envConfig.ELASTICSEARCH_PASSWORD
+      password: envConfig.ELASTICSEARCH_PASSWORD,
+      index: {
+        assistant: envConfig.ELASTICSEARCH_INDEX_ASSISTANT
+      }
     }
     this.firerbase = {
       authDomain: envConfig.FIREBASE_AUTH_DOMAIN,
