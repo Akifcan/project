@@ -11,9 +11,20 @@ export class NewsController {
         return this.newsService.createNews()
     }
 
+    @Post("/generate-announcements")
+    generateAnnouncements() {
+        return this.newsService.createAnnouncements()
+    }
+
     @Get("/last")
     lastNews() {
         return this.newsService.getLastNews()
     }
+
+    @Get("/announcements")
+    announcements() {
+        return this.newsService.getAnnouncements()
+    }
+
 
 }
