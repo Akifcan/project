@@ -145,13 +145,13 @@ export class PostService {
         const post = await this.postRepository.findOneOrFail({ where: { event: event.id }, relations: ["user"] })
 
         if (event.participations.find(e => e.id === user.id)) {
-
-            throw new BadRequestException(language.tr.alreadyParticipate)
+            event.participations = event.participations.filter(e => e.id !== userId)
+            this.notificationService.undoNotification(userId, post.user.id, post.id)
+        } else {
+            this.notificationService.sendPersonalNotification("post", userId, post.user.id, "Event", "Will join your event", post.id)
+            event.participations.push(user)
         }
 
-        this.notificationService.sendPersonalNotification("post", userId, post.user.id, "Event", "Will join your event", post.id)
-
-        event.participations.push(user)
         return (await this.eventPostRepository.save(event)).participations
     }
 
