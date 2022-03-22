@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Announcement } from '../announcement/entities/announcement.entity'
 import { Notification, NotificationTopic } from './entities/notification.entity'
+import { NotificationTransformer } from './notification.transformer'
 
 @Injectable()
 export class NotificationService {
@@ -10,14 +11,19 @@ export class NotificationService {
     @InjectRepository(Announcement) readonly announcementRepository: Repository<Announcement>
     @InjectRepository(Notification) readonly notificationRepository: Repository<Notification>
 
-    myNotifications(userId: number) {
-        return this.notificationRepository.createQueryBuilder("notification")
-            .leftJoinAndSelect("notification.lesson", "lesson")
-            .leftJoinAndSelect("lesson.users", "lessonUsers")
-            .leftJoinAndSelect("notification.sender", "sender")
-            .leftJoinAndSelect("notification.receiver", "receiver")
-            .where("lessonUsers.id = :userId OR receiver.id = :userId", { userId })
-            .getMany()
+    @Inject() private readonly notificationTransformer: NotificationTransformer
+
+    async myNotifications(userId: number) {
+        return this.notificationTransformer.notificationsToPublicEntity(await
+            this.notificationRepository.createQueryBuilder("notification")
+                .leftJoinAndSelect("notification.lesson", "lesson")
+                .leftJoinAndSelect("lesson.users", "lessonUsers")
+                .leftJoinAndSelect("notification.sender", "sender")
+                .leftJoinAndSelect("notification.receiver", "receiver")
+                .where("lessonUsers.id = :userId OR receiver.id = :userId", { userId })
+                .getMany()
+
+        )
     }
 
 
