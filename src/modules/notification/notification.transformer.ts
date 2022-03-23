@@ -6,11 +6,14 @@ export class NotificationTransformer {
 
     notificationsToPublicEntity(notificaitons: Notification[]) {
         return notificaitons.map(notificaiton => {
-            const { body, ...rest } = notificaiton
+
+            const { lesson, body, post, ...rest } = notificaiton
 
             return {
                 body: rest.topic != "announcement" ? rest.sender.name + "-" + body : body,
-                ...rest
+                ...rest,
+                redirectToId: post ? post.id : null,
+                lesson
             }
         })
     }

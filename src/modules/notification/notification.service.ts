@@ -18,9 +18,11 @@ export class NotificationService {
             this.notificationRepository.createQueryBuilder("notification")
                 .leftJoinAndSelect("notification.lesson", "lesson")
                 .leftJoinAndSelect("lesson.users", "lessonUsers")
+                .leftJoinAndSelect("notification.post", "post")
                 .leftJoinAndSelect("notification.sender", "sender")
                 .leftJoinAndSelect("notification.receiver", "receiver")
                 .where("lessonUsers.id = :userId OR receiver.id = :userId", { userId })
+                .orderBy("notification.createdAt", "DESC")
                 .getMany()
 
         )
