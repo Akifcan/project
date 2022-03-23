@@ -17,7 +17,8 @@ export class ConfigService {
     }
   }
   mapbox: {
-    apiKey: string
+    apiKey: string,
+    baseUrl: string
   }
   database: {
     host: string;
@@ -63,6 +64,7 @@ export class ConfigService {
       ELASTICSEARCH_PASSWORD: Joi.string().required(),
       ELASTICSEARCH_INDEX_ASSISTANT: Joi.string().required(),
       MAPBOX_API_KEY: Joi.string().required(),
+      MAPBOX_BASE_URL: Joi.string().required()
     })
 
     const vars = { ...process.env } as any
@@ -84,7 +86,8 @@ export class ConfigService {
       name: envConfig.DB_NAME,
     }
     this.mapbox = {
-      apiKey: envConfig.MAPBOX_API_KEY
+      apiKey: envConfig.MAPBOX_API_KEY,
+      baseUrl: envConfig.MAPBOX_BASE_URL
     }
     this.redis = {
       host: envConfig.REDIS_HOST,
