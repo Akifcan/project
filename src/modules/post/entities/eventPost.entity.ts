@@ -29,6 +29,19 @@ export class EventPost {
     @Column()
     body: string
 
+    @Column()
+    addressTitle: string
+
+    @Column()
+    addressDescription: string
+
+    @Column()
+    lat: number
+
+    @Column()
+    long: number
+
+
     @ManyToOne(
         () => User,
         user => user.id

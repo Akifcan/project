@@ -18,6 +18,18 @@ export class CreateEventPostDto {
     @IsDateString()
     endDate: Date
 
+    @IsNotEmpty()
+    addressTitle: string
+
+    @IsNotEmpty()
+    addressDescription: string
+
+    @IsNotEmpty()
+    lat: string
+
+    @IsNotEmpty()
+    long: string
+
 
 
 }
