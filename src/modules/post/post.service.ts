@@ -1,6 +1,5 @@
-import { BadRequestException, Inject, Injectable, Logger } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import LanguageProps from '../../common/i18y/language.interface'
 import { Repository } from 'typeorm'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { FileService } from '../file/file.service'
@@ -159,8 +158,9 @@ export class PostService {
         const event = await this.eventPostRepository.createQueryBuilder("event")
             .where("event.id = :eventId", { eventId })
             .leftJoinAndSelect("event.participations", "participations")
+            .leftJoinAndSelect("participations.department", "department")
             .getMany()
-        return event.map(event => event.participations.map(e => this.userTransformer.user(e)))
+        return event.map(event => event.participations.map(e => this.userTransformer.user(e)))[0]
     }
 
     async participateStatus(userId: number, eventId: number) {
