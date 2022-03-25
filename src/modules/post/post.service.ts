@@ -52,11 +52,8 @@ export class PostService {
     }
 
     async createPostAsEvent(user: CurrentUserProps, createEventPostDto: CreateEventPostDto, files: Express.Multer.File[] = []) {
-        const { lat, long, ...rest } = createEventPostDto
         const eventPost = await this.eventPostRepository.save(this.eventPostRepository.create({
-            lat: +lat,
-            long: +long,
-            ...rest,
+            ...createEventPostDto,
             user: { id: user.id },
             participations: [{ id: user.id }]
         }))

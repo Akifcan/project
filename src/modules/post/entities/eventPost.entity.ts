@@ -36,10 +36,10 @@ export class EventPost {
     addressDescription: string
 
     @Column()
-    lat: number
+    lat: string
 
     @Column()
-    long: number
+    long: string
 
 
     @ManyToOne(
