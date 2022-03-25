@@ -16,12 +16,12 @@ export class NewsService {
     newsCacheName = "news"
     announcementsCacheName = "announcements"
 
-    @Cron(every12HourCron)
+    // @Cron(every12HourCron)
     handleNews() {
         this.createNews()
     }
 
-    @Cron(every6HourCron)
+    // @Cron(every6HourCron)
     handleAnnouncements() {
         this.createAnnouncements()
     }

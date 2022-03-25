@@ -11,9 +11,12 @@ export class MapService {
         const result = await lastValueFrom(this.httpService.get(`/${lat},${long}.json`))
         const place = result.data?.features[0]
         return place ? {
+            success: true,
             title: place.text,
             address: place.place_name
-        } : {}
+        } : {
+            success: false
+        }
     }
 
 }
