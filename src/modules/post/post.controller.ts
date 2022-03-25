@@ -1,7 +1,5 @@
 import { Body, Controller, Get, Inject, Param, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
-import { Language } from '../../common/decorators/language.decorator'
-import LanguageProps from '../../common/i18y/language.interface'
 import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { CreateEventPostDto } from './dtos/createEventPost.dto'
@@ -32,9 +30,15 @@ export class PostController {
 
 
     @Get("event/:id/participate")
-    participateEvent(@User() user: CurrentUserProps, @Param() params: { id: number }, @Language() language: LanguageProps) {
-        return this.postService.participateEvent(user.id, params.id, language)
+    participateEvent(@User() user: CurrentUserProps, @Param() params: { id: number }) {
+        return this.postService.participateEvent(user.id, params.id)
     }
+
+    @Get("event/:id/participations")
+    eventParticipations(@Param() params: { id: number }) {
+        return this.postService.eventParticipations(params.id)
+    }
+
 
     @Get("event/:id/participate/status")
     participateStatus(@User() user: CurrentUserProps, @Param() params: { id: number }) {

@@ -139,7 +139,7 @@ export class PostService {
 
     }
 
-    async participateEvent(userId: number, eventId: number, language: LanguageProps) {
+    async participateEvent(userId: number, eventId: number) {
         const user = await this.userRepository.findOneOrFail({ id: userId })
         const event = await this.eventPostRepository.findOneOrFail({ where: { id: eventId }, relations: ["participations"] })
         const post = await this.postRepository.findOneOrFail({ where: { event: event.id }, relations: ["user"] })
@@ -153,6 +153,14 @@ export class PostService {
         }
 
         return (await this.eventPostRepository.save(event)).participations
+    }
+
+    async eventParticipations(eventId: number) {
+        const event = await this.eventPostRepository.createQueryBuilder("event")
+            .where("event.id = :eventId", { eventId })
+            .leftJoinAndSelect("event.participations", "participations")
+            .getMany()
+        return event.map(event => event.participations.map(e => this.userTransformer.user(e)))
     }
 
     async participateStatus(userId: number, eventId: number) {
