@@ -21,7 +21,7 @@ export class AssistantService {
                 keywords: ["maske", "zorunlu", "covid", "virüs", "virus"]
             },
             {
-                "title": "Hes kodunuzu kayıt etmek için  -https://heskod2.yasar.edu.tr/smarthescode/home.faces|-tıklayın",
+                "title": "Hes kodunuzu kayıt etmek için  -https://heskod2.yasar.edu.tr/smarthescode/home.faces|tıklayın",
                 keywords: ["hes", "covid", "kayıt", "korona", "virüs", "virus"]
             },
             {
