@@ -29,6 +29,7 @@ export class UserService {
     async myLessons(id: number) {
         return this.userTransformer.lessons(await this.lessonRepository.createQueryBuilder("lessons")
             .leftJoinAndSelect("lessons.users", "users")
+            .leftJoinAndSelect("lessons.place", "place")
             .where("users.id = :id", { id })
             .getMany()
 

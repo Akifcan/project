@@ -5,7 +5,9 @@ import {
     CreateDateColumn,
     OneToMany,
     PrimaryGeneratedColumn,
+    ManyToOne,
 } from 'typeorm'
+import { Place } from './place.entity'
 
 
 
@@ -25,6 +27,13 @@ export class Department {
         user => user.department
     )
     users: User[]
+
+    @ManyToOne(
+        () => Place,
+        place => place.id
+    )
+    place: Place
+
 
     @CreateDateColumn()
     createdAt: Date

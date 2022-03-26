@@ -12,6 +12,7 @@ import {
 
 import { Announcement } from '../modules/announcement/entities/announcement.entity'
 import { Schedule } from '../modules/schedule/entities/schedule.entity'
+import { Place } from './place.entity'
 
 
 @Entity()
@@ -30,6 +31,11 @@ export class Lesson {
   @OneToMany(() => Announcement, (announcement) => announcement.lesson)
   announcements: Announcement[]
 
+  @ManyToOne(
+    () => Place,
+    place => place.id
+  )
+  place: Place
 
   @ManyToMany(() => User)
   @JoinTable()
