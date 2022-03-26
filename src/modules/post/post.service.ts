@@ -9,7 +9,7 @@ import { CreateEventPostDto } from './dtos/createEventPost.dto'
 import { CreateMediaPostDto } from './dtos/createMediaPost.dto'
 import { EventPost } from './entities/eventPost.entity'
 import { MediaPost } from './entities/mediaPost.entity'
-import { Post } from './entities/post.entity'
+import { Post, PostType } from './entities/post.entity'
 import { PostTransformer } from './post.transformer'
 import UserTransformer from '../user/user.transformer'
 import { NotificationService } from '../notification/notification.service'
@@ -84,6 +84,24 @@ export class PostService {
                 .orderBy("posts.createdAt", "DESC")
                 .getMany(), userId)
     }
+
+    async filterByPostBy(postType: PostType, userId: number) {
+        return this.postTransformer.postsToPublicEntity(
+            await this.postBuilder()
+                .where(`posts.${postType}.id IS NOT NULL`)
+                .orderBy("posts.createdAt", "DESC")
+                .getMany(), userId)
+    }
+
+    async meParticipatedEvents(userId: number) {
+        return this.postTransformer.postsToPublicEntity(
+            await this.postBuilder()
+                .leftJoinAndSelect("event.participations", "participations")
+                .where(`posts.event.id IS NOT NULL and participations.id = :userId`, { userId })
+                .orderBy("posts.createdAt", "DESC")
+                .getMany(), userId)
+    }
+
 
     async postDetail(postId: number, currentUserId: number) {
         return this.postTransformer.postToPublicEntity(await this.postBuilder()
