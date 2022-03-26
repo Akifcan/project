@@ -7,6 +7,7 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm'
 
 import { Announcement } from '../modules/announcement/entities/announcement.entity'
@@ -28,6 +29,7 @@ export class Lesson {
 
   @OneToMany(() => Announcement, (announcement) => announcement.lesson)
   announcements: Announcement[]
+
 
   @ManyToMany(() => User)
   @JoinTable()

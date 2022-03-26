@@ -1,30 +1,25 @@
-import { User } from '../modules/user/entites/user.entity'
 import {
     Entity,
     Column,
     CreateDateColumn,
-    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm'
 
 
 
 @Entity()
-export class Department {
+export class Place {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column({ unique: true })
-    nameTr: string
+    lat: string
 
     @Column({ unique: true })
-    nameEn: string
+    long: string
 
-    @OneToMany(
-        () => User,
-        user => user.department
-    )
-    users: User[]
+    @Column({ unique: true })
+    addressTitle: string
 
     @CreateDateColumn()
     createdAt: Date
