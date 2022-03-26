@@ -20,6 +20,15 @@ export class Department {
     @Column({ unique: true })
     nameEn: string
 
+    @Column()
+    lat: string
+
+    @Column()
+    long: string
+
+    @Column()
+    addressTitle: string
+
     @OneToMany(
         () => User,
         user => user.department
