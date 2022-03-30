@@ -47,7 +47,6 @@ describe('AnnouncementController (e2e)', () => {
             id: 99999,
             name: "Test class",
             code: "tst",
-
         }))
 
         lessonId = saveLesson.id
