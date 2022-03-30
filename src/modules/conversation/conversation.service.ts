@@ -52,7 +52,7 @@ export class ConversationService implements OnGatewayInit, OnGatewayConnection, 
     }
 
 
-    @InjectRepository(Conversation) private readonly conversationRepository: Repository<Conversation>
+    @InjectRepository(Conversation) readonly conversationRepository: Repository<Conversation>
     @InjectRepository(Message) private readonly messageRepository: Repository<Message>
 
     @Inject() private readonly conversationTransformer: ConversationTransformer

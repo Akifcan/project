@@ -26,13 +26,15 @@ export class Conversation {
 
     @ManyToOne(
         () => User,
-        user => user.id
+        user => user.id,
+        { onDelete: 'CASCADE' }
     )
     sender: User
 
     @ManyToOne(
         () => User,
-        user => user.id
+        user => user.id,
+        { onDelete: 'CASCADE' }
     )
     receiver: User
 

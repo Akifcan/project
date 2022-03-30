@@ -45,7 +45,8 @@ export class Notification {
 
     @ManyToOne(
         () => Conversation,
-        conversation => conversation.id
+        conversation => conversation.id,
+        { onDelete: 'CASCADE' }
     )
     conversation: Post
 

@@ -1,4 +1,3 @@
-import { Lesson } from '../../../entities/lesson.entity'
 import { User } from '../../../modules/user/entites/user.entity'
 import {
     Entity,
@@ -22,13 +21,15 @@ export class Message {
 
     @ManyToOne(
         () => User,
-        user => user.id
+        user => user.id,
+        { onDelete: 'CASCADE' }
     )
     sender: User
 
     @ManyToOne(
         () => Conversation,
-        conversation => conversation.id
+        conversation => conversation.id,
+        { onDelete: 'CASCADE' }
     )
     conversation: Conversation
 
