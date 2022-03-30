@@ -13,12 +13,14 @@ import { Place } from '../../entities/place.entity'
     HttpModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        params: {
-          "access_token": configService.mapbox.apiKey
-        },
-        baseURL: configService.mapbox.baseUrl,
-      }),
+      useFactory: (configService: ConfigService) => {
+        return {
+          params: {
+            "access_token": configService.mapbox.apiKey
+          },
+          baseURL: configService.mapbox.baseUrl,
+        }
+      },
     })
   ],
   providers: [MapService],

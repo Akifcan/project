@@ -17,6 +17,8 @@ export class MapService {
 
     async reverse(long: number, lat: number) {
         const result = await lastValueFrom(this.httpService.get(`/${lat},${long}.json`))
+
+
         const place = result.data?.features[0]
         return place ? {
             success: true,

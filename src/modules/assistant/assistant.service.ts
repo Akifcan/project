@@ -9,7 +9,7 @@ export class AssistantService {
     @Inject() private readonly configService: ConfigService
 
 
-    generateAssistant() {
+    async generateAssistant() {
 
         const body = [
             {
@@ -34,8 +34,7 @@ export class AssistantService {
             },
         ]
 
-
-        return Promise.all(body.map(async (e, i) => {
+        return await Promise.all(body.map(async (e, i) => {
             return this.elasticService.save(
                 this.configService.elasticSearch.index.assistant,
                 i.toString(),

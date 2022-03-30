@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt'
 import { SeederService } from '../../src/seeder/seeder.service'
 import { Department } from " '../../src/entities/department.entity"
 import { AssistantService } from '../../src/modules/assistant/assistant.service'
+// import { ElasticService } from '../../src/elastic/elastic.service'
 
 
 describe('UserController (e2e)', () => {
@@ -19,6 +20,7 @@ describe('UserController (e2e)', () => {
     let validUser: User
     let validJwt: string
     let assistantService: AssistantService
+    // let elasticService: ElasticService
     const elasticIndexName = "assistant-test-e2e"
 
     const validQuestion = "maske takmak zorunlu mu"
@@ -33,14 +35,13 @@ describe('UserController (e2e)', () => {
             imports: [AppModule],
         }).compile()
 
-
         app = moduleFixture.createNestApplication()
         userService = moduleFixture.get<UserService>(UserService)
         seederService = moduleFixture.get<SeederService>(SeederService)
         jwtService = moduleFixture.get<JwtService>(JwtService)
         assistantService = moduleFixture.get<AssistantService>(AssistantService)
-
-
+        // elasticService = moduleFixture.get<ElasticService>(ElasticService)
+        await assistantService.generateAssistant()
 
         app.useGlobalPipes(new ValidationPipe())
         await app.init()
@@ -62,7 +63,6 @@ describe('UserController (e2e)', () => {
             })
         )
 
-        await assistantService.generateAssistant()
 
         validJwt = jwtService.sign({ id: validUser.id, role: validUser.role })
     })
@@ -79,7 +79,6 @@ describe('UserController (e2e)', () => {
             const result = await request(app.getHttpServer()).post("/assistant/ask")
                 .set({ "Authorization": `Bearer ${validJwt}` })
                 .send({ question: validQuestion })
-
             expect(result.body[0].keywords).toBeDefined()
         })
         it("should success keywords not available when question is unvalid", async () => {
