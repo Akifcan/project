@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios'
 import { Module } from '@nestjs/common'
 import { ElasticsearchModule } from '@nestjs/elasticsearch'
 import { ConfigModule } from '../config/config.module'
@@ -19,6 +20,7 @@ import { ElasticService } from './elastic.service'
                 }
             }),
         }),
+        HttpModule,
     ],
     providers: [ElasticService],
     exports: [ElasticService],
