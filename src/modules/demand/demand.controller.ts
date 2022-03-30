@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Post, Delete, UseGuards, Param, Patch } from '@nestjs/common'
-import RoleGuard from 'src/common/guards/role.guard'
+import RoleGuard from '../../common/guards/role.guard'
 import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { DemandService } from './demand.service'

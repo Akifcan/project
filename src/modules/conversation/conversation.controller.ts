@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Param, Post, Get } from '@nestjs/common'
-import { User } from 'src/common/decorators/user.decorator'
+import { User } from '../../common/decorators/user.decorator'
 import CurrentUserProps from '../auth/interface/currenetUser.interface'
 import { ConversationService } from './conversation.service'
 import { SendMessageDto } from './dtos/sendMessageDto.dto'

@@ -23,7 +23,7 @@ import { ConversationModule } from './modules/conversation/conversation.module'
 import { ElasticModule } from './elastic/elastic.module'
 import { NewsModule } from './modules/news/news.module'
 import { AssistantModule } from './modules/assistant/assistant.module'
-import { MapModule } from './modules/map/map.module';
+import { MapModule } from './modules/map/map.module'
 
 @Module({
   providers: [

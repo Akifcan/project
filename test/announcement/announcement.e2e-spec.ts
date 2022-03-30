@@ -6,13 +6,16 @@ import { UserService } from '../../src/modules/user/user.service'
 import { User } from '../../src/modules/user/entites/user.entity'
 import { JwtService } from '@nestjs/jwt'
 import { AnnouncementService } from '../../src/modules/announcement/announcement.service'
+import { SeederService } from '../../src/seeder/seeder.service'
+import { PostService } from '../../src/modules/post/post.service'
 
 describe('AnnouncementController (e2e)', () => {
     let app: INestApplication
     let userService: UserService
     let announcementService: AnnouncementService
-
+    let seederService: SeederService
     let jwtService: JwtService
+    let postService: PostService
 
     let validTeacherUser: User
     let validModeratorUser: User
@@ -21,6 +24,7 @@ describe('AnnouncementController (e2e)', () => {
     let validTeacherJwt: string
     let validModeratorJwt: string
     let unvalidUserJwt: string
+    let lessonId: number
     let createdAnnouncementId = 0
 
     beforeAll(async () => {
@@ -30,11 +34,23 @@ describe('AnnouncementController (e2e)', () => {
 
         app = moduleFixture.createNestApplication()
         userService = moduleFixture.get<UserService>(UserService)
+        postService = moduleFixture.get<PostService>(PostService)
         announcementService = moduleFixture.get<AnnouncementService>(AnnouncementService)
         jwtService = moduleFixture.get<JwtService>(JwtService)
+        seederService = moduleFixture.get<SeederService>(SeederService)
+
 
         app.useGlobalPipes(new ValidationPipe())
         await app.init()
+
+        const saveLesson = await seederService.lessonRepository.save(seederService.lessonRepository.create({
+            id: 99999,
+            name: "Test class",
+            code: "tst",
+
+        }))
+
+        lessonId = saveLesson.id
 
         validTeacherUser = await userService.userRepository.save(
             userService.userRepository.create({
@@ -73,6 +89,7 @@ describe('AnnouncementController (e2e)', () => {
     afterAll(async () => {
         validTeacherJwt = ''
         validModeratorJwt = ''
+        await seederService.lessonRepository.delete({ id: lessonId })
         await userService.userRepository.delete(validTeacherUser)
         await userService.userRepository.delete(validModeratorUser)
         await userService.userRepository.delete(unvalidUser)
@@ -81,9 +98,10 @@ describe('AnnouncementController (e2e)', () => {
 
     describe("list", () => {
         it('should be return 200 when announcement listed successfully', async () => {
-            const result = await request(app.getHttpServer()).get('/announcement')
-                .set({ "Authorization": `Bearer ${unvalidUserJwt}` })
+            const result = await request(app.getHttpServer()).get(`/announcement/lesson/${lessonId}`)
+                .set({ "Authorization": `Bearer ${validTeacherJwt}` })
                 .send({})
+
             expect(result.statusCode).toBe(200)
         })
     })
@@ -123,8 +141,12 @@ describe('AnnouncementController (e2e)', () => {
                     "id": "3",
                     title: "About today class",
                     content: "Today's class will be start at 14:00",
+                    validUntil: ""
                 })
+
             createdAnnouncementId = result.body.announcement.id
+            await postService.postRepository.delete({ announcement: { id: createdAnnouncementId } })
+            await announcementService.announcementRepository.delete({ id: createdAnnouncementId })
             expect(result.statusCode).toBe(201)
         })
 
@@ -134,8 +156,11 @@ describe('AnnouncementController (e2e)', () => {
                 .send({
                     title: "About today class",
                     content: "Today's class will be start at 14:00",
+                    validUntil: ""
                 })
             createdAnnouncementId = result.body.announcement.id
+            await postService.postRepository.delete({ announcement: { id: createdAnnouncementId } })
+            await announcementService.announcementRepository.delete({ id: createdAnnouncementId })
             expect(result.statusCode).toBe(201)
         })
 

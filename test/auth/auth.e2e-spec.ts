@@ -6,7 +6,7 @@ import { UserService } from '../../src/modules/user/user.service'
 import { User } from '../../src/modules/user/entites/user.entity'
 import { JwtService } from '@nestjs/jwt'
 
-describe('AuthController (e2e)', () => {
+describe.skip('AuthController (e2e)', () => {
     let app: INestApplication
     let userService: UserService
     let jwtService: JwtService

@@ -7,7 +7,7 @@ import {
     ManyToOne
 } from 'typeorm'
 import { MediaPost } from '../../../modules/post/entities/mediaPost.entity'
-import { EventPost } from 'src/modules/post/entities/eventPost.entity'
+import { EventPost } from '../../../modules/post/entities/eventPost.entity'
 
 
 @Entity()
