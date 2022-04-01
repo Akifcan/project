@@ -22,6 +22,7 @@ export class ElasticService {
             index,
             body: query
         })
+
         const hits = body.hits.hits
         return hits.map((item) => item._source)
     }

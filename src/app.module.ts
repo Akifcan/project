@@ -61,6 +61,10 @@ import { MapModule } from './modules/map/map.module'
         database: config.database.name,
         autoLoadEntities: true,
         synchronize: true,
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
       }),
     }),
     UserModule,

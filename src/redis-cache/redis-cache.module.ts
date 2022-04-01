@@ -4,7 +4,6 @@ import * as redisStore from 'cache-manager-redis-store'
 import { ConfigService } from '../config/config.service'
 import { ConfigModule } from '../config/config.module'
 
-
 @Module({
   imports: [
     CacheModule.registerAsync({
@@ -12,8 +11,7 @@ import { ConfigModule } from '../config/config.module'
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         store: redisStore,
-        host: configService.redis.host,
-        port: configService.redis.port,
+        url: `redis://${configService.redis.username}:${configService.redis.password}@${configService.redis.host}:${configService.redis.port}`,
         ttl: 0
       }),
     })
